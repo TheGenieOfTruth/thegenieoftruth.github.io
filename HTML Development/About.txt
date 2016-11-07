@@ -1,3 +1,0 @@
-Welcome to Ben Smith's project folder!
-This is where all HTML Projects are stored, and categorized. To use this folder, simply enter a folder and find what you need.
-If you ever get confused each category has an about file to explain what the category is used for. 

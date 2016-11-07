@@ -1,2 +1,0 @@
-get("essentials")
-get("autogrowplus")

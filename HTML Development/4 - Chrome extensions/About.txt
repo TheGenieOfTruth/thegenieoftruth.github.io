@@ -1,2 +1,0 @@
-About: Chrome extensions
-The chrome extension folder has chrome extensions that have been developed. Each includes proper chrome extension syntax.
