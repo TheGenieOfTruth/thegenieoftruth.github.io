@@ -1,0 +1,48 @@
+<style>
+textarea{width:300px;height:150px}
+</style>
+<textarea id = "code" placeholder ="Put a message here"></textarea>
+<br/>
+<button onclick = "encode(document.getElementById('encryption').value)">Encode</button>
+<br/>
+<br/>
+<button onclick = "decode(document.getElementById('encryption').value)">Decode</button>
+<br/>
+<br/>
+Encoding security: <input type = "number" id = "encryption" value = "1"/>
+<br/>
+(enter a number 1-5 based on the amount of security you want. Going anywhere above 7 on lengthy documents may crash your computer...)
+<br/>
+<script>
+//Javascript encoding thing!
+function decode(times){
+var precode = document.getElementById("code").value.split(",")
+var aftercode = ""
+	for(j=0;j<times;j++){
+		for(i=0;i<precode.length;i++){
+			aftercode = aftercode.substring(0,i)+String.fromCharCode(precode[i]-5-Math.floor(Math.sin(i*10))*20-i%2-i%3-i%4-i%5-i%6-i%7-((i%2)*23)+((i%3)*17))+aftercode.substring(i+1,precode.length)
+		}
+    document.getElementById("output").innerHTML = aftercode
+    if(j<times-1){
+    	precode = aftercode.split(",")
+      aftercode = ""
+      }
+	}
+}
+//
+function encode(times){
+var precode = document.getElementById("code").value
+var aftercode = []
+for(j=0;j<times;j++){
+for(i=0;i<precode.length;i++){
+	aftercode[i] = precode.charCodeAt(i)+5+Math.floor(Math.sin(i*10))*20+i%2+i%3+i%4+i%5+i%6+i%7+((i%2)*23)-((i%3)*17)
+}
+precode = String(aftercode)
+aftercode = []
+}
+document.getElementById("output").innerHTML = precode
+}
+</script>
+<br/>
+<br/>
+<textarea id = "output" placeholder = "This is the result!"></textarea>

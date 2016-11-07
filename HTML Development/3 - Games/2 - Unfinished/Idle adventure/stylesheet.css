@@ -1,0 +1,11 @@
+.navbar{border-radius:0px}
+li:hover{cursor:pointer}
+#content{
+  margin-left:10px;
+  margin-right: 10px;
+}
+normaldiv {
+    display: block;
+}
+.full{width:100%}
+.square{width:465px;height:340px;margin:10px;display:inline-block;border:1px solid #D0D0D0}

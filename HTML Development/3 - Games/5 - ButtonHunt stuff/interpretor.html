@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>button{padding:20px 40px}</style>
+</head>
+<body>
+    <textarea style = "display:block" placeholder = "Paste import code to begin" id = "import"></textarea>
+<p id = "label">
+
+</p>
+<button onclick = "gen()" id = "button">
+Submit
+</button>
+<script>
+function gen(){
+  arr = eval(document.getElementById("import").value)
+  document.getElementById("import").style.display = "none"
+  ct = 1
+  document.getElementById("button").onclick = function(){
+    document.getElementById("label").innerHTML = arr[ct]
+    ct++
+  }
+  document.getElementById("label").innerHTML = arr[0]
+  document.getElementById("button").innerHTML = "Next"
+}
+</script>
+</body>
+</html>

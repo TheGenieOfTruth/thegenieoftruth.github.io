@@ -1,0 +1,43 @@
+<html>
+<head>
+<script src = 'core.js'>
+</script>
+</head>
+<body>
+    <div id = "pagewrapper">
+        <h2>Map editor</h2>
+        <hr>
+        <p>The map editor is used to add tiles to the map. Use the +s on the side to increase the size of the map, and type inside of cells to set the flavor of cell. You can later edit the properties of the cells through the Cell editor. You can also right click to cycle through the cell flavors.</p>
+  <div id = "wrapper" class = "block">
+  <table>
+    <tbody id = "table">
+    <tr class = "row" id ="first">
+      <td class = "square" id = "0-0" contenteditable oninput = "getData();register(this)" oncontextmenu = "cycle(this);register(this); return false" onclick = "register(this)"></td>
+      <td class = "square" id = "0-1" contenteditable oninput = "getData();register(this)" oncontextmenu = "cycle(this);register(this); return false" onclick = "register(this)"></td>
+      <td id = "sidebar" rowspan="2" class = "wider btn-default" onclick = "addColumn();getData()">+</td>
+    </tr>
+    <tr class = "row">
+
+      <td class = "square" id = "1-0" contenteditable oninput = "getData();register(this)" oncontextmenu = "cycle(this);register(this); return false" onclick = "register(this)"></td>
+      <td class = "square" id = "1-1" contenteditable oninput = "getData();register(this)" oncontextmenu = "cycle(this);register(this); return false" onclick = "register(this)"></td>
+
+    </tr>
+    </tbody>
+    <tr>
+     <td id = "footer" colspan = "3" class = "taller btn-default" onclick = "addRow();getData()">+</td>
+     </tr>
+  </table>
+  </div>
+  <br>
+  <h2>Cell editor</h2>
+  <hr>
+  <p>Here, you can change a cell's properties. For example, you can add text to a sign, toggle if a wall is a gate or not, and if so, is it on or off. Access a cell's data by clicking on it.</p>
+  <div id = "celleditor">
+  </div>
+
+  <hr>
+  <br>
+  <div id = "export" class = "monospace" readonly></div>
+  </div>
+</body>
+</html>

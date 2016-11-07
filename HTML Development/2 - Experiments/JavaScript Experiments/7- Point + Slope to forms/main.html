@@ -1,0 +1,66 @@
+<script>
+function check(num){
+var fin = ""
+if(num<0){fin=" - "+-num}
+  else if(num>0){fin=" + "+num;}
+  else if(num===0){fin = ""}
+  return fin}
+function simplify(){
+var point = document.getElementById("point").value
+  var m = document.getElementById("slope").value
+  point = point.replace(/(\(|\))/g, "")
+  point = point.split(",")
+  calculate(point,m)}
+function calculate(point,m){
+  var x = Number(point[0])-0
+  var y = Number(point[1])-0
+  var preservex = x
+  var preservey = y
+  var xspecial = ""
+  var yspecial = ""
+  if(x<0){xspecial=" +";x=-x}
+  else if(x>0){xspecial=" -";}
+  else if(x===0){xspecial="";x=""}
+  if(y<0){yspecial=" +";y=-y}
+  else if(y>0){yspecial=" -";}
+  else if(y===0){yspecial="";y=""}
+  var expor = document.getElementById("export")
+  var pointslope = "Point slope: y"+yspecial+" "+y+" = "+ m+"(x"+xspecial+" "+x+")<br>"
+  x = preservex
+  y = preservey
+  m = eval(m)
+  //y-y=x-x*m
+  var eqy = "y"
+  var eqx = ""
+  eqx+=String(m+"x")
+  var hold = check(y-x*m)
+  eqx+=hold
+  slopeintercept = eqy + " = " + eqx
+  var slopeintercept = "Slope intercept: "+slopeintercept
+  expor.innerHTML = ""
+  expor.innerHTML= pointslope+"<br>"+slopeintercept
+}
+function calculate2(){
+	var point1 = document.getElementById("point1").value
+	var point2 = document.getElementById("point2").value
+	point1 = point1.replace(/(\(|\))/g, "")
+  	point1 = point1.split(",")
+	point2 = point2.replace(/(\(|\))/g, "")
+  	point2 = point2.split(",")
+	var slope = (point1[1]-point2[1])/(point1[0]-point2[0])
+	calculate(point1,slope)
+	}
+</script>
+<input id = "point" placeholder = "Point (x,y)" value = "3,3">
+<input id = "slope" placeholder = "Slope (decimal or fraction)" value = "3">
+<button onclick = "simplify()">
+Calculate
+</button><br/>
+<input id = "point1" placeholder = "Point 1 (x,y)" value = "3,3">
+<input id = "point2" placeholder = "Point 2 (x,y)" value = "4,4">
+<button onclick = "calculate2()">
+Calculate
+</button>
+<p class = "monospace" id = "export">
+
+</p>

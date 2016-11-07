@@ -1,0 +1,22 @@
+input:focus, textarea:focus{outline:0}
+input{font-size:14px;display:inline-block;border-color:transparent;width:95%}
+body{margin:10px}
+textarea{width:95%;resize:none;border-width:0px}
+textarea.normal:focus{outline:1}
+textarea.normal{font-family:monospace;width:25%;resize:both;border-width:1px}
+.btn-xxs{top:0;padding:0px 5px}
+.popover{background-color:rgba(255,255,255,0.9);float:left}
+.popover-title{background-color:rgba(255,255,255,0.8) !important}
+.full{width:100%;border-radius:0px}
+
+.popover.bottom .arrow {
+  left:25px !important;
+  display:none !important
+}
+.popover{
+    background:rgba(255,255,255,0.75) !important;
+}
+.btn-primary{
+    opacity:0.9 !important;
+}
+meh{display:inline}

@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Roboto:100');
+.header1,.header2{
+    opacity:0;
+    display:flex;
+      justify-content: center;
+      font-family:Roboto;
+      -webkit-animation:fadein 1s ease-in;
+      -moz-animation:fadein 1s ease-in;
+      animation:fadein 1s ease-in
+}
+.header1{
+
+}
+.header2{
+    -webkit-animation-delay: 0.7s;
+    -moz-animation-delay: 0.7s;
+    animation-delay: 0.7s;
+}
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
