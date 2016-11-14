@@ -67,9 +67,8 @@ return array;
 }
 arr = shuffle(arr)
 arr[0] = arr[0].substring(0,1).toUpperCase()+ arr[0].substring(1,arr[0].length).toLowerCase()
-arr[arr.length-1] = arr[arr.length-1]+endLetter
 }
-arr = arr.join(" ")
+arr = arr.join(" ")+endLetter
 
 document.getElementById("edit-submit").disabled  = false
 document.getElementById("edit-comment").value = arr
