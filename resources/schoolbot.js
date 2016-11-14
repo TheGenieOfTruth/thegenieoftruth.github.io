@@ -47,10 +47,10 @@ function fallback(arg,def){
 }
 //All the different flavors of arguments, and their fallbacks
 if(typeof arguments[0] === "object"){
-    var message = fallback(arguments[0].message,"hello this is a message")
-    var delay = fallback(arguments[0].delay,100)
-    var scrambled = fallback(arguments[0].scrambled,true)
-    var endLetter = fallback(arguments[0].endLetter,"!")
+    var message = fallback(arguments[0]["message"],"hello this is a message")
+    var delay = fallback(arguments[0]["delay"],100)
+    var scrambled = fallback(arguments[0]["scrambled"],true)
+    var endLetter = fallback(arguments[0]["endLetter"],"!")
 } else{
 var message = fallback(arguments[0],"hello this is a message")
 var delay = fallback(arguments[1],100)
