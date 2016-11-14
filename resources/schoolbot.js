@@ -75,4 +75,4 @@ document.getElementById("edit-submit").disabled  = false
 document.getElementById("edit-comment").value = arr
 clickify(document.getElementById("edit-submit"))
 },delay)
-}}
+}
