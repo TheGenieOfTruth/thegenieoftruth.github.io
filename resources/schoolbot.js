@@ -14,7 +14,14 @@ var clickEvent = document.createEvent ('MouseEvents');
 clickEvent.initEvent (eventType, true, true);
 node.dispatchEvent (clickEvent);
 }
-function initialize(){
+function halt(){
+    clearInterval(loop)
+}
+function init(){
+console.log("Ahoy there! Thanks for using the Schoology Bot.")
+console.log("To use it, simply use this simple documentation:")
+console.log("init(\"message here\")")
+console.log("For more advanced features, type help()")
 function fallback(arg,def){
     if(arguments[arg]==undefined){
         return def
@@ -23,7 +30,7 @@ function fallback(arg,def){
 }
 var message = fallback(0,"hello this is a spam")
 var delay = fallback(1,5000)
-setInterval(function(){
+loop = setInterval(function(){
 
 
 var arr = "oh poop nuggets Mr. Trump has become president".split(" ")
