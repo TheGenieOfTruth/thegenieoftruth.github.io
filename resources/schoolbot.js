@@ -23,13 +23,13 @@ console.log("To use it, simply use this simple documentation:")
 console.log("init(\"message here\")")
 console.log("For more advanced features, type help()")
 function fallback(arg,def){
-    if(arguments[arg]==undefined){
+    if(arg==undefined){
         return def
     }
-    return arguments[arg]
+    return arg
 }
-var message = fallback(0,"hello this is a spam")
-var delay = fallback(1,5000)
+var message = fallback(arguments[0],"hello this is a spam")
+var delay = fallback(arguments[1],5000)
 loop = setInterval(function(){
 
 
