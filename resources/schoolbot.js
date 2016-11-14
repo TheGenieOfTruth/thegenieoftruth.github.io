@@ -27,13 +27,13 @@ function fallback(arg,def){
         return def
     }
     return arg
-}
-var message = fallback(arguments[0],"hello this is a spam")
+
+var message = fallback(arguments[0],"hello this is a message")
 var delay = fallback(arguments[1],5000)
 loop = setInterval(function(){
 
 
-var arr = "oh poop nuggets Mr. Trump has become president".split(" ")
+var arr = message.split(" ")
 function shuffle(array) {
 var currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -60,5 +60,5 @@ arr = arr.join(" ")
 document.getElementById("edit-submit").disabled  = false
 document.getElementById("edit-comment").value = arr
 clickify(document.getElementById("edit-submit"))
-},1000)
-}
+},delay)
+}}
