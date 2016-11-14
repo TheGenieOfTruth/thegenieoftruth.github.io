@@ -27,7 +27,7 @@ function fallback(arg,def){
         return def
     }
     return arg
-
+}
 var message = fallback(arguments[0],"hello this is a message")
 var delay = fallback(arguments[1],5000)
 loop = setInterval(function(){
