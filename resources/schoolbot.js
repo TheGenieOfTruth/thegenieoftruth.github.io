@@ -14,6 +14,15 @@ var clickEvent = document.createEvent ('MouseEvents');
 clickEvent.initEvent (eventType, true, true);
 node.dispatchEvent (clickEvent);
 }
+function initialize(){
+function fallback(arg,def){
+    if(arguments[arg]==undefined){
+        return def
+    }
+    return arguments[arg]
+}
+var message = fallback(0,"hello this is a spam")
+var delay = fallback(1,5000)
 setInterval(function(){
 
 
@@ -45,3 +54,4 @@ document.getElementById("edit-submit").disabled  = false
 document.getElementById("edit-comment").value = arr
 clickify(document.getElementById("edit-submit"))
 },1000)
+}
