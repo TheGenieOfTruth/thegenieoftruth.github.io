@@ -1,0 +1,12 @@
+.buff{
+  padding:60px 50px !important;
+ font-size:60px !important;
+  margin-top:50px;
+  opacity:0.5;
+  position:fixed;
+}
+#lit-div{
+  margin-left:300px;
+  margin-right:300px;
+  margin-top:0.7px;
+}
