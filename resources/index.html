@@ -15,10 +15,9 @@ textarea{border:none;resize:none;overflow-y:none;width:100%;background:inherit;}
   <p>Ranging from bots to libraries to potatoes, this has everything you need.</p>
   <h2>FAQ <small>Flippin' Awesome Quickreferencethings</small></h2>
   <h5>Grab one of these fancy libraries through <b>JavaScript</b></h5>
-  <code><textarea rows = 12 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>function e(a,b){var c=document.getElementsByTagName("head")[0];d=document.createElement("script");d.type="text/javascript";d.src=a;d.onload=b;d.onreadystatechange=function(){"complete"==this.readyState},c.appendChild(d)} e("link/to/whatever.js",function(){/*callback*/})</textarea></code><br>
+  <code value = 'function e(a,b){var c=document.getElementsByTagName("head")[0];d=document.createElement("script");d.type="text/javascript";d.src=a;d.onload=b;d.onreadystatechange=function(){"complete"==this.readyState},c.appendChild(d)} e("link/to/whatever.js",function(){/*callback*/})'></code><br>
   <sub>Minified</sub>
-  <code><textarea autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled>
-function get(src, callback) {
+  <code value = 'function get(src, callback) {
     var head = document.getElementsByTagName("head")[0];
     elem = document.createElement("script");
     elem.type = "text/javascript";
@@ -30,11 +29,11 @@ function get(src, callback) {
 }
 get("link/to/whatever.js", function() {
     //callback
-})
-    </textarea></code><br>
+})'>
+    </code><br>
   <sub>Normal</sub>
   <h5>Grab one of these fancy libraries through <b>HTML</b></h5>
-  <code><textarea rows = 12 autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" disabled><script src = "link/to/whatever.js"></script></textarea></code>
+  <code value = '<script src = "link/to/whatever.js"></script>'></code>
   <div id = "content">
   </div>
   <script>
