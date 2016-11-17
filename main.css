@@ -9,9 +9,9 @@ h1,h2,h3,h4,h5,h6{
   /*I used !important, I am now ashamed D:*/
 }
 pre{
-  border:none;
-  margin-top:10px;
-  margin-bottom:10px;
-  padding-top:5px;
-  padding-bottom:5px;
+  border:none !important;
+  margin-top:10px !important;
+  margin-bottom:10px !important;
+  padding-top:5px !important;
+  padding-bottom:5px !important;
 }
