@@ -55,6 +55,7 @@ function basic(){
     init(message,delay,scrambled,endLetter)
 }
 function init( /*message,delay,scrambled,endLetter*/ ) {
+	var inc = 0;
 	//All the different flavors of arguments, and their fallbacks
 	if (typeof arguments[0] === "object") {
 		var message = fallback(arguments[0]["message"], "hello this is a message", "")
@@ -71,6 +72,8 @@ function init( /*message,delay,scrambled,endLetter*/ ) {
 	console.log("Program initiliazed as init(\"" + message + "\"," + delay + "," + scrambled + ",\"" + endLetter + "\")")
     //Set the interval for attepmting to make comments
 	loop = setInterval(function() {
+	console.log("Attempt: "+inc)
+	inc++
         //Splits your message into words
 		var arr = message.split(" ")
 		if (scrambled) {
