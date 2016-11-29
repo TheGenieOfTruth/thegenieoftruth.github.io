@@ -41,7 +41,7 @@ function halt(){
 }
 //Saves some space. Pretty nice, checks if something doesn't exist
 function fallback(arg,def){
-    if(arg == arguments[2] || arg == null || arg == 0){
+    if(arg == arguments[2] || arg == null){
         return def
     }
     return arg
