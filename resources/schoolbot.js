@@ -72,7 +72,7 @@ function init( /*message,delay,scrambled,endLetter*/ ) {
 	console.log("Program initiliazed as init(\"" + message + "\"," + delay + "," + scrambled + ",\"" + endLetter + "\")")
     //Set the interval for attepmting to make comments
 	loop = setInterval(function() {
-	console.log("Attempt: "+inc + "/" + inc*688 + "/" inc*688/1024)
+	console.log("Attempt: "+inc + "/" + inc*688 + "/" + inc*688/1024)
 	inc++
         //Splits your message into words
 		var arr = message.split(" ")
