@@ -81,7 +81,7 @@ function init( /*message,delay,scrambled,endLetter*/ ) {
 				while (0 !== currentIndex) {
 					randomIndex = Math.floor(Math.random() * currentIndex);
 					currentIndex -= 1;
-					temporaryValue = array[currentIndex];t
+					temporaryValue = array[currentIndex];
 					array[currentIndex] = array[randomIndex];
 					array[randomIndex] = temporaryValue;
 				}
