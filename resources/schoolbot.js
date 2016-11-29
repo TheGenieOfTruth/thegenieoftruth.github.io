@@ -27568,7 +27568,3 @@ Always bringing joy.
 The greatest show on earth.
 The Great Indian Circus`,4000,true,"!? :D")
 }
-
-
--- 
-The amazing Luke Trenaman!
