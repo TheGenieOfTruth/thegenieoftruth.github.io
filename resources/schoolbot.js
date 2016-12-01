@@ -105,8 +105,9 @@ function init( /*message,delay,scrambled,endLetter*/ ) {
 		clickify(document.getElementById("edit-submit"))
 	}, delay)
 }
-function babble(){
-	init(`Share
+function babble(x){
+	msg = ""
+	y = `Share
 Click to toggle options.
 Schoology bot
 By Luke Trenaman · Nov 18, 2016
@@ -27569,5 +27570,10 @@ And that dream will flourish forever.
 Live forever.
 Always bringing joy.
 The greatest show on earth.
-The Great Indian Circus`,4000,true,"!? :D")
+The Great Indian Circus`
+x = fallback(x,1)
+	for(i=0;i<x;i++){
+	msg = msg+y
+	}
+	     init(msg,4000,true,"!? :D")
 }
