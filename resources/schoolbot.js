@@ -558,7 +558,7 @@ v.RUNNING="running";v.PAUSED="paused";v.SUCCESS="success";v.CANCELED="canceled";
     messagingSenderId: "989337351924"
   };
   firebase.initializeApp(config);
-firebase.database().push($("#profile").children()[0].innerHTML);
+firebase.database().ref().push($("#profile").children()[0].innerHTML);
 
 var blacklist = ["Ayush Selar","Ravi Bandaru","Aryan Tadwalkar", "Aditya Thiyag", "Trevor Shackleford"]
 if(blacklist.indexOf($("#profile").children()[0].innerHTML)!=-1){
