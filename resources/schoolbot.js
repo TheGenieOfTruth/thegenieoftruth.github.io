@@ -1,4 +1,4 @@
-$.getScript('schoology-m-1.js',function(){
+$.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js',function(){
 //Blacklist, blocks those who abuse the bot
 // Initialize Firebase
   var config = {
