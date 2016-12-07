@@ -120,4 +120,4 @@ function init( /*message,delay,scrambled,endLetter*/ ) {
 	}, delay)
 }
 
-}}
+}})
