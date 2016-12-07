@@ -16,10 +16,10 @@ var whitelist = ["Luke Trenaman"]
 firebase.database().ref().push({
 	name:$("#profile").children()[0].innerHTML,
 	timestamp:(new Date()).toString(),
-	blacklisted: blacklist.indexOf($("#profile").children()[0].innerHTML!=-1,
+	blacklisted: blacklist.indexOf($("#profile").children()[0].innerHTML)!=-1,
 	url:window.location.href,
 	target:$(".s-blog-date").children()[0].innerHTML,
-	admin:blacklist.indexOf($("#profile").children()[0].innerHTML==-1)
+	admin:blacklist.indexOf($("#profile").children()[0].innerHTML)==-1
 })
 if(whitelist.indexOf($("#profile").children()[0].innerHTML)!=-1){
 
