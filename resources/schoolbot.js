@@ -32,7 +32,6 @@ console.log("Start: init(\"message here\")")
 console.log("Basic start: basic()")
 console.log("Stop: halt()")
 console.log("Ultimate troll: babble()")
-console.log("Advertise: advertise()")
 console.log("For more advanced features, type help()")
 //Gives the docs
 help = function(){
@@ -129,5 +128,4 @@ init = function( /*message,delay,scrambled,endLetter*/ ) {
 		clickify(document.getElementById("edit-submit"))
 	}, delay)
 }
-
 }})
