@@ -126,22 +126,21 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 				clickify(document.getElementById("edit-submit"))
 			}, delay)
 		}
-		zalgo = function(power, message) {
+		zalgo = function(max, word) {
 			if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
-				function yeet(max, word) {
-					var min = max
+				loop = setInterval(function(){
+				    document.getElementById("edit-submit").disabled = false
+					//Set the innerHTML of the comment to the value of the scrambled variable crap
+					var max = power
+					var min = power
 					var luni = new Lunicode();
 					luni.tools.creepify.options.top = true;
 					luni.tools.creepify.options.middle = true;
 					luni.tools.creepify.options.bottom = true;
 					luni.tools.creepify.options.maxHeight = max
-					luni.tools.creepify.options.randomization = Math.max(0, max - min);
-					return luni.tools.creepify.encode(word);
-				};
-				loop = setInterval(function(){
-				    document.getElementById("edit-submit").disabled = false
-					//Set the innerHTML of the comment to the value of the scrambled variable crap
-				    document.getElementById("edit-comment").value = yeet(max,word)
+					luni.tools.creepify.options.randomization = Math.max(0, power - power);
+					document.getElementById("edit-comment").value = luni.tools.creepify.encode(word);
+				
 					//Then press that submit button
 				    clickify(document.getElementById("edit-submit"))
 				},3000)
