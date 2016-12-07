@@ -127,7 +127,7 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 			}, delay)
 		}
 		zalgo = function(power, message) {
-			if (whitelist.indexOf($("#profile").children()[0].innerHTML) == -1) {
+			if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
 				function yeet(max, word) {
 					var min = max
 					var luni = new Lunicode();
@@ -143,7 +143,7 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 				console.error("You do not have the required permissions for this command")
 			}
 		}
-		if (whitelist.indexOf($("#profile").children()[0].innerHTML) == -1) {
+		if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
 			console.log("Initialized Schoology bot as admin")
 		}
 	}
