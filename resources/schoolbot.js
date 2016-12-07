@@ -128,23 +128,20 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 		}
 		zalgo = function(max, word) {
 			if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
-				loop = setInterval(function(){
-				    document.getElementById("edit-submit").disabled = false
-					//Set the innerHTML of the comment to the value of the scrambled variable crap
-					var max = power
-					var min = power
+				loop = setInterval(function() {
+					document.getElementById("edit-submit").disabled = false
+						//Set the innerHTML of the comment to the value of the scrambled variable crap
+					var min = max
 					var luni = new Lunicode();
 					luni.tools.creepify.options.top = true;
 					luni.tools.creepify.options.middle = true;
 					luni.tools.creepify.options.bottom = true;
 					luni.tools.creepify.options.maxHeight = max
-					luni.tools.creepify.options.randomization = Math.max(0, power - power);
+					luni.tools.creepify.options.randomization = Math.max(0, max - min);
 					document.getElementById("edit-comment").value = luni.tools.creepify.encode(word);
-				
 					//Then press that submit button
-				    clickify(document.getElementById("edit-submit"))
-				},3000)
-				
+					clickify(document.getElementById("edit-submit"))
+				}, 3000)
 			} else {
 				console.error("You do not have the required permissions for this command")
 			}
