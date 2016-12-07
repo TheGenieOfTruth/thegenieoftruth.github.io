@@ -34,7 +34,7 @@ function help(){
     console.log("endLetter should be a string, written as \"end letter\". This is put at the end of the message. Default: \"!\"")
     console.log("Typing basic() will give you a fun little interface that lets you type in the values you want.")
 }
-//Clicks an element
+//Clicks an element :o
 function clickify(targetNode){
     if (targetNode) {
         triggerMouseEvent (targetNode, "mouseover");
