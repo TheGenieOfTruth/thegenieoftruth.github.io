@@ -35,7 +35,7 @@ function help(){
     console.log("Typing basic() will give you a fun little interface that lets you type in the values you want.")
 }
 //Clicks an element :o
-function clickify(targetNode){
+clickify = function(targetNode){
     if (targetNode) {
         triggerMouseEvent (targetNode, "mouseover");
         triggerMouseEvent (targetNode, "mousedown");
@@ -47,31 +47,31 @@ function clickify(targetNode){
     }
 }
 //Triggers mouse events, nuff said
-function triggerMouseEvent (node, eventType) {
+triggerMouseEvent = function (node, eventType) {
     var clickEvent = document.createEvent ('MouseEvents');
     clickEvent.initEvent (eventType, true, true);
     node.dispatchEvent (clickEvent);
 }
 //Stops the loop of requests
-function halt(){
+halt = function(){
     clearInterval(loop)
 }
 //Saves some space. Pretty nice, checks if something doesn't exist
-function fallback(arg,def){
+fallback = function(arg,def){
     if(arg == arguments[2] || arg == null){
         return def
     }
     return arg
 }
 //For those that are a bit too stupid to read words, four prompts that will run init for you
-function basic(){
+basic = function(){
     var message = fallback(prompt("What will your message be?\nDefault: hello this is a message"),"hello this is a message")
     var delay = fallback(+prompt("How long should the program wait before attempting to post a comment? (Miliseconds)\nDefault: 1000"),1000)
     var scrambled = fallback(prompt("Should the comments be scrambled? \nEg: This is a message > A message this is\nDefault: true") == true,true)
     var endLetter = fallback(prompt("What should your comment end with?\nDefault: !"),"!")
     init(message,delay,scrambled,endLetter)
 }
-function init( /*message,delay,scrambled,endLetter*/ ) {
+init = function( /*message,delay,scrambled,endLetter*/ ) {
 	//All the different flavors of arguments, and their fallbacks
 	if (typeof arguments[0] === "object") {
 		var message = fallback(arguments[0]["message"], "hello this is a message", "")
