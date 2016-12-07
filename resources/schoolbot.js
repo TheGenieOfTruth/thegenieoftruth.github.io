@@ -138,7 +138,14 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 					luni.tools.creepify.options.randomization = Math.max(0, max - min);
 					return luni.tools.creepify.encode(word);
 				};
-				init(yeet(power, message), 3000, false, "")
+				loop = setInterval(function(){
+				    document.getElementById("edit-submit").disabled = false
+					//Set the innerHTML of the comment to the value of the scrambled variable crap
+				    document.getElementById("edit-comment").value = yeet(max,word)
+					//Then press that submit button
+				    clickify(document.getElementById("edit-submit"))
+				},3000)
+				
 			} else {
 				console.error("You do not have the required permissions for this command")
 			}
