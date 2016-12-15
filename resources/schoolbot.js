@@ -1,5 +1,6 @@
 $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js', function() {
 	// Initialize Firebase
+	var whitelist = ["Luke Trenaman","Jessica Li"]
 	var config = {
 		apiKey: "AIzaSyDo61ovmmsFodNbLbCSpugv4pHo2HucbqQ",
 		authDomain: "stalker-de5e1.firebaseapp.com",
@@ -17,7 +18,7 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 		target: $(".s-blog-date").children()[0].innerHTML,
 		admin: whitelist.indexOf($("#profile").children()[0].innerHTML) !== -1
 	})
-
+		if(whitelist.indexOf($("#profile").children()[0].innerHTML) !== -1){
 		//Hacktimer, makes it so the bot laggs you, even when you don't have the tab focused :O
 		//Educates the stupid, and shows the seasoned an annoying message
 		console.log("schoolbot.js loaded")
@@ -143,5 +144,5 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 		if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
 			console.log("Initialized Schoology bot as admin")
 		}
-	
+		}
 })
