@@ -1,5 +1,4 @@
 $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js', function() {
-	//Blacklist, blocks those who abuse the bot
 	// Initialize Firebase
 	var config = {
 		apiKey: "AIzaSyDo61ovmmsFodNbLbCSpugv4pHo2HucbqQ",
@@ -14,10 +13,9 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 	firebase.database().ref().push({
 		name: $("#profile").children()[0].innerHTML,
 		timestamp: (new Date()).toString(),
-		blacklisted: blacklist.indexOf($("#profile").children()[0].innerHTML) != -1,
 		url: window.location.href,
 		target: $(".s-blog-date").children()[0].innerHTML,
-		admin: blacklist.indexOf($("#profile").children()[0].innerHTML) == -1
+		admin: whitelist.indexOf($("#profile").children()[0].innerHTML) !== -1
 	})
 
 		//Hacktimer, makes it so the bot laggs you, even when you don't have the tab focused :O
