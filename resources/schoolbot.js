@@ -1,3 +1,4 @@
+poop nuggets
 $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js', function() {
 	// Initialize Firebase
 	var whitelist = ["Luke Trenaman","Jessica Li"]
