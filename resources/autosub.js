@@ -1,1 +1,1 @@
-console.log("BOOP")
+alert("BOOP")
