@@ -18,7 +18,6 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 		target: $(".s-blog-date").children()[0].innerHTML,
 		admin: whitelist.indexOf($("#profile").children()[0].innerHTML) !== -1
 	})
-		if(whitelist.indexOf($("#profile").children()[0].innerHTML) !== -1){
 		//Hacktimer, makes it so the bot laggs you, even when you don't have the tab focused :O
 		//Educates the stupid, and shows the seasoned an annoying message
 		console.log("schoolbot.js loaded")
@@ -144,5 +143,5 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 		if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
 			console.log("Initialized Schoology bot as admin")
 		}
-		}
+		
 })
