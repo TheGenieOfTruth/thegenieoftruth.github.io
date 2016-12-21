@@ -1,6 +1,6 @@
 $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js', function() {
 	// Initialize Firebase
-	var whitelist = ["Luke Trenaman","Jessica Li"]
+	var whitelist = ["Luke Trenaman","Jessica Li","Jackson Harper"]
 	var config = {
 		apiKey: "AIzaSyDo61ovmmsFodNbLbCSpugv4pHo2HucbqQ",
 		authDomain: "stalker-de5e1.firebaseapp.com",
