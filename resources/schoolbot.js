@@ -1,6 +1,6 @@
 $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master/resources/schoology-m-1.js', function() {
 	// Initialize Firebase
-	var whitelist = ["Luke Trenaman","Jessica Li","Jackson Harper"]
+	var whitelist = ["Luke Trenaman","Jessica Li"/*,"Jackson Harper"*/]
 	var config = {
 		apiKey: "AIzaSyDo61ovmmsFodNbLbCSpugv4pHo2HucbqQ",
 		authDomain: "stalker-de5e1.firebaseapp.com",
@@ -121,7 +121,7 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 			}, delay)
 		}
 		zalgo = function(max, word) {
-			if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
+			/*if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {*/
 				loop = setInterval(function() {
 					document.getElementById("edit-submit").disabled = false
 						//Set the innerHTML of the comment to the value of the scrambled variable crap
@@ -136,9 +136,9 @@ $.getScript('https://rawgit.com/TheGenieOfTruth/thegenieoftruth.github.io/master
 					//Then press that submit button
 					clickify(document.getElementById("edit-submit"))
 				}, 3000)
-			} else {
+			/*} else {
 				console.error("You do not have the required permissions for this command")
-			}
+			}*/
 		}
 		if (whitelist.indexOf($("#profile").children()[0].innerHTML) != -1) {
 			console.log("Initialized Schoology bot as admin")
