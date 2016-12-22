@@ -6,14 +6,8 @@
     align-items:center;
     background:linear-gradient(315deg,#2980b9, #3498db,#1abc9c,#2ecc71);
     color:#eee;
-    margin:5px 0;
+    margin:0.17vw 0;
     flex-wrap:wrap;
-}
-#head-gradient h1{
-    font-size:6vw
-}
-#head-gradient p{
-    font-size:2.7vw
 }
 #head-gradient::after {
   content: '';

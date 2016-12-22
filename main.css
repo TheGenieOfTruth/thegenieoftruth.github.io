@@ -1,14 +1,23 @@
 /*Main CSS flavour to give to all documents*/
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
+/*5px = 0.2vw
+3,0.1
+*/
 body{
-  margin:10px;
-  padding:10px;
+  margin:1vw;
+  padding:1vw;
 }
 h1,h2,h3,h4,h5,h6{
     font-family:Roboto !important;
-  margin-top:3px !important;
-  margin-bottom:3px !important;
+  margin-top:0.1vw !important;
+  margin-bottom:0.1vw !important;
   /*I used !important, I am now ashamed D:*/
+}
+body h1{
+    font-size:6vw
+}
+body p{
+    font-size:2.7vw
 }
 pre{
     display: block;
