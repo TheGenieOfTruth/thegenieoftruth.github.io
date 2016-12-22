@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Montserrat|Roboto:100');
+@media (max-width:319px){
+    .glyphicon {
+        font-size: 140px
+    }
+    .dynamic-size{font-size:16px}
+    .dynamic-size-large{font-size:18px}
+    .dynamic-size-huge{font-size:34px}
+    .dynamic-size-massive{font-size:54px}
+}
+@media (min-width:320px)  {
+    .glyphicon {
+        font-size: 140px
+    }
+    .dynamic-size{font-size:16px}
+    .dynamic-size-large{font-size:18px}
+    .dynamic-size-huge{font-size:30px}
+    .dynamic-size-massive{font-size:54px}
+}
+@media (min-width:480px)  {
+    .glyphicon {
+        font-size: 160px
+    }
+    .dynamic-size{font-size:18px}
+    .dynamic-size-large{font-size:22px}
+    .dynamic-size-huge{font-size:34px}
+    .dynamic-size-massive{font-size:66px}
+}
+@media (min-width:600px)  {
+    .glyphicon {
+        font-size: 135px
+    }
+    .dynamic-size{font-size:16px}
+    .dynamic-size-large{font-size:20px}
+    .dynamic-size-huge{font-size:32px}
+    .dynamic-size-massive{font-size:66px}
+}
+@media (min-width:801px)  {
+    .glyphicon {
+        font-size: 155px
+    }
+    .dynamic-size{font-size:17px}
+    .dynamic-size-large{font-size:22px}
+    .dynamic-size-huge{font-size:33px}
+    .dynamic-size-massive{font-size:69px}
+}
+@media (min-width:1025px) {
+    .glyphicon {
+        font-size: 175px
+    }
+    .dynamic-size{font-size:18px}
+    .dynamic-size-large{font-size:25px}
+    .dynamic-size-huge{font-size:34px}
+    .dynamic-size-massive{font-size:72px}
+}
+@media (min-width:1281px) {
+    .glyphicon {
+        font-size: 200px
+    }
+    .dynamic-size{font-size:20px}
+    .dynamic-size-large{font-size:26px}
+    .dynamic-size-huge{font-size:36px}
+    .dynamic-size-massive{font-size:72px}
+}
+body {
+    scroll-behavior: smooth;
+    font-family:Lato,sans-serif,arial
+}
+#top {
+    color: black
+}
+body {
+    margin: 0px
+}
+.green {
+    background-color: #3498db;
+    width: 100%;
+    color: white;
+    transition: background-color 1s;
+   -moz-transition: background-color 1s;
+   -webkit-transition: background-color 1s;
+   -ms-transition: background-color 1s;
+}
+  .green:hover{
+background:#2980b9
+}
+.container {
+    padding: 10px
+}
+lg {
+    font-size: 36px
+}
+hd {
+    font-size: 28px
+}
+ct {
+    font-size: 14px
+}
+.text {
+    margin: 10px;
+    font-size: 24px
+}
+  .content-wrapper{
+	padding-top:25px;
+	padding-bottom:25px;
+	background:url('http://subtlepatterns2015.subtlepatterns.netdna-cdn.com/patterns/congruent_pentagon.png');
+}
+  .content-wrapper-content{
+	padding:20px;
+	margin-left:7%;
+	margin-right:7%;
+	width:86%;
+	background:white;
+    transition: background-color 1s;
+   -moz-transition: background-color 1s;
+   -webkit-transition: background-color 1s;
+   -ms-transition: background-color 1s;
+	}
+.link-on-blue{
+    color:#f39c12
+}
+.link-on-blue:hover{
+    color:#e67e22
+}
+.fonts-head{
+    font-family:Roboto
+}
