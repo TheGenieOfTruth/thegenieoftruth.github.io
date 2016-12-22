@@ -1,5 +1,7 @@
 /*Main CSS flavour to give to all documents*/
 @import url('https://fonts.googleapis.com/css?family=Roboto:300');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://bootswatch.com/flatly/bootstrap.min.css');
 /*5px = 0.2vw
 3,0.1
 */
@@ -21,4 +23,19 @@ pre{
     margin: 0 0 10px 3px;
     font-size: 13px;
     line-height: 1;
+}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background: linear-gradient(90deg,#f0f0f0,#eee);
+  text-align: center;
+}
+.black{
+    color:black
+}
+.spaced{
+    margin:0 10px;
 }
