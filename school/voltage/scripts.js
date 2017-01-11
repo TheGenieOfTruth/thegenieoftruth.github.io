@@ -30,8 +30,8 @@ var words = [
 	["Ammeter", "The tool used to measure the amount of a<b></b>mps in a c<b></b>ircuit."],
 	["Electricity", "Moving e<b></b>lectrons in a c<b></b>ircuit."],
 	["Circuit", "A pathway in which e<b></b>lectrons can travel."],
-	["Electron", "A subatomic particle in which is negatively charged."],
-	["Electrons", "Subatomic particles in which are negatively charged"]
+	["Electrons", "Subatomic particles in which are negatively charged"],
+	["Electron", "A subatomic particle in which is negatively charged."]
 ]
 paragraph = paragraph.split(" ")
 words.forEach(function(value, index) {
