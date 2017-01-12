@@ -25,7 +25,7 @@ var words = [
 	["Circuit", "A pathway in which e<b></b>lectrons can travel."],
 	["Electricity", "Moving e<b></b>lectrons in a c<b></b>ircuit."],
 	["Electrons", "Subatomic particles in which are negatively charged"],
-	["Electron", "A subatomic particle in which is negatively charged."]
+	["Electron", "A subatomic particle in which is negatively charged."],
 	["Ohms", "The unit of electrical r<b></b>esistance, expressing the r<b></b>esistance in a c<b></b>ircuit."],
 	["Resistance", "An electrical unit that measures how something reduces e<b></b>lectric current."],
 	["Volts", "A unit that measures how strong the force moving the e<b></b>lectrons is."],
