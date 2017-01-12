@@ -1,5 +1,5 @@
 var paragraph = `
-  <p>Voltage, and its friends amperage and resistance are quite the interesting units of measurement. I would think that these are magical, but truly there is quite a bit of science behind it. So first and foremost... </p><br>
+  <p>Voltage, amperage, and resistance; I would think that these are magical, but truly there is quite a bit of science behind it. So first and foremost... </p><br>
   <h3>V<b></b>oltage</h3>
   <p>Voltage is the difference between the electrons at the start of a circuit and the end of the circuit. Voltage is measured in volts with a voltometer. How creative.</p>
   <p>Voltage can increase amperage, as it forces the electrons through more swiftly. It can be thought of as a push that moves the electrons through a circuit. What exactly is amperage?</p><br>
@@ -9,29 +9,29 @@ var paragraph = `
   <h3>R<b></b>esistance</h3>
   <p>Resistance is something that tries to stop or slow down electrons. This decreases current, but sadly is not measured in a resistometer. It is measured in ohms, with an ohmeter. You can also use this cool little Ω symbol as well.</p>
   <br>
-  <h3>So I guess it isn't magic</h3>
-  <p>But its still pretty cool stuff.</p>
+  <p>So maybe it isn't magical, but its still pretty cool stuff.</p>
   <br>
+  <h3>Vocabulary</h3>
   <br>
   <hr>
 `
 var words = [
 	["Amperage", "The strength of an e<b></b>lectric current in a<b></b>mperes."],
+	["Ammeter", "The tool used to measure the amount of a<b></b>mps in a c<b></b>ircuit."],
 	["Amperes", "A unit of e<b></b>lectric current."],
 	["Ampere", "A unit of e<b></b>lectric current."],
 	["Amps", "Short for a<b></b>mperes, a unit of e<b></b>lectric current."],
 	["Amp", "Short for a<b></b>mpere, a unit of e<b></b>lectric current."],
+	["Circuit", "A pathway in which e<b></b>lectrons can travel."],
+	["Electricity", "Moving e<b></b>lectrons in a c<b></b>ircuit."],
+	["Electrons", "Subatomic particles in which are negatively charged"],
+	["Electron", "A subatomic particle in which is negatively charged."]
 	["Ohms", "The unit of electrical r<b></b>esistance, expressing the r<b></b>esistance in a c<b></b>ircuit."],
 	["Resistance", "An electrical unit that measures how something reduces e<b></b>lectric current."],
-	["Ω", "A symbol for o<b></b>hms, a unit of electrical r<b></b>esistance."],
 	["Volts", "A unit that measures how strong the force moving the e<b></b>lectrons is."],
 	["Voltage", "A difference of electrical potential with the system."],
 	["Voltometer", "The tool used to measure the amount of v<b></b>olts in a c<b></b>ircuit."],
-	["Ammeter", "The tool used to measure the amount of a<b></b>mps in a c<b></b>ircuit."],
-	["Electricity", "Moving e<b></b>lectrons in a c<b></b>ircuit."],
-	["Circuit", "A pathway in which e<b></b>lectrons can travel."],
-	["Electrons", "Subatomic particles in which are negatively charged"],
-	["Electron", "A subatomic particle in which is negatively charged."]
+	["Ω", "A symbol for o<b></b>hms, a unit of electrical r<b></b>esistance."],
 ]
 paragraph = paragraph.split(" ")
 words.forEach(function(value, index) {
@@ -46,3 +46,9 @@ words.forEach(function(value, index) {
 console.log(paragraph)
 $("#stuff").html(paragraph.join(" "))
 $("sp").tooltip()
+var diction = "";
+words.forEach(function(val){
+	diction+= "<h3>"+val[0]+"</h3>"
+	diction+= "<p>"+val[1]+"</p>"
+})
+diction+="<br>"
