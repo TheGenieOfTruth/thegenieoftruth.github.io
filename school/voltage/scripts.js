@@ -44,7 +44,7 @@ words.forEach(function(value, index) {
 	});
 });
 console.log(paragraph)
-$("#stuff").html(paragraph.join(" "))
+$("#stuff").append(paragraph.join(" "))
 $("sp").tooltip()
 var diction = "";
 words.forEach(function(val){
@@ -52,3 +52,4 @@ words.forEach(function(val){
 	diction+= "<p>"+val[1]+"</p>"
 });
 diction+="<br>"
+$("#stuff").append(diction)
