@@ -48,7 +48,7 @@ $("sp").tooltip()
 var diction = "";
 words.forEach(function(val){
 	diction+= "<h5>"+val[0]+"</h5>"
-	diction+= "<p>"+val[1]+"</p>"
+	diction+= "<p>"+val[1]+"</p><br>"
 });
 diction+="<br><hr>"
 $("#stuff").append(diction)
