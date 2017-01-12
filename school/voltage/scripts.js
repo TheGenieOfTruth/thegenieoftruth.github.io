@@ -13,7 +13,6 @@ var paragraph = `
   <br>
   <h3>Vocabulary</h3>
   <br>
-  <hr>
 `
 var words = [
 	["Amperage", "The strength of an e<b></b>lectric current in a<b></b>mperes."],
@@ -51,5 +50,5 @@ words.forEach(function(val){
 	diction+= "<h5>"+val[0]+"</h5>"
 	diction+= "<p>"+val[1]+"</p>"
 });
-diction+="<br>"
+diction+="<br><hr>"
 $("#stuff").append(diction)
