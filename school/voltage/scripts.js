@@ -48,8 +48,8 @@ $("#stuff").append(paragraph.join(" "))
 $("sp").tooltip()
 var diction = "";
 words.forEach(function(val){
-	diction+= "<h3>"+val[0]+"</h3>"
-	diction+= "<p>"+val[1]+"</p>"
+	diction+= "<h5>"+val[0]+"</h5><br>"
+	diction+= "<p>"+val[1]+"</p><br><br>"
 });
 diction+="<br>"
 $("#stuff").append(diction)
