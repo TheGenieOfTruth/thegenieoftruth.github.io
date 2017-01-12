@@ -31,7 +31,7 @@ var words = [
 	["Volts", "A unit that measures how strong the force moving the e<b></b>lectrons is."],
 	["Voltage", "A difference of electrical potential with the system."],
 	["Voltometer", "The tool used to measure the amount of v<b></b>olts in a c<b></b>ircuit."],
-	["Ω", "A symbol for o<b></b>hms, a unit of electrical r<b></b>esistance."],
+	["Ω", "A symbol for o<b></b>hms, a unit of electrical r<b></b>esistance."]
 ]
 paragraph = paragraph.split(" ")
 words.forEach(function(value, index) {
@@ -41,8 +41,8 @@ words.forEach(function(value, index) {
 		return val.replace(re, function(match) {
 			return "<sp class = 'active' data-html = 'true' title = '" + "<h4>" + value[0].substring(0, 1) + "<b></b>" + value[0].substring(1, value[0].length) + "</h4>" + words[index][1] + "' style = 'border-bottom: 1px dotted #3498db;cursor:pointer'><x>" + match.substring(0, 1) + "<b></b>" + match.substring(1, match.length) + "</x></sp>"
 		});
-	})
-})
+	});
+});
 console.log(paragraph)
 $("#stuff").html(paragraph.join(" "))
 $("sp").tooltip()
@@ -50,5 +50,5 @@ var diction = "";
 words.forEach(function(val){
 	diction+= "<h3>"+val[0]+"</h3>"
 	diction+= "<p>"+val[1]+"</p>"
-})
+});
 diction+="<br>"
