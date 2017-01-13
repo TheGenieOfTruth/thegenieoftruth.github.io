@@ -54,6 +54,10 @@ sp{
 .margin-side{
   margin:20px 40px;
 }
+.tiny-light{
+  color:#aaa;
+  font-size:16px;
+}
 .tooltip-inner{
   font-size:16px;
 }
