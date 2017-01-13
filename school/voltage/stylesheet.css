@@ -36,10 +36,6 @@ p,h1,h2,h3,h4,h5,h6{
 p{
   font-size:22px;
 }
-sp{
-  font-family:Montserrat;
-  font-size:88.65%;
-}
 .small-light{
   font-size:30px;
   color:#888;
@@ -62,5 +58,5 @@ sp{
   font-size:16px;
 }
 .vocab{
-  cursor:pointer
+  border-bottom:1px dashed   #bdc3c7;cursor:pointer
 }
