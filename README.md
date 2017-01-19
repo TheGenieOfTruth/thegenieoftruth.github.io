@@ -8,9 +8,9 @@ O: Ongoing development (An area in which will never be completed, as has an eter
 A: Mostly abandoned (This is never going to finish, ever)
 Sitemap:
     /htmlproject (CI)
+    /random (O)
+        /go
     /resources (O)
-        /5minutes (A)
-            /go (C)
         /tools (A)
     /tools (D)
     /school (D)
