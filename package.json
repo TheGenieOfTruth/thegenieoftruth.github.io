@@ -1,0 +1,23 @@
+{
+  "name": "grunt-dev",
+  "version": "1.0.0",
+  "description": "This is nice...",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Fabio",
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-htmlmin": "^2.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-cssbeautifier": "^0.1.2",
+    "grunt-includes": "^1.0.0",
+    "grunt-jsbeautifier": "^0.2.13",
+    "grunt-sass": "^2.0.0"
+  }
+}

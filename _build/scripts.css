@@ -1,0 +1,101 @@
+/*Main CSS flavour to give to all documents*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
+@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+@import url('https://bootswatch.com/flatly/bootstrap.min.css');
+
+@media (max-width:319px){
+    .normal, body{font-size:16px !important}
+    .large{font-size:18px}
+    .huge{font-size:34px}
+    .massive{font-size:54px}
+}
+@media (min-width:320px)  {
+    .normal, body{font-size:16px !important}
+    .large{font-size:18px}
+    .huge{font-size:30px}
+    .massive{font-size:54px}
+}
+@media (min-width:480px)  {
+    .normal, body{font-size:18px !important}
+    .large{font-size:22px}
+    .huge{font-size:34px}
+    .massive{font-size:66px}
+}
+@media (min-width:600px)  {
+    .normal, body{font-size:16px !important}
+    .large{font-size:20px}
+    .huge{font-size:32px}
+    .massive{font-size:66px}
+}
+@media (min-width:801px)  {
+    .normal, body{font-size:17px !important}
+    .large{font-size:22px}
+    .huge{font-size:33px}
+    .massive{font-size:69px}
+}
+@media (min-width:1025px) {
+    .normal, body{font-size:18px !important}
+    .large{font-size:25px}
+    .huge{font-size:34px}
+    .massive{font-size:72px}
+}
+@media (min-width:1281px) {
+    .normal, body{font-size:20px !important}
+    .large{font-size:26px}
+    .huge{font-size:36px}
+    .massive{font-size:72px}
+}
+
+
+/*5px = 0.2vw
+3,0.1
+*/
+.content{
+  margin:10px;
+  padding:10px;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family:Roboto !important;
+  margin-top:0.1vw !important;
+  margin-bottom:0.1vw !important;
+  /*I used !important, I am now ashamed D:*/
+}
+
+pre{
+    display: block;
+    font-family: monospace;
+    padding: 5px;
+    margin: 0 0 10px 3px;
+    font-size: 13px;
+    line-height: 1;
+}
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background: linear-gradient(90deg,#f0f0f0,#eee);
+  text-align: center;
+}
+.black{
+    color:black
+}
+.spaced{
+    margin:0 10px;
+}
+#head-gradient{
+    width:100%;
+    background:linear-gradient(135deg,#2c3e50,#34495e);
+    color:#eee;
+    flex-wrap:wrap;
+
+
+}
+#head-gradient::after {
+  content: '';
+  width: 100%;
+}
+#head-gradient:nth-child(n+1) { /* or `:nth-child(n + 4)` */
+  order: 1;
+}
