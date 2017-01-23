@@ -1,7 +1,7 @@
 var paragraph = `
   <p>Voltage, amperage, and resistance; I would think that these are magical, but truly there is quite a bit of science behind it. So first and foremost... </p><br>
   <h3>V<b></b>oltage</h3>
-  <p>Voltage is the difference between the electrons at the start of a circuit and the end of the circuit. Voltage is measured in volts with a voltometer. How creative.</p>
+  <p>Voltage is the difference between the electrons at the start of a circuit and the end of the circuit. Voltage is measured in volts with a voltmeter. How creative.</p>
   <p>Voltage can increase amperage, as it forces the electrons through more swiftly. It can be thought of as a push that moves the electrons through a circuit. What exactly is amperage?</p><br>
   <h3>A<b></b>mperage</h3>
   <p>Amperage is a measure of electric current, which is measured with an ammeter. The higher the amperage, well, the higher speed of the electrons. The scientists are especially creative when they name the units for amperage "amperes", or amps.</p>
@@ -29,7 +29,7 @@ var words = [
 	["Resistance", "An electrical unit that measures how something reduces e<b></b>lectric current."],
 	["Volts", "A unit that measures how strong the force moving the e<b></b>lectrons is."],
 	["Voltage", "A difference of electrical potential with the system."],
-	["Voltometer", "The tool used to measure the amount of v<b></b>olts in a c<b></b>ircuit."],
+	["voltmeter", "The tool used to measure the amount of v<b></b>olts in a c<b></b>ircuit."],
 	["Ω", "A symbol for o<b></b>hms, a unit of electrical r<b></b>esistance."]
 ]
 paragraph = paragraph.split(" ")
