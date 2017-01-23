@@ -99,13 +99,13 @@ module.exports = function(grunt) {
 				src: grunt.file.readJSON(proj + "_source/manifest.json")["css"].map(function(val) {
 					return proj + "_source/css/" + val
 				}),
-				dest: proj + "_build/scripts.css"
+				dest: proj + "_build/stylesheet.css"
 			});
 			grunt.config.set('concat.' + dash(proj) + "c-sass", {
 				src: grunt.file.readJSON(proj + "_source/manifest.json")["sass"].map(function(val) {
 					return proj + "_source/sass/" + val
 				}),
-				dest: proj + "_build/scripts.scss"
+				dest: proj + "_build/sass.scss"
 			});
 			grunt.config.set('includes.' + dash(proj) + "c", {
 				src: [proj + '_source/index.html'], // Source files
@@ -114,13 +114,13 @@ module.exports = function(grunt) {
 				cwd: '.'
 			});
 			grunt.config.set('uglify.' + dash(proj) + "c", {
-				files: obj(proj+"scripts.js", [proj+'_build/scripts.js'])
+				files: obj(proj+"_dist/scripts.js", [proj+'_build/scripts.js'])
 			});
 			grunt.config.set('cssmin.' + dash(proj) + "c-css", {
-				files: obj(proj+'stylesheet.css', [proj+'_build/stlyesheet.css'])
+				files: obj(proj+'_dist/stylesheet.css', [proj+'_build/stylesheet.css'])
 			});
 			grunt.config.set('cssmin.' + dash(proj) + "c-sass", {
-				files: obj(proj+'sass.css', [proj+'_build/sass.css'])
+				files: obj(proj+'_dist/sass.css', [proj+'_build/sass.css'])
 			});
 			grunt.config.set('htmlmin.' + dash(proj) + "c", {
 				options: { // Target options
@@ -137,6 +137,7 @@ module.exports = function(grunt) {
 			grunt.task.run('concat:' + dash(proj) + "c-sass");
 			grunt.task.run('sass:' + dash(proj) + "c");
 			grunt.task.run('includes:' + dash(proj) + "c");
+			grunt.task.run('uglify:' + dash(proj) + "c");
 			grunt.task.run('cssmin:' + dash(proj) + "c-css")
 			grunt.task.run('cssmin:' + dash(proj) + "c-sass")
 			grunt.task.run('htmlmin:' + dash(proj) + "c")
