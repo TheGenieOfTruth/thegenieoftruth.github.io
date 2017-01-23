@@ -78,73 +78,70 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-jsbeautifier");
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.registerTask('ba', 'This hurt, but I think it might work?', function() {
-    var projects = [''];
+		var projects = ['', '_sample/'];
+		projects.forEach(function(proj) {
+			function dash(x) {
+				return x.replace("/", "-").replace("_", "-")
+			}
 
-    projects.forEach(function(proj){
-		grunt.config.set('concat.'+proj+"c-js", {
-			src: grunt.file.readJSON(proj+"_source/manifest.json")["js"].map(function(val){
-				return proj+"_source/js/"+val
-			}),
-    		dest: proj+"_build/scripts.js"
-		});
-		grunt.config.set('concat.'+proj+"c-css", {
-    		src: grunt.file.readJSON(proj+"_source/manifest.json")["css"].map(function(val){
-					return proj+"_source/css/"+val
+			function obj(key, val) {
+				var x = new Object()
+				x[key] = val
+				return x
+			}
+			grunt.config.set('concat.' + dash(proj) + "c-js", {
+				src: grunt.file.readJSON(proj + "_source/manifest.json")["js"].map(function(val) {
+					return proj + "_source/js/" + val
 				}),
-    		dest: proj+"_build/scripts.css"
-		});
-		grunt.config.set('concat.'+proj+"c-sass", {
-			src: grunt.file.readJSON(proj+"_source/manifest.json")["sass"].map(function(val){
-				return proj+"_source/sass/"+val
-			}),
-    		dest: proj+"_build/scripts.scss"
-		});
-		grunt.config.set('includes.'+proj+"c", {
-			src: [proj+'_source/index.html'], // Source files
-			dest: proj+'_build/index.html', // Destination directory
-			flatten: true,
-			cwd: '.'
-		});
-	    	grunt.config.set('uglify.'+proj+"c", {
-			files: {
-				'scripts.js': ['_build/scripts.js']
-			}
-		});
-	    	grunt.config.set('cssmin.'+proj+"c-css", {
-			files: {
-				'stylesheet.css': ['_build/stlyesheet.css']
-			}
-		});
-	    	grunt.config.set('cssmin.'+proj+"c-sass", {
-			files: {
-				'sass.css': ['_build/sass.css']
-			}
-		});
-	    	grunt.config.set('htmlmin.'+proj+"c",{
+				dest: proj + "_build/scripts.js"
+			});
+			grunt.config.set('concat.' + dash(proj) + "c-css", {
+				src: grunt.file.readJSON(proj + "_source/manifest.json")["css"].map(function(val) {
+					return proj + "_source/css/" + val
+				}),
+				dest: proj + "_build/scripts.css"
+			});
+			grunt.config.set('concat.' + dash(proj) + "c-sass", {
+				src: grunt.file.readJSON(proj + "_source/manifest.json")["sass"].map(function(val) {
+					return proj + "_source/sass/" + val
+				}),
+				dest: proj + "_build/scripts.scss"
+			});
+			grunt.config.set('includes.' + dash(proj) + "c", {
+				src: [proj + '_source/index.html'], // Source files
+				dest: proj + '_build/index.html', // Destination directory
+				flatten: true,
+				cwd: '.'
+			});
+			grunt.config.set('uglify.' + dash(proj) + "c", {
+				files: obj(proj+"scripts.js", [proj+'_build/scripts.js'])
+			});
+			grunt.config.set('cssmin.' + dash(proj) + "c-css", {
+				files: obj(proj+'stylesheet.css', [proj+'_build/stlyesheet.css'])
+			});
+			grunt.config.set('cssmin.' + dash(proj) + "c-sass", {
+				files: obj(proj+'sass.css', [proj+'_build/sass.css'])
+			});
+			grunt.config.set('htmlmin.' + dash(proj) + "c", {
 				options: { // Target options
 					removeComments: true,
 					collapseWhitespace: true
 				},
-				files: { // Dictionary of files
-					'index.html': '_build/index.html' // 'destination': 'source'
-				}
+				files: obj(proj+"index.html", proj+'_build/index.html')
 			})
-		grunt.config.set('sass'+proj+"c",{
-			files: {
-					'_build/sass.css': '_source/sass.scss'
-				}
-		})
-		grunt.task.run('concat:'+proj+"c-js");
-		grunt.task.run('concat:'+proj+"c-css");
-		grunt.task.run('concat:'+proj+"c-sass");
-	    grunt.task.run('task:'+proj+"c")
-		grunt.task.run('sass:'+proj+"c")
-		grunt.task.run('includes:'+proj+"c");
-	    grunt.task.run('cssmin:'+proj+"c-css")
-	    grunt.task.run('cssmin:'+proj+"c-sass")
-		grunt.task.run('htmlmin:'+proj+"c")
-    });
-});
+			grunt.config.set('sass.' + dash(proj) + "c", {
+				files: obj(proj+'_build/sass.css', proj+'_source/sass.scss')
+			})
+			grunt.task.run('concat:' + dash(proj) + "c-js");
+			grunt.task.run('concat:' + dash(proj) + "c-css");
+			grunt.task.run('concat:' + dash(proj) + "c-sass");
+			grunt.task.run('sass:' + dash(proj) + "c");
+			grunt.task.run('includes:' + dash(proj) + "c");
+			grunt.task.run('cssmin:' + dash(proj) + "c-css")
+			grunt.task.run('cssmin:' + dash(proj) + "c-sass")
+			grunt.task.run('htmlmin:' + dash(proj) + "c")
+		});
+	});
 	grunt.registerTask('build', ['concat', 'includes', 'sass', 'uglify', 'cssmin', 'htmlmin']);
 	grunt.registerTask('default', ['concat', 'includes', 'sass', 'uglify', 'cssmin', 'htmlmin']);
 };
