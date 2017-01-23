@@ -82,15 +82,21 @@ module.exports = function(grunt) {
 
     projects.forEach(function(proj){
 		grunt.config.set('concat.'+proj+"c-js", {
-    		src: [proj+'_source/**/*.js'],
+			src: grunt.file.readJSON(proj+"_source/manifest.json")["js"].map(function(val){
+				return proj+"_source/js/"+val
+			}),
     		dest: proj+"_build/scripts.js"
 		});
 		grunt.config.set('concat.'+proj+"c-css", {
-    		src: [proj+'_source/**/*.css'],
+    		src: grunt.file.readJSON(proj+"_source/manifest.json")["css"].map(function(val){
+					return proj+"_source/css/"+val
+				}),
     		dest: proj+"_build/scripts.css"
 		});
 		grunt.config.set('concat.'+proj+"c-sass", {
-    		src: [proj+'_source/**/*.scss'],
+			src: grunt.file.readJSON(proj+"_source/manifest.json")["sass"].map(function(val){
+				return proj+"_source/sass/"+val
+			}),
     		dest: proj+"_build/scripts.scss"
 		});
 		grunt.config.set('includes.'+proj+"c", {

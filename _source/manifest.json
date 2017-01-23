@@ -1,0 +1,6 @@
+{
+  "title":"Home",
+  "css":["~imports.css","dynamicsize.css","main.css"],
+  "js":["main.js"],
+  "sass":[]
+}
