@@ -1,73 +1,6 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		concat: {
-			js: {
-				src: ['_source/**/*.js'],
-				dest: '_build/scripts.js'
-			},
-			css: {
-				src: ['_source/**/*.css'],
-				dest: '_build/stylesheet.css'
-			},
-			sass: {
-				src: ['_source/**/*.scss'],
-				dest: '_build/sass.scss'
-			}
-		},
-		includes: {
-			files: {
-				src: ['_source/index.html'], // Source files
-				dest: '_build/index.html', // Destination directory
-				flatten: true,
-				cwd: '.'
-			}
-		},
-		uglify: {
-			target: {
-				files: {
-					'scripts.js': ['_build/scripts.js']
-				}
-			}
-		},
-		cssmin: {
-			options: {
-				shorthandCompacting: false,
-				roundingPrecision: -1,
-				processImport: false
-			},
-			css: {
-				files: {
-					'stylesheet.css': ['_build/stylesheet.css'],
-				}
-			},
-			sass: {
-				files: {
-					'sass.css': ['_build/sass.css'],
-				}
-			}
-		},
-		htmlmin: { // Task
-			dist: { // Target
-				options: { // Target options
-					removeComments: true,
-					collapseWhitespace: true
-				},
-				files: { // Dictionary of files
-					'index.html': '_build/index.html' // 'destination': 'source'
-				}
-			}
-		},
-		sass: {
-			options: {
-				sourceMap: false
-			},
-			dist: {
-				files: {
-					'_build/sass.css': '_source/sass.scss'
-				}
-			}
-		}
 	});
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-includes');
@@ -89,60 +22,48 @@ module.exports = function(grunt) {
 				x[key] = val
 				return x
 			}
-			grunt.config.set('concat.' + dash(proj) + "c-js", {
-				src: grunt.file.readJSON(proj + "_source/manifest.json")["js"].map(function(val) {
-					return proj + "_source/js/" + val
-				}),
-				dest: proj + "_build/scripts.js"
-			});
-			grunt.config.set('concat.' + dash(proj) + "c-css", {
-				src: grunt.file.readJSON(proj + "_source/manifest.json")["css"].map(function(val) {
-					return proj + "_source/css/" + val
-				}),
-				dest: proj + "_build/stylesheet.css"
-			});
-			grunt.config.set('concat.' + dash(proj) + "c-sass", {
-				src: grunt.file.readJSON(proj + "_source/manifest.json")["sass"].map(function(val) {
-					return proj + "_source/sass/" + val
-				}),
-				dest: proj + "_build/sass.scss"
-			});
 			grunt.config.set('includes.' + dash(proj) + "c", {
 				src: [proj + '_source/index.html'], // Source files
-				dest: proj + '_build/index.html', // Destination directory
+				dest: proj + 'index.html', // Destination directory
 				flatten: true,
 				cwd: '.'
 			});
 			grunt.config.set('uglify.' + dash(proj) + "c", {
-				files: obj(proj+"_dist/scripts.js", [proj+'_build/scripts.js'])
+				files: obj(proj+"_release/scripts.js", [proj+'_build/scripts.js'])
 			});
 			grunt.config.set('cssmin.' + dash(proj) + "c-css", {
-				files: obj(proj+'_dist/stylesheet.css', [proj+'_build/stylesheet.css'])
-			});
-			grunt.config.set('cssmin.' + dash(proj) + "c-sass", {
-				files: obj(proj+'_dist/sass.css', [proj+'_build/sass.css'])
-			});
+  target: {
+    files: [{
+      expand: true,
+      cwd: proj,
+      src: [proj+'_source/**/*.css'],
+      dest: proj+'_release',
+      ext: '.css'
+    }]
+		//IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
+  }
+});
 			grunt.config.set('htmlmin.' + dash(proj) + "c", {
-				options: { // Target options
+				options: { // Target options (or Walmart options)
 					removeComments: true,
 					collapseWhitespace: true
 				},
-				files: obj(proj+"index.html", proj+'_build/index.html')
+				files: obj(proj+"_source/build/index.html", proj+'index.html')
 			})
 			grunt.config.set('sass.' + dash(proj) + "c", {
-				files: obj(proj+'_build/sass.css', proj+'_source/sass.scss')
+				files: obj(proj+'build/sass.css', proj+'_source/sass.scss')
 			})
-			grunt.task.run('concat:' + dash(proj) + "c-js");
-			grunt.task.run('concat:' + dash(proj) + "c-css");
-			grunt.task.run('concat:' + dash(proj) + "c-sass");
-			grunt.task.run('sass:' + dash(proj) + "c");
-			grunt.task.run('includes:' + dash(proj) + "c");
-			grunt.task.run('uglify:' + dash(proj) + "c");
+			/*
+			(such) Flow:
+			(many) build >>
+				includes > _source/build (build index)
+				sass > _source/build (compile sass, yey)
+			(so) compress >>
+				compress CSS > _source/ * * / * .css > _source/dist (In same directory makeup) (very) leave .js extension
+				compress JS > _source/ * * / * .js > _source/dist (In same directory makeup, again) leave .css extension
+				compress HTML > _source/build/index.html > root
+			*/
 			grunt.task.run('cssmin:' + dash(proj) + "c-css")
-			grunt.task.run('cssmin:' + dash(proj) + "c-sass")
-			grunt.task.run('htmlmin:' + dash(proj) + "c")
 		});
 	});
-	grunt.registerTask('build', ['concat', 'includes', 'sass', 'uglify', 'cssmin', 'htmlmin']);
-	grunt.registerTask('default', ['concat', 'includes', 'sass', 'uglify', 'cssmin', 'htmlmin']);
 };
