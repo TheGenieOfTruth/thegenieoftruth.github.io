@@ -76,8 +76,10 @@ module.exports = function(grunt) {
                 }
             })
             grunt.config.set('prettify.' + dash(proj) + "c", {
-                src: [proj+'source/**/*.html'],
-                dest: proj+'source/'
+                expand: true,
+                cwd: proj + "source",
+                src: ['**/*.html'],
+                dest: proj + 'source/'
             })
 
             /*
