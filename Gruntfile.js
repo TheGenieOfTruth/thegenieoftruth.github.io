@@ -1,6 +1,15 @@
 module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        watch: {
+            all: {
+                files: ['**/*'],
+                tasks: ["ba"],
+                options: {
+                    spawn: false
+                }
+            }
+        }
     });
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-includes');
@@ -11,7 +20,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-prettify');
-
+    grunt.loadNpmTasks('grunt-contrib-watch')
     grunt.registerTask('ba', 'This hurt, but I think it might work?', function() {
         var projects = ['sample/'];
         projects.forEach(function(proj) {
@@ -37,28 +46,32 @@ module.exports = function(grunt) {
                 src: ['**/*.js'],
                 dest: proj + 'release/',
                 ext: '.min.js'
-
                 //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
             });
             grunt.config.set('cssmin.' + dash(proj) + "c", {
                 extDot: true,
                 expand: true,
-                cwd: proj + "source/",
+                cwd: proj + "source",
                 src: ['**/*.css'],
                 dest: proj + 'release/',
                 ext: '.min.css'
-
                 //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
             });
+            grunt.config.set('cssmin.' + dash(proj) + "s", {
+                extDot: true,
+                expand: true,
+                cwd: proj + 'release/temp',
+                src: ['**/*.css'],
+                dest: proj + 'release/',
+                ext: '.min.css'
+                //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
+            })
             grunt.config.set('htmlmin.' + dash(proj) + "c", {
                 options: { // Target options (or Walmart options)
                     removeComments: true,
                     collapseWhitespace: true
                 },
                 files: obj(proj + "index.html", proj + 'release/index.html')
-            })
-            grunt.config.set('sass.' + dash(proj) + "c", {
-                files: obj(proj + 'build/sass.css', proj + 'source/sass.scss')
             })
             grunt.config.set('cssbeautifier.' + dash(proj) + "c", {
                 src: [proj + "source/**/*.css", "!" + proj + "source/**/*.min.css"],
@@ -81,7 +94,15 @@ module.exports = function(grunt) {
                 src: ['**/*.html'],
                 dest: proj + 'source/'
             })
-
+            grunt.config.set('sass.' + dash(proj) + "c", {
+                files: [{
+                    expand: true,
+                    cwd: proj + 'source',
+                    src: ['**/*.scss'],
+                    dest: proj + 'release/temp/',
+                    ext: '.css'
+                }]
+            })
             /*
             (such) Flow:
             (many) build >>
@@ -96,7 +117,9 @@ module.exports = function(grunt) {
             grunt.task.run("jsbeautifier:" + dash(proj) + "c")
             grunt.task.run("prettify:" + dash(proj) + "c")
             grunt.task.run("includes:" + dash(proj) + "c")
+            grunt.task.run("sass:" + dash(proj) + "c")
             grunt.task.run('cssmin:' + dash(proj) + "c")
+            grunt.task.run('cssmin:' + dash(proj) + "s")
             grunt.task.run('uglify:' + dash(proj) + "c")
             grunt.task.run('htmlmin:' + dash(proj) + "c")
         });
