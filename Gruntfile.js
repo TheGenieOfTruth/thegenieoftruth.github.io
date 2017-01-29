@@ -92,7 +92,9 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: proj + "source",
                 src: ['**/*.html'],
-                dest: proj + 'source/'
+                dest: proj + 'source/',
+                preserve_newlines: true,
+                max_preserve_newlines: 1,
             })
             grunt.config.set('sass.' + dash(proj) + "c", {
                 files: [{
