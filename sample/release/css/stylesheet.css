@@ -1,1 +1,1 @@
-body{margin:10px;padding:10px}
+body{margin:10px;padding:10px}.tiny{font-size:8px}.contact-flex{display:flex;justify-content:space-between;font-size:40px;width:50%;margin:0 auto}.full{width:100%}.contact-flex a{color:#444;transition:.1s color ease-in-out}.contact-flex a:hover{color:#222}@media only screen and (max-width :700px){.contact-flex{width:100%}}
