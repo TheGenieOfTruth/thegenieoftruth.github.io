@@ -23,7 +23,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy')
     grunt.registerTask('ba', 'This hurt, but I think it might work?', function() {
-        var projects = ['sample/', '404/'];
+        var projects = ['sample/', 'error-404/'];
         projects.forEach(function(proj) {
             function dash(x) {
                 return x.replace("/", "-").replace("_", "-")
