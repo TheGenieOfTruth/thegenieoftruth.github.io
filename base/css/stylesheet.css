@@ -72,7 +72,7 @@ h1,h2,h3,h4,h5,h6{
 /* Small Devices, Tablets */
 #head-gradient .display-1, #head-gradient .display-5{
     word-wrap: break-word;
-    width:100vw
+    width:100%
 }
 @media only screen and (max-width : 700px) {
    .contact-flex {
