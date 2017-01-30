@@ -1,0 +1,1 @@
+$(document).ready(function(){$("#cat-script").append("<img alt = 'Aww' src = 'assets/cat"+Math.round(6*Math.random()+1)+".jpg' class = 'img-fluid mx-auto d-block'/>")});
