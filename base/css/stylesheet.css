@@ -1,5 +1,9 @@
 body {
    color:#1b2631; /*Dark blue used instead of black, less intense*/
+   width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
 h1,h2,h3,h4,h5,h6{
     font-weight:400
@@ -47,7 +51,7 @@ h1,h2,h3,h4,h5,h6{
     background:linear-gradient(135deg,#e74c3c,#c0392b);
 }
 #head-gradient{
-    width:100vw;
+    width:100%;
     color:#f8f8f8;
     flex-wrap:wrap;
     top:0;right:0;bottom:0;left:0;
@@ -58,18 +62,18 @@ h1,h2,h3,h4,h5,h6{
 }
 #head-gradient::after {
   content: "";
-  width:100vw;
+  width:100%;
   height:10px;
   top:20px;
   display:block;
   position:relative;
   background:linear-gradient(0deg,rgba(0,0,0,0.1),rgba(0,0,0,0))
 }
-#head-gradient:nth-child(n+1) { /* or `:nth-child(n + 4)` */
-  order: 1;
-}
 /* Small Devices, Tablets */
-
+#head-gradient .display-1, #head-gradient .display-5{
+    word-wrap: break-word;
+    width:100vw
+}
 @media only screen and (max-width : 700px) {
    .contact-flex {
       width: 100%;
@@ -78,7 +82,7 @@ h1,h2,h3,h4,h5,h6{
    .margin-side-vw{
        margin: 0 5px;
    }
-   #head-gradient.display-1{
+   #head-gradient .display-1{
        font-size:64px
    }
    #head-gradient .display-5{
@@ -86,7 +90,7 @@ h1,h2,h3,h4,h5,h6{
    }
 }
 @media only screen and (max-width : 400px){
-    #head-gradient.display-1{
+    #head-gradient .display-1{
         font-size:50px
     }
     #head-gradient .display-5{
