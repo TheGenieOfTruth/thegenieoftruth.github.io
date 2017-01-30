@@ -20,9 +20,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-jsbeautifier");
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-prettify');
-    grunt.loadNpmTasks('grunt-contrib-watch')
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy')
     grunt.registerTask('ba', 'This hurt, but I think it might work?', function() {
-        var projects = ['sample/'];
+        var projects = ['sample/', '404/'];
         projects.forEach(function(proj) {
             function dash(x) {
                 return x.replace("/", "-").replace("_", "-")
@@ -33,6 +34,10 @@ module.exports = function(grunt) {
                 x[key] = val
                 return x
             }
+            grunt.config.set('copy.' + dash(proj) + "c", {
+                src: 'base/index.html',
+                dest: proj + 'source/index.html',
+            });
             grunt.config.set('includes.' + dash(proj) + "c", {
                 src: [proj + 'source/index.html'], // Source files
                 dest: proj + 'release/index.html', // Destination directory
@@ -115,6 +120,7 @@ module.exports = function(grunt) {
             	compress JS > source/ * * / * .js > source/dist (In same directory makeup, again) leave .css extension
             	compress HTML > source/build/index.html > root
             */
+            grunt.task.run("copy:" + dash(proj) + "c")
             grunt.task.run("cssbeautifier:" + dash(proj) + "c")
             grunt.task.run("jsbeautifier:" + dash(proj) + "c")
             grunt.task.run("prettify:" + dash(proj) + "c")

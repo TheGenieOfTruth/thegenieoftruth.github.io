@@ -41,8 +41,6 @@ pre{
     background:linear-gradient(135deg,#2c3e50,#34495e);
     color:#eee;
     flex-wrap:wrap;
-
-
 }
 #head-gradient::after {
   content: '';
