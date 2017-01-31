@@ -64,8 +64,24 @@ h1,h2,h3,h4,h5,h6{
 
 }
 .head-gradient-main{
-  background: linear-gradient(135deg, rgba(231, 76, 60, 0.6), rgba(192, 57, 43, 0.6)), url(http://allroundnews.com/wp-content/uploads/2012/02/seamless-wood-texture-free-40.jpg);
-
+     transition: background 0.5s;
+}
+.btn{
+    cursor:pointer
+}
+.bg-color{
+    background:#e74c3c;
+    transition: 0.5s all;
+}
+.bg-color:hover{
+    background:#c0392b
+}
+.text-color{
+    color:#e74c3c;
+    transition: 0.5s all;
+}
+.white{
+    color:white
 }
 #head-gradient{
     width:100%;
