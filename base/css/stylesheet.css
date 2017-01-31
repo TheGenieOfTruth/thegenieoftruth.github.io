@@ -1,9 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Lato|Roboto:300');
 body {
    color:#1b2631; /*Dark blue used instead of black, less intense*/
+   font-size:18px;
    width: 100%;
     height: 100%;
     margin: 0px;
     padding: 0px;
+    font-family:Lato;
+}
+.display-1,.display-2,.display-3,.display-4,.display-5,.display-6{
+    font-family:Roboto;
 }
 h1,h2,h3,h4,h5,h6{
     font-weight:400
@@ -49,6 +55,31 @@ h1,h2,h3,h4,h5,h6{
 }
 .head-gradient-red{
     background:linear-gradient(135deg,#e74c3c,#c0392b);
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+.head-gradient-rainbow{
+    background: linear-gradient(135deg, #e74c3c, #e67e22, #f1c40f, #2ecc71, #3498db, #9b59b6);
+background-size: 1200% 1200%;
+
+-webkit-animation: AnimationName 30s ease-in-out infinite;
+-moz-animation: AnimationName 30s ease-in-out infinite;
+animation: AnimationName 30s ease-in-out infinite;
+
+
 }
 #head-gradient{
     width:100%;
