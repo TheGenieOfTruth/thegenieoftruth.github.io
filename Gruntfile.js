@@ -23,10 +23,21 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-copy')
     grunt.registerTask('ba', 'This hurt, but I think it might work?', function() {
-        var projects = ['', 'sample/', 'error-404/'];
+        var projects = [
+            ['', {
+                "nocopy": true
+            }], 'sample/', 'error-404/'
+        ];
         projects.forEach(function(proj) {
             function dash(x) {
-                return x.replace("/", "-").replace("_", "-")
+                return thru(x).replace("/", "-").replace("_", "-")
+            }
+
+            function thru(x) {
+                if (typeof x !== "string") {
+                    return x[0]
+                }
+                return x
             }
 
             function obj(key, val) {
@@ -34,40 +45,48 @@ module.exports = function(grunt) {
                 x[key] = val
                 return x
             }
+
+            function prop(x, property, def) {
+                if (typeof x !== "string") {
+                    return x[1][property]
+                } else {
+                    return def
+                }
+            }
             grunt.config.set('copy.' + dash(proj) + "c", {
                 src: 'base/index.html',
-                dest: proj + 'source/index.html',
+                dest: thru(proj) + 'source/index.html',
             });
             grunt.config.set('includes.' + dash(proj) + "c", {
-                src: [proj + 'source/index.html'], // Source files
-                dest: proj + 'release/index.html', // Destination directory
+                src: [thru(proj) + 'source/index.html'], // Source files
+                dest: thru(proj) + 'release/index.html', // Destination directory
                 flatten: true,
                 cwd: '.'
             });
             grunt.config.set('uglify.' + dash(proj) + "c", {
                 extDot: true,
                 expand: true,
-                cwd: proj + "source/",
+                cwd: thru(proj) + "source/",
                 src: ['**/*.js'],
-                dest: proj + 'release/',
+                dest: thru(proj) + 'release/',
                 ext: '.min.js'
                 //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
             });
             grunt.config.set('cssmin.' + dash(proj) + "c", {
                 extDot: true,
                 expand: true,
-                cwd: proj + "source",
+                cwd: thru(proj) + "source",
                 src: ['**/*.css'],
-                dest: proj + 'release/',
+                dest: thru(proj) + 'release/',
                 ext: '.min.css'
                 //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
             });
             grunt.config.set('cssmin.' + dash(proj) + "s", {
                 extDot: true,
                 expand: true,
-                cwd: proj + 'release/temp',
+                cwd: thru(proj) + 'release/temp',
                 src: ['**/*.css'],
-                dest: proj + 'release/',
+                dest: thru(proj) + 'release/',
                 ext: '.min.css'
                 //IF DOLPHINS ARE SO SMART WHY DO THEY LIVE IN [P]IGLOOS!?
             })
@@ -76,10 +95,10 @@ module.exports = function(grunt) {
                     removeComments: true,
                     collapseWhitespace: true
                 },
-                files: obj(proj + "index.html", proj + 'release/index.html')
+                files: obj(thru(proj) + "index.html", thru(proj) + 'release/index.html')
             })
             grunt.config.set('cssbeautifier.' + dash(proj) + "c", {
-                src: [proj + "source/**/*.css", "!" + proj + "source/**/*.min.css"],
+                src: [thru(proj) + "source/**/*.css", "!" + thru(proj) + "source/**/*.min.css"],
                 options: {
                     indent: '   ',
                     openbrace: 'end-of-line',
@@ -87,7 +106,7 @@ module.exports = function(grunt) {
                 }
             })
             grunt.config.set('jsbeautifier.' + dash(proj) + "c", {
-                src: [proj + "source/**/*.js", "!" + proj + "source/**/*.min.js"],
+                src: [thru(proj) + "source/**/*.js", "!" + thru(proj) + "source/**/*.min.js"],
                 options: {
                     indentChar: "   ",
                     indentSize: 1
@@ -95,18 +114,18 @@ module.exports = function(grunt) {
             })
             grunt.config.set('prettify.' + dash(proj) + "c", {
                 expand: true,
-                cwd: proj + "source",
+                cwd: thru(proj) + "source",
                 src: ['**/*.html'],
-                dest: proj + 'source/',
+                dest: thru(proj) + 'source/',
                 preserve_newlines: true,
                 max_preserve_newlines: 1,
             })
             grunt.config.set('sass.' + dash(proj) + "c", {
                 files: [{
                     expand: true,
-                    cwd: proj + 'source',
+                    cwd: thru(proj) + 'source',
                     src: ['**/*.scss'],
-                    dest: proj + 'release/temp/',
+                    dest: thru(proj) + 'release/temp/',
                     ext: '.css'
                 }]
             })
@@ -120,7 +139,7 @@ module.exports = function(grunt) {
             	compress JS > source/ * * / * .js > source/dist (In same directory makeup, again) leave .css extension
             	compress HTML > source/build/index.html > root
             */
-            grunt.task.run("copy:" + dash(proj) + "c")
+            if (!prop(proj, "nocopy", false)) grunt.task.run("copy:" + dash(proj) + "c")
             grunt.task.run("cssbeautifier:" + dash(proj) + "c")
             grunt.task.run("jsbeautifier:" + dash(proj) + "c")
             grunt.task.run("prettify:" + dash(proj) + "c")

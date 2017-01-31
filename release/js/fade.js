@@ -1,0 +1,1 @@
+function fade(a,b){setTimeout(function(){$(".fade-"+a+"-"+b).fadeIn(1e3*a),console.log(".fade-"+a+"-"+b)},1e3*b)}$(document).ready(function(){for(i=0;i<10;i++)for(j=0;j<10;j++)$(".fade-"+i+"-"+j).fadeOut(0),fade(i,j)});
