@@ -1,17 +1,12 @@
 # TheGenieOfTruth.github.io
 This is a repo in where I slap together broken HTML files to make something that might resemble a website if you cross your eyes.
-```
-(Sitemap not actively maintained)
-CI: Complete, needs standard file link (Good meta tags, favicons, etc.)
-C: Complete (Done. No touchy)
-D: Under development (An open area in which edits will occasionally be added)
-O: Ongoing development (An area in which will never be completed, as has an eternal purpose)
-A: Mostly abandoned (This is never going to finish, ever)
-Sitemap:
-    /htmlproject (CI)
-    /random (O)
-        /go
-    /resources (O)
-    /school (D)
-        /voltage (CI)
-```
+
+THINGS LOOKIN' GOOD!
+TODO
+* Portfolio
+* Blog
+* Games
+* Jokes
+* Resources
+* Credits
+* Web Design - Learn (htmlproject.net, polish and finish)
