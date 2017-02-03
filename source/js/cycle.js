@@ -1,40 +1,10 @@
 var intensity = 0.8
 var things = [{
-        "name": "Portfolio",
-        "lore": "View my",
-        "colors": ["#34495e", "#2c3e50"],
-        "transparent": ["rgba(52,73,94,0.8)", "rgba(44,62,80,0.8)"],
-        "link": "portfolio"
-    }, {
-        "name": "Blog",
-        "lore": "Read the",
-        "colors": ["#e67e22", "#d35400"],
-        "transparent": ["rgba(230,126,34,0.8)", "rgba(211,84,0,0.8)"],
-        "link": "blog"
-    }, {
         "name": "Games",
         "lore": "Play some",
         "colors": ["#3498db", "#2980b9"],
-        "transparent": ["rgba(52,152,219,0.8)", "rgba(41,128,185,0.8)"],
+        "transparent": ["rgba(52, 152, 219,0.8)", "rgba(41, 128, 185,0.8)"],
         "link": "games"
-    }, {
-        "name": "Jokes",
-        "lore": "Laugh with some",
-        "colors": ["#f1c40f", "#f39c12"],
-        "transparent": ["rgba(241,196,15,0.8)", "rgba(243,156,18,0.8)"],
-        "link": "jokes"
-    }, {
-        "name": "Resources",
-        "lore": "Use the",
-        "colors": ["#1abc9c", "#16a085"],
-        "transparent": ["rgba(26,188,156,0.8)", "rgba(22,160,133,0.8)"],
-        "link": "resources"
-    }, {
-        "name": "Credits",
-        "lore": "View the",
-        "colors": ["#95a5a6", "#7f8c8d"],
-        "transparent": ["rgba(149,165,166,0.8)", "rgba(127,140,141,0.8)"],
-        "link": "credits"
     },
     {
         "name": "Web Design",
@@ -42,7 +12,36 @@ var things = [{
         "colors": ["#2ecc71", "#27ae60"],
         "transparent": ["rgba(46, 204, 113,0.8)", "rgba(39, 174, 96,0.8)"],
         "link": "htmlproject"
+    },
+    {
+        "name": "Jokes",
+        "lore": "Laugh with some",
+        "colors": ["#f1c40f", "#f39c12"],
+        "transparent": ["rgba(241,196,15,0.8)", "rgba(243,156,18,0.8)"],
+        "link": "jokes"
+    },
+    {
+        "name": "Blog",
+        "lore": "Read the",
+        "colors": ["#e67e22", "#d35400"],
+        "transparent": ["rgba(230,126,34,0.8)", "rgba(211,84,0,0.8)"],
+        "link": "blog"
+    },
+    {
+        "name": "Resources",
+        "lore": "Use the",
+        "colors": ["#1abc9c", "#16a085"],
+        "transparent": ["rgba(26,188,156,0.8)", "rgba(22,160,133,0.8)"],
+        "link": "resources"
+    },
+    {
+        "name": "Portfolio",
+        "lore": "View my",
+        "colors": ["#34495e", "#2c3e50"],
+        "transparent": ["rgba(52,73,94,0.8)", "rgba(44,62,80,0.8)"],
+        "link": "portfolio"
     }
+
 ]
 /*
 function h(hex) {
@@ -62,7 +61,7 @@ things.map(function(val) {
     return val;
 })
 */
-var inc = 0;
+var inc = -1;
 
 function cycle() {
     inc = (inc + 1) % things.length
@@ -88,5 +87,5 @@ $(document).ready(function() {
     setInterval(function() {
         cycle()
 
-    }, 10000)
+    }, 7500)
 })

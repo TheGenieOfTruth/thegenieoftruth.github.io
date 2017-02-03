@@ -61,7 +61,20 @@ h1,h2,h3,h4,h5,h6{
 }
 .head-gradient-darkblue{
     background: linear-gradient(135deg, #34495e,#2c3e50);
-
+}
+.head-gradient-blue{
+    background: linear-gradient(135deg, #3498db,#2980b9);
+}
+.inline-block{
+    display:inline-block;
+    float:left
+}
+.arcade-button{
+    background:#3498db;
+    color:#f8f8fe;
+}
+.arcade-button:hover{
+    background:#2980b9;
 }
 .head-gradient-main{
      transition: background 0.5s;
