@@ -1,5 +1,13 @@
 .testing {
   width: 71.42857%; }
 
+html, body {
+  padding: 0;
+  margin: 0; }
+
+html {
+  height: 100%; }
+
 body {
-  background: #c0ffee; }
+  background: linear-gradient(red, orange);
+  background-repeat: no-repeat; }
