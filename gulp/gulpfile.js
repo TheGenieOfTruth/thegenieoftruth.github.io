@@ -10,6 +10,12 @@ var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 var autoprefixer = require('gulp-autoprefixer');
+var jade = require('gulp-jade');
+gulp.task('jade', function() {
+    return gulp.src('app/*.jade')
+        .pipe(jade({ pretty: true })) // pip to jade plugin
+        .pipe(gulp.dest('app')); // tell gulp our output folder
+});
 gulp.task('browserSync', function() {
     browserSync.init({
         server: {
@@ -38,7 +44,7 @@ gulp.task('useref', function() {
         .pipe(gulpIf('*.js', uglify()))
         .pipe(gulpIf('*.css', autoprefixer({browsers:['last 2 versions']})))
         .pipe(gulpIf('*.css', cssnano()))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });
 gulp.task('images', function() {
     return gulp.src('app/images/**/*.+(png|jpg|gif|svg)')
@@ -58,7 +64,7 @@ gulp.task('clean', function() {
   });
 })
 gulp.task('build', function (callback) {
-  runSequence('clean:dist',
+  runSequence('jade',
     ['sass', 'useref', 'images', 'fonts'],
     callback
   )
