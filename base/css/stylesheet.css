@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato|Roboto:300');
+
 .hide{
     display:none
 }
@@ -10,9 +10,6 @@ body {
     margin: 0px;
     padding: 0px;
     font-family:Lato;
-}
-.display-1,.display-2,.display-3,.display-4,.display-5,.display-6{
-    font-family:Roboto;
 }
 h1,h2,h3,h4,h5,h6{
     font-weight:400
