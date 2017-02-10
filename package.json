@@ -10,6 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.7",
+    "colors": "^1.1.2",
     "del": "^2.2.2",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-cache": "^0.4.5",
@@ -23,6 +24,7 @@
     "gulp-jade": "^1.1.0",
     "gulp-pug": "^3.2.0",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.0.1",
     "gulp-useref": "^3.1.2",
     "run-sequence": "^1.2.2",
