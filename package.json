@@ -30,6 +30,7 @@
     "gulp-uglify": "^2.0.1",
     "gulp-useref": "^3.1.2",
     "run-sequence": "^1.2.2",
-    "useref": "^1.2.0"
+    "useref": "^1.2.0",
+    "yargs": "^6.6.0"
   }
 }
