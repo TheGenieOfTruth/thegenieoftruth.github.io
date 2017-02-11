@@ -12,6 +12,8 @@
     "browser-sync": "^2.18.7",
     "colors": "^1.1.2",
     "del": "^2.2.2",
+    "fs": "0.0.1-security",
+    "glob": "^7.1.1",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-cache": "^0.4.5",
     "gulp-coffee": "^2.3.3",

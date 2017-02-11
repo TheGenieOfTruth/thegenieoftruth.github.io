@@ -1,3 +1,4 @@
+var glob = require("glob")
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var useref = require('gulp-useref')
@@ -13,9 +14,21 @@ var autoprefixer = require('gulp-autoprefixer');
 var jade = require('gulp-jade');
 var coffee = require('gulp-coffee');
 var replace = require('gulp-replace');
+var fs = require('fs');
 var loc = ["gulp/","harmonicraft/"];
 var cwd = "";
-
+console.log(glob.sync("base/jade-partials/**/*.html"))
+var data = {}
+glob.sync("base/jade-partials/**/*.html").forEach(function(val){
+    var a = val.split("/")
+    a = a[a.length-1]
+    a = a.split(".")[0]
+    data[a] = read(val)
+})
+console.log(data)
+function read(path){
+    return fs.readFileSync(path, 'utf8')
+}
 function def(x,callback){
   cwd = x
   runSequence('jade','coffee','sass', 'useref', 'fonts','itr',callback);
@@ -27,7 +40,8 @@ gulp.task('coffee',function(){
 });
 gulp.task('jade', function() {
     return gulp.src(cwd + 'app/**/*.jade')
-        .pipe(jade({ pretty: true })) // pip to jade plugin
+        .pipe(jade({ pretty: true,
+        "data": data})) // pip to jade plugin
         .pipe(gulp.dest(cwd + 'app')); // tell gulp our output folder
 });
 gulp.task('browserSync', function() {
@@ -79,12 +93,19 @@ gulp.task('clean', function() {
     return cache.clearAll(cb);
   });
 });
+//Index to root
 gulp.task('itr',function(){
         return gulp.src(cwd+'dist/index.html')
         .pipe(replace('href="css/','href="dist/css/'))
         .pipe(replace('src="images/','src="dist/images/'))
         .pipe(replace('src="js/','src="dist/js/'))
         .pipe(gulp.dest(cwd));
+});
+//Sass partial compile
+gulp.task('spc',function(){
+    return gulp.src('base/jade-partials/**/*.jade')
+    .pipe(jade())
+    .pipe(gulp.dest("base/jade-partials"))
 })
 gulp.task('build', function (callback) {
   runSequence('jade','coffee',
@@ -92,7 +113,7 @@ gulp.task('build', function (callback) {
     callback
 );
 });
-gulp.task('default', function () {
+gulp.task('default', ['spc'], function () {
     var ct = 0
 function loop() {
     if (ct < loc.length) {
