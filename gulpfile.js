@@ -35,7 +35,7 @@ function def(x,callback){
 gulp.task('coffee',function(){
   return gulp.src(cwd + 'app/coffee/**/*.coffee')
     .pipe(coffee())
-    .pipe(gulp.dest(cwd + 'app/js'));
+    .pipe(gulp.dest(cwd + 'app/js'))
 });
 gulp.task('jade', function() {
     return gulp.src(cwd + 'app/**/*.jade')
@@ -66,11 +66,12 @@ gulp.task('watch', function(callback) {
         cwd = argv.a != undefined ? argv.a : cwd
         console.log(argv.a)
         console.log(cwd)
-        gulp.watch(cwd + 'app/coffee/**/*.coffee',['coffee'])
-        gulp.watch([cwd + 'app/**/*.jade'],['jade','itr','jpc']);
-        gulp.watch(cwd + 'app/**/*.scss', ['sass']);
-        gulp.watch(cwd + 'app/*.html');
-        gulp.watch(cwd + 'app/js/**/*.js');
+        gulp.watch(cwd + 'app/coffee/**/*.coffee',['coffee']); //reload via javascript change
+        gulp.watch([cwd + 'app/**/*.jade'],['jade','itr','jpc']); //reload via HTML change
+        gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
+        gulp.watch(cwd + 'app/*.html',browserSync.reload); //reload
+        gulp.watch(cwd + 'app/js/**/*.js',browserSync.reload); //reload
+        gulp.watch(cwd + 'app/js/**/*.css',browserSync.reload); //reload
     })
     // Other stoof
 });
@@ -102,9 +103,9 @@ gulp.task('clean', function() {
 //Index to root
 gulp.task('itr',function(){
         return gulp.src(cwd+'dist/index.html')
-        .pipe(replace('href="css/','href="dist/css/'))
-        .pipe(replace('src="images/','src="dist/images/'))
-        .pipe(replace('src="js/','src="dist/js/'))
+        .pipe(replace(/<head>((.|\n)*?)href="(css\/)((.|\n)*?)<\/head>/g,'<head>$1href="dist/$3$4</head>'))
+        .pipe(replace(/<head>((.|\n)*?)src="(images\/)((.|\n)*?)<\/head>/g,'<head>$1src="dist/$3$4</head>'))
+        .pipe(replace(/<head>((.|\n)*?)src="(js\/)((.|\n)*?)<\/head>/g,'<head>$1src="dist/$3$4</head>'))
         .pipe(gulp.dest(cwd));
 });
 //Jade partial compile
