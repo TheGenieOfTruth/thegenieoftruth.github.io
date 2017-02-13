@@ -38,9 +38,15 @@ gulp.task('coffee',function(){
     .pipe(gulp.dest(cwd + 'app/js'))
 });
 gulp.task('jade', function() {
+  var stuff = JSON.parse(JSON.stringify(data))
+  stuff.times = cwd.split("/").length
+  stuff.chunk = "";
+  for(i=0;i<stuff.times;i++){
+    stuff.chunk+="../"
+  }
     return gulp.src(cwd + 'app/**/*.jade')
         .pipe(jade({ pretty: true,
-        "data": data})) // pip to jade plugin
+        "data": stuff})) // pip to jade plugin
         .pipe(gulp.dest(cwd + 'app')); // tell gulp our output folder
 });
 gulp.task('browserSync', function() {
@@ -99,9 +105,9 @@ gulp.task('clean', function() {
 //Index to root
 gulp.task('itr',function(){
         return gulp.src(cwd+'dist/index.html')
-        .pipe(replace(/<head>((.|\n)*?)href="(css\/)((.|\n)*?)<\/head>/g,'<head>$1href="dist/$3$4</head>'))
-        .pipe(replace(/<head>((.|\n)*?)src="(images\/)((.|\n)*?)<\/head>/g,'<head>$1src="dist/$3$4</head>'))
-        .pipe(replace(/<head>((.|\n)*?)src="(js\/)((.|\n)*?)<\/head>/g,'<head>$1src="dist/$3$4</head>'))
+        .pipe(replace(/<link(.*)(href="css\/)(.*)>/g,'<link$1href="dist/css/$3>'))
+        .pipe(replace(/<img(.*)(src="images\/)(.*)\/>/g,'<img$1src="dist/images/$3/>'))
+        .pipe(replace(/<script>(.*)(src="js\/)(.*)<\/script>/g,'<script>$1src="dist/js/$3</script>'))
         .pipe(gulp.dest(cwd));
 });
 //Jade partial compile
