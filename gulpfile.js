@@ -55,23 +55,19 @@ gulp.task('sass', function() {
     return gulp.src(cwd + 'app/scss/**/*.scss')
         .pipe(sass()) // Using gulp-sass
         .pipe(gulp.dest(cwd + 'app/css'))
-        .pipe(browserSync.reload(
-            {
-                stream:true
-            }
-        ));
 });
 gulp.task('watch', function(callback) {
     runSequence('default','browserSync',function(){
-        cwd = argv.a != undefined ? argv.a : cwd
+        cwd = argv.a != undefined ? argv.a : ""
         console.log(argv.a)
         console.log(cwd)
         gulp.watch(cwd + 'app/coffee/**/*.coffee',['coffee']); //reload via javascript change
-        gulp.watch([cwd + 'app/**/*.jade'],['jade','itr','jpc']); //reload via HTML change
+        gulp.watch([cwd + 'app/*.jade'],['jade','itr']); //reload via HTML change
+        gulp.watch("base/jade-partials/**/*.jade",['jpc'])
         gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
-        gulp.watch(cwd + 'app/*.html',browserSync.reload); //reload
+        gulp.watch(cwd + 'app/*.html',["useref",browserSync.reload]); //reload
         gulp.watch(cwd + 'app/js/**/*.js',browserSync.reload); //reload
-        gulp.watch(cwd + 'app/js/**/*.css',browserSync.reload); //reload
+        gulp.watch(cwd + 'app/css/**/*.css',browserSync.reload); //reload
     })
     // Other stoof
 });
