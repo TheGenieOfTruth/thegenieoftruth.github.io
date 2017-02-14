@@ -20,23 +20,14 @@ var argv = require('yargs')
 	.argv;
 var loc = ["gulp/", "harmonicraft/"];
 var cwd = "";
-var data = {};
-glob.sync("base/jade-partials/**/*.html")
-	.forEach(function(val) {
-		var a = val.split("/");
-		a = a[a.length - 1];
-		a = a.split(".")[0];
-		data[a] = read(val);
-	});
-
-function read(path) {
-	return fs.readFileSync(path, 'utf8');
-}
+var htmlprettify = require('gulp-html-beautify');
+var jsprettify = require('gulp-jsbeautifier');
+var cssprettify = require('gulp-cssbeautify');
 
 function
 def(x, callback) {
 	cwd = x;
-		runSequence('clean:dist', 'images', 'jade', 'jpc', 'coffee', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js', callback);
+		runSequence('clean', 'images', 'jade', 'coffee', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js','beautify-css','beautify-js','beautify-html', callback);
 }
 gulp.task('coffee', function() {
 	return gulp.src(cwd + 'app/coffee/**/*.coffee')
@@ -45,17 +36,28 @@ gulp.task('coffee', function() {
 });
 gulp.task('jade', function() {
 	//locals.root, used for building via relative paths. NEVER USE IN FRONTEND OR YOU WILL DIE, CHILD
-	var stuff = JSON.parse(JSON.stringify(data));
-	stuff.times = cwd.split("/")
+	var data = {}
+	data.times = cwd.split("/")
 		.length;
-	stuff.root = "";
-	for (i = 0; i < stuff.times; i++) {
-		stuff.root += "../";
+	data.root = "";
+	for (i = 0; i < data.times; i++) {
+		data.root += "../";
 	}
+	data.a = data.root + "base/jade-partials/"
+	glob.sync("base/jade-partials/*.jade")
+		.forEach(function(val) {
+			var a = val.split("/");
+		a = a[a.length - 1];
+		a = a.split(".")[0];
+			data[a] = val
+		});
+
+	data.a = require("jade").renderFile
+	console.log(data)
 	return gulp.src(cwd + 'app/**/*.jade')
 		.pipe(jade({
-			pretty: true,
-			"data": stuff
+			"pretty": true,
+			"data": data
 		})) // pip to jade plugin
 		.pipe(gulp.dest(cwd + 'app')); // tell gulp our output folder
 });
@@ -107,14 +109,8 @@ gulp.task('fonts', function() {
 	return gulp.src(cwd + 'app/fonts/**/*')
 		.pipe(gulp.dest(cwd + 'dist/fonts'));
 });
-gulp.task('clean:dist', function() {
-	return del.sync(cwd + 'dist');
-});
 gulp.task('clean', function() {
-	return del.sync(cwd + 'dist')
-		.then(function(cb) {
-			return cache.clearAll(cb);
-		});
+	return del([cwd + 'dist/**/*']);
 });
 //Index to root
 gulp.task('itr', function() {
@@ -156,6 +152,21 @@ gulp.task('copy-css', function() {
 	return gulp.src(cwd + 'app/css/**/*.min.css')
 		.pipe(gulp.dest(cwd + 'dist/css'));
 })
+gulp.task('beautify-css', function(){
+	return gulp.src(cwd + 'app/css/**/*.css')
+		.pipe(cssprettify())
+		.pipe(gulp.dest(cwd + "app/css"))
+});
+gulp.task('beautify-js', function(){
+	return gulp.src(cwd + 'app/js/**/*.js')
+		.pipe(jsprettify())
+		.pipe(gulp.dest(cwd + "app/js"))
+});
+gulp.task('beautify-html', function(){
+	return gulp.src(cwd + 'app/**/*.html')
+		.pipe(htmlprettify())
+		.pipe(gulp.dest(cwd + "app"))
+});
 gulp.task('help', function() {
 	console.log("watch:")
 	console.log("-a <param> - set a custom directory to watch")
