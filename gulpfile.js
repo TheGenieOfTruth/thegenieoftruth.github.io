@@ -23,7 +23,7 @@ var cwd = "";
 var htmlprettify = require('gulp-html-beautify');
 var jsprettify = require('gulp-jsbeautifier');
 var cssprettify = require('gulp-cssbeautify');
-
+var jadeprettify = require('gulp-pug-beautify');
 function
 def(x, callback) {
 	cwd = x;
@@ -43,8 +43,8 @@ gulp.task('jade', function() {
 	for (i = 0; i < data.times; i++) {
 		data.root += "../";
 	}
-	data.a = data.root + "base/jade-partials/"
-	glob.sync("base/jade-partials/*.jade")
+	data.a = data.root + "base/jade/"
+	glob.sync("base/jade/*.jade")
 		.forEach(function(val) {
 			var a = val.split("/");
 		a = a[a.length - 1];
@@ -53,7 +53,6 @@ gulp.task('jade', function() {
 		});
 
 	data.a = require("jade").renderFile
-	console.log(data)
 	return gulp.src(cwd + 'app/**/*.jade')
 		.pipe(jade({
 			"pretty": true,
@@ -78,15 +77,13 @@ gulp.task('watch', function(callback) {
 	runSequence('default', 'browserSync', function() {
 			cwd = argv.a != undefined ? argv.a : ""
 			browserSync.reload()
-			console.log(argv.a)
-			console.log(cwd)
 			gulp.watch(cwd + 'app/coffee/**/*.coffee', ['coffee']); //reload via javascript change
 			gulp.watch(cwd + 'app/*.jade', ['jade']); //reload via HTML change
-			gulp.watch("base/jade-partials/**/*.jade", ['jpc'])
 			gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
 			gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
 			gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload
 			gulp.watch(cwd + 'app/css/**/*.css', browserSync.reload); //reload
+			gulp.watch("base/jade/*.jade",["jade"])
 		})
 		// Other stoof
 });
@@ -120,14 +117,14 @@ gulp.task('itr', function() {
 		.pipe(replace(/<script>(.*)(src="js\/)(.*)<\/script>/g, '<script>$1src="dist/js/$3</script>'))
 		.pipe(gulp.dest(cwd));
 });
-//Jade partial compile
-gulp.task('jpc', function() {
-	return gulp.src('base/jade-partials/**/*.jade')
-		.pipe(jade())
-		.pipe(gulp.dest("base/jade-partials"))
+//Jade template clean
+gulp.task('jtc',function(){
+	return gulp.src('base/jade/**/*.jade')
+		.pipe(jadeprettify())
+		.pipe(gulp.dest('base/jade'))
 })
 gulp.task('build', ['default'], function() {});
-gulp.task('default', ['jpc'], function(callback) {
+gulp.task('default',['jtc'], function(callback) {
 	var ct = 0
 
 	function loop() {
@@ -167,6 +164,11 @@ gulp.task('beautify-html', function(){
 		.pipe(htmlprettify())
 		.pipe(gulp.dest(cwd + "app"))
 });
+gulp.task('beautify-jade',function(){
+	return gulp.src(cwd + 'app/**/*.jade')
+		.pipe(jadeprettify())
+		.pipe(gulp.dest(cwd + "app"))
+})
 gulp.task('help', function() {
 	console.log("watch:")
 	console.log("-a <param> - set a custom directory to watch")
