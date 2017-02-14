@@ -30,7 +30,14 @@ function read(path){
 }
 function def(x,callback){
   cwd = x
-  runSequence('jade','jpc','coffee','sass', 'useref', 'fonts','itr',callback);
+  if(argv.c != undefined){
+      runSequence('clean:dist','images','jade','jpc','coffee','sass', 'useref', 'fonts','itr','copy-css','copy-js',callback);
+  }
+  if(argv.b != undefined){
+      runSequence('images','jade','jpc','coffee','sass', 'useref', 'fonts','itr','copy-css','copy-js',callback);
+  } else{
+      runSequence('jade','jpc','coffee','sass', 'useref', 'fonts','itr','copy-css','copy-js',callback);
+  }
 }
 gulp.task('coffee',function(){
   return gulp.src(cwd + 'app/coffee/**/*.coffee')
@@ -38,11 +45,12 @@ gulp.task('coffee',function(){
     .pipe(gulp.dest(cwd + 'app/js'))
 });
 gulp.task('jade', function() {
+    //locals.root, used for building via relative paths. NEVER USE IN FRONTEND OR YOU WILL DIE, CHILD
   var stuff = JSON.parse(JSON.stringify(data))
   stuff.times = cwd.split("/").length
-  stuff.chunk = "";
+  stuff.root = "";
   for(i=0;i<stuff.times;i++){
-    stuff.chunk+="../"
+    stuff.root+="../"
   }
     return gulp.src(cwd + 'app/**/*.jade')
         .pipe(jade({ pretty: true,
@@ -65,13 +73,14 @@ gulp.task('sass', function() {
 gulp.task('watch', function(callback) {
     runSequence('default','browserSync',function(){
         cwd = argv.a != undefined ? argv.a : ""
+        browserSync.reload()
         console.log(argv.a)
         console.log(cwd)
         gulp.watch(cwd + 'app/coffee/**/*.coffee',['coffee']); //reload via javascript change
-        gulp.watch([cwd + 'app/*.jade'],['jade','itr']); //reload via HTML change
+        gulp.watch(cwd + 'app/*.jade',['jade']); //reload via HTML change
         gulp.watch("base/jade-partials/**/*.jade",['jpc'])
         gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
-        gulp.watch(cwd + 'app/*.html',["useref",browserSync.reload]); //reload
+        gulp.watch(cwd + 'app/*.html',browserSync.reload); //reload
         gulp.watch(cwd + 'app/js/**/*.js',browserSync.reload); //reload
         gulp.watch(cwd + 'app/css/**/*.css',browserSync.reload); //reload
     })
@@ -133,3 +142,18 @@ function loop() {
 }
 loop()
 });
+gulp.task('copy-js',function(){
+    return gulp.src(cwd + 'app/js/**/*.min.js')
+        .pipe(gulp.dest(cwd + 'dist/js'));
+})
+gulp.task('copy-css',function(){
+    return gulp.src(cwd + 'app/css/**/*.min.css')
+        .pipe(gulp.dest(cwd + 'dist/css'));
+})
+gulp.task('help',function(){
+    console.log("watch:")
+    console.log("-a <param> - set a custom directory to watch")
+    console.log("default:")
+    console.log("-b - run normal tasks but also run imgmin")
+    console.log("-c - run normal tasks but also delete /dir")
+})
