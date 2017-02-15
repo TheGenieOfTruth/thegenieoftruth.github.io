@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
 .hide {
     display: none;
 }
@@ -10,6 +12,11 @@ body {
     height: 100%;
     margin: 0px;
     padding: 0px;
+    font-height: 1.4;
+}
+
+p {
+    font-family: "Open Sans";
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -59,6 +66,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .head-gradient-turquoise {
     background: linear-gradient(135deg, black, white);
+}
+
+.inline {
+    display: inline;
 }
 
 .inline-block {

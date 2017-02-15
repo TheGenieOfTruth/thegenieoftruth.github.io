@@ -83,7 +83,8 @@ gulp.task('watch', function(callback) {
 			gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
 			gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload
 			gulp.watch(cwd + 'app/css/**/*.css', browserSync.reload); //reload
-			gulp.watch("base/jade/*.jade",["jade"])
+			gulp.watch('base/scss/stylesheet.scss',['copy-base']);
+			gulp.watch("base/jade/*.jade",["jade"]);
 		})
 		// Other stoof
 });
