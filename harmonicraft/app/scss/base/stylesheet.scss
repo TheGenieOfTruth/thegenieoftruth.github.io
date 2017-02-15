@@ -71,16 +71,23 @@ h1,h2,h3,h4,h5,h6{
   background:$base1;
 }
 .navbar-gradient{
-  background:$base1;
+  background:darken($base1,15%);
 }
 .navbar-color{
-  background:linear-gradient(270deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
-  color:white;
+  background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
+  color:#f8f8f8;
 }
-.navbar-color *{
-  color:white
+.navbar-color a, .navbar-color li{
+  color:#f8f8f8;
+}
+li.nav-item:hover{
+    background:(darken($base1,20%));
+}
+nav{
+    z-index:1;
 }
 #head-gradient{
+    z-index:2;
     width:100%;
     color:#f8f8f8;
     flex-wrap:wrap;

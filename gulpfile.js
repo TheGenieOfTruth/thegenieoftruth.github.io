@@ -114,7 +114,7 @@ gulp.task('clean', function() {
 gulp.task('itr', function() {
 	return gulp.src(cwd + 'dist/index.html')
 		.pipe(replace(/<link(.*)(href="css\/)(.*)>/g, '<link$1href="dist/css/$3>'))
-		.pipe(replace(/<img(.*)(src="images\/)(.*)\/>/g, '<img$1src="dist/images/$3/>'))
+		.pipe(replace(/<img(.*)(src="images\/)(.*)>/g, '<img$1src="dist/images/$3/>'))
 		.pipe(replace(/<script>(.*)(src="js\/)(.*)<\/script>/g, '<script>$1src="dist/js/$3</script>'))
 		.pipe(gulp.dest(cwd));
 });
