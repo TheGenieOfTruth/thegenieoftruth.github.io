@@ -54,9 +54,6 @@ h1,h2,h3,h4,h5,h6{
 .no-text-deco,.no-text-deco:hover{
     text-decoration:none
 }
-.head-gradient-turquoise{
-    background:linear-gradient(135deg,$base1,$base2);
-}
 .inline,.inline *{
     display:inline;
 }
@@ -70,6 +67,20 @@ h1,h2,h3,h4,h5,h6{
 .white{
     color:white
 }
+.gradient-darken{
+  background:$base1;
+}
+.navbar-gradient{
+  background:$base1;
+}
+.navbar-color{
+  background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
+  color:white;
+  border:solid black 0px;
+}
+.navbar-color a, .navbar-color li{
+  color:white;
+}
 #head-gradient{
     width:100%;
     color:#f8f8f8;
@@ -78,6 +89,7 @@ h1,h2,h3,h4,h5,h6{
     padding:10px 0 20px 0;
     margin-bottom:30px;
     box-shadow: 0px 0px 1px #888;
+    background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
 
 }
 #head-gradient::after {

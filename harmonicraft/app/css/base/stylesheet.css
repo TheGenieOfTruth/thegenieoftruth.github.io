@@ -64,11 +64,7 @@ h1, h2, h3, h4, h5, h6 {
     text-decoration: none;
 }
 
-.head-gradient-turquoise {
-    background: linear-gradient(135deg, black, white);
-}
-
-.inline {
+.inline, .inline * {
     display: inline;
 }
 
@@ -85,6 +81,23 @@ h1, h2, h3, h4, h5, h6 {
     color: white;
 }
 
+.gradient-darken {
+    background: black;
+}
+
+.navbar-gradient {
+    background: black;
+}
+
+.navbar-color {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+    color: white;
+}
+
+.navbar-color * {
+    color: white;
+}
+
 #head-gradient {
     width: 100%;
     color: #f8f8f8;
@@ -96,6 +109,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px 0 20px 0;
     margin-bottom: 30px;
     box-shadow: 0px 0px 1px #888;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
 }
 
 #head-gradient::after {

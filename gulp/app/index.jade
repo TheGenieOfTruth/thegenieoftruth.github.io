@@ -1,14 +1,15 @@
 doctype html
 html
     head
-        != a(head,{"title":"Gulp"})
+        != a(head,{"title":"Gulp - Whalescome to the page of holy hallos!"})
         //build:js js/main.min.js
         // endbuild
         //build:css css/styles.min.css
-        link(rel="stylesheet" href="css/base/stylesheet.css")/
+        link(rel="stylesheet" href="css/base/stylesheet.css")
         //endbuild
     body
-        != a(header,{"pagename":"hallo!"})
+        != a(navbar)
+        != a(header,{"pagename":"hallo"})
         div(class="container")
             h3 This is a random test page. If it had #[i any purpose], it would not be a random test page anymore. It would simply be a page.
             br
