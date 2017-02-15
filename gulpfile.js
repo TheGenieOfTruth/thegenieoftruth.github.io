@@ -27,7 +27,7 @@ var jadeprettify = require('gulp-pug-beautify');
 function
 def(x, callback) {
 	cwd = x;
-		runSequence('clean', 'images', 'jade', 'coffee', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js','beautify-css','beautify-js','beautify-html', callback);
+		runSequence('clean', 'images', 'jade', 'coffee', 'sass', 'useref', 'fonts', 'itr', 'copy-base', 'copy-css', 'copy-js','beautify-css','beautify-js','beautify-html', callback);
 }
 gulp.task('coffee', function() {
 	return gulp.src(cwd + 'app/coffee/**/*.coffee')
@@ -141,6 +141,10 @@ gulp.task('default',['jtc'], function(callback) {
 	}
 	loop()
 });
+gulp.task('copy-base',function(){
+	return gulp.src("base/scss/*.scss")
+		.pipe(gulp.dest(cwd+"app/scss/base"));
+})
 gulp.task('copy-js', function() {
 	return gulp.src(cwd + 'app/js/**/*.min.js')
 		.pipe(gulp.dest(cwd + 'dist/js'));
