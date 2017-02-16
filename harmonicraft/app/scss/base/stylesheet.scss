@@ -21,6 +21,9 @@ h1,h2,h3,h4,h5,h6{
 .tiny {
    font-size: 8px;
 }
+.big{
+  font-size:20px
+}
 
 .contact-flex {
    display: flex;
@@ -72,25 +75,27 @@ h1,h2,h3,h4,h5,h6{
 }
 .navbar-gradient{
   background:darken($base1,15%);
+  border-bottom:solid 1px $base1
 }
 nav.navbar-color{
   margin:0px;
   padding:0px;
-  background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
   color:#f8f8f8;
-  border-bottom:1px solid darken($base1,23%)
 }
 .navbar-color a, .navbar-color li{
   color:#f8f8f8;
 }
-.li.nav-item,.navbar-brand{
+.nav-item,.navbar-brand{
     height:100%;
     padding:0px;
-    display:inline-block
+    display:inline-block;
+    transition:background 0.1s;
+    -webkit-transition:background 0.1s;
 }
-li.nav-item:hover,.navbar-brand:hover{
-    background:(darken($base1,20%));
+.nav-item:hover,.navbar-brand:hover{
+    background-color:(darken($base1,20%));
 }
+
 #head-gradient{
     width:100%;
     color:#f8f8f8;
@@ -98,18 +103,8 @@ li.nav-item:hover,.navbar-brand:hover{
     top:0;right:0;bottom:0;left:0;
     padding:10px 0 20px 0;
     margin-bottom:30px;
-    box-shadow: 0px 0px 1px #888;
     background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
 
-}
-#head-gradient::after {
-  content: "";
-  width:100%;
-  height:10px;
-  top:20px;
-  display:block;
-  position:relative;
-  background:linear-gradient(0deg,rgba(0,0,0,0.1),rgba(0,0,0,0))
 }
 /* Small Devices, Tablets */
 #head-gradient .display-1, #head-gradient .display-5{
