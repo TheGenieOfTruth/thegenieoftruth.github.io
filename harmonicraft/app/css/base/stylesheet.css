@@ -2,7 +2,12 @@
 
 .icon-badge {
     background: black;
-    border-radius: 30px;
+    border-radius: 0;
+    transition: background 0.1s;
+}
+
+.icon-badge:hover {
+    background: black;
 }
 
 .flex-vertical {
@@ -110,7 +115,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .navbar-gradient {
     background: black;
-    border-bottom: solid 1px black;
 }
 
 nav.navbar-color {
@@ -152,6 +156,12 @@ nav.navbar-color {
 #head-gradient .display-1, #head-gradient .display-5 {
     word-wrap: break-word;
     width: 100%;
+}
+
+@media only screen and (max-width: 768px) {
+    .margin-30-sm {
+        margin: 0px 18px;
+    }
 }
 
 @media only screen and (max-width: 700px) {
