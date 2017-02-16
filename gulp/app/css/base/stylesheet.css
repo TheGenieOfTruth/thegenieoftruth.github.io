@@ -1,167 +1,132 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
-
 .hide {
-    display: none;
-}
+  display: none; }
 
 body {
-    color: #1b2631;
+  color: #1b2631;
   /*Dark blue used instead of black, less intense*/
-    font-size: 18px;
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    padding: 0px;
-    font-height: 1.4;
-}
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-height: 1.4; }
 
 p {
-    font-family: "Open Sans";
-}
+  font-family: "Open Sans"; }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 400;
-}
+  font-weight: 400; }
 
 .tiny {
-    font-size: 8px;
-}
+  font-size: 8px; }
 
 .contact-flex {
-    display: flex;
-    justify-content: space-between;
-    font-size: 40px;
-    width: 50%;
-    margin: 0 auto;
-}
+  display: flex;
+  justify-content: space-between;
+  font-size: 40px;
+  width: 50%;
+  margin: 0 auto; }
 
 .full {
-    width: 100%;
-}
+  width: 100%; }
 
 .contact-flex a {
-    color: #243342;
-    transition: 0.1s color ease-in-out;
-}
+  color: #243342;
+  transition: 0.1s color ease-in-out; }
 
 .contact-flex a:hover {
-    color: #1b2631;
-}
+  color: #1b2631; }
 
 .margin-side-vw {
-    margin: 0 20vw;
-}
+  margin: 0 20vw; }
 
 .red {
-    color: #e74c3c;
-}
+  color: #e74c3c; }
 
 .white, .white:hover {
-    color: white;
-}
+  color: white; }
 
 .no-text-deco, .no-text-deco:hover {
-    text-decoration: none;
-}
+  text-decoration: none; }
 
 .inline, .inline * {
-    display: inline;
-}
+  display: inline; }
 
 .inline-block {
-    display: inline-block;
-    float: left;
-}
+  display: inline-block;
+  float: left; }
 
 .btn {
-    cursor: pointer;
-}
+  cursor: pointer; }
 
 .white {
-    color: white;
-}
+  color: white; }
 
 .gradient-darken {
-    background: #3498db;
-}
+  background: #3498db; }
 
 .navbar-gradient {
-    background: #1d6fa5;
-}
+  background: #1d6fa5; }
 
-.navbar-color {
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
-    color: #f8f8f8;
-}
+nav.navbar-color {
+  margin: 0px;
+  padding: 0px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
+  color: #f8f8f8;
+  border-bottom: 1px solid #175783; }
 
 .navbar-color a, .navbar-color li {
-    color: #f8f8f8;
-}
+  color: #f8f8f8; }
 
-li.nav-item:hover {
-    background: #196090;
-}
+.li.nav-item, .navbar-brand {
+  height: 100%;
+  padding: 0px;
+  display: inline-block; }
 
-nav {
-    z-index: 1;
-}
+li.nav-item:hover, .navbar-brand:hover {
+  background: #196090; }
 
 #head-gradient {
-    z-index: 2;
-    width: 100%;
-    color: #f8f8f8;
-    flex-wrap: wrap;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 10px 0 20px 0;
-    margin-bottom: 30px;
-    box-shadow: 0px 0px 1px #888;
-    background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05));
-}
+  width: 100%;
+  color: #f8f8f8;
+  flex-wrap: wrap;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px 0 20px 0;
+  margin-bottom: 30px;
+  box-shadow: 0px 0px 1px #888;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05)); }
 
 #head-gradient::after {
-    content: "";
-    width: 100%;
-    height: 10px;
-    top: 20px;
-    display: block;
-    position: relative;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), transparent);
-}
+  content: "";
+  width: 100%;
+  height: 10px;
+  top: 20px;
+  display: block;
+  position: relative;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.1), transparent); }
 
 /* Small Devices, Tablets */
 #head-gradient .display-1, #head-gradient .display-5 {
-    word-wrap: break-word;
-    width: 100%;
-}
+  word-wrap: break-word;
+  width: 100%; }
 
 @media only screen and (max-width: 700px) {
-    .contact-flex {
-        width: 100%;
-        font-size: 30px;
-    }
-
-    .margin-side-vw {
-        margin: 0 5px;
-    }
-
-    #head-gradient .display-1 {
-        font-size: 64px;
-    }
-
-    #head-gradient .display-5 {
-        font-size: 32px;
-    }
-}
+  .contact-flex {
+    width: 100%;
+    font-size: 30px; }
+  .margin-side-vw {
+    margin: 0 5px; }
+  #head-gradient .display-1 {
+    font-size: 64px; }
+  #head-gradient .display-5 {
+    font-size: 32px; } }
 
 @media only screen and (max-width: 400px) {
-    #head-gradient .display-1 {
-        font-size: 50px;
-    }
-
-    #head-gradient .display-5 {
-        font-size: 25px;
-    }
-}
+  #head-gradient .display-1 {
+    font-size: 50px; }
+  #head-gradient .display-5 {
+    font-size: 25px; } }

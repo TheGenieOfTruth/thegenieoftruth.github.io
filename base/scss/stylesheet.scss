@@ -73,21 +73,25 @@ h1,h2,h3,h4,h5,h6{
 .navbar-gradient{
   background:darken($base1,15%);
 }
-.navbar-color{
+nav.navbar-color{
+  margin:0px;
+  padding:0px;
   background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
   color:#f8f8f8;
+  border-bottom:1px solid darken($base1,23%)
 }
 .navbar-color a, .navbar-color li{
   color:#f8f8f8;
 }
-li.nav-item:hover{
+.li.nav-item,.navbar-brand{
+    height:100%;
+    padding:0px;
+    display:inline-block
+}
+li.nav-item:hover,.navbar-brand:hover{
     background:(darken($base1,20%));
 }
-nav{
-    z-index:1;
-}
 #head-gradient{
-    z-index:2;
     width:100%;
     color:#f8f8f8;
     flex-wrap:wrap;
