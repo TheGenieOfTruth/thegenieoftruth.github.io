@@ -1,8 +1,17 @@
 @import 'variables';
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+.icon-badge{
+    background:darken($base1,25%);
+    border-radius:0;
+    transition:background 0.1s;
+}
+.icon-badge:hover{
+    background:darken($base1,30%)
+}
 .flex-vertical{
   display: flex;
-  flex-direction:column;
+  justify-content:center;
+  align-items:center;
 }
 .pointer{
   cursor:pointer;
@@ -29,9 +38,8 @@ h1,h2,h3,h4,h5,h6{
    font-size: 8px;
 }
 .big{
-  font-size:20px
+  font-size:100%
 }
-
 .contact-flex {
    display: flex;
    justify-content: space-between;
@@ -40,8 +48,11 @@ h1,h2,h3,h4,h5,h6{
    margin: 0 auto;
 }
 
-.full {
+.full,.full-width {
    width: 100%;
+}
+.full,.full-height{
+    height:100%
 }
 
 .contact-flex a {
@@ -82,7 +93,6 @@ h1,h2,h3,h4,h5,h6{
 }
 .navbar-gradient{
   background:darken($base1,15%);
-  border-bottom:solid 1px $base1
 }
 nav.navbar-color{
   margin:0px;
@@ -111,12 +121,16 @@ nav.navbar-color{
     padding:10px 0 20px 0;
     margin-bottom:30px;
     background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
-
 }
 /* Small Devices, Tablets */
 #head-gradient .display-1, #head-gradient .display-5{
     word-wrap: break-word;
     width:100%
+}
+@media only screen and (max-width : 768px) {
+    .margin-30-sm{
+        margin:0px 18px;
+    }
 }
 @media only screen and (max-width : 700px) {
    .contact-flex {

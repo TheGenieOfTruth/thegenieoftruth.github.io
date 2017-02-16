@@ -62,10 +62,11 @@ gulp.task('jade', function() {
 });
 gulp.task('browserSync', function() {
 	browserSync.init({
-		server: {
-			baseDir: ""
+		"server": {
+			"baseDir": ""
 		},
-		open: false
+		"open": false,
+		"notify":false
 	});
 });
 gulp.task('sass', function() {

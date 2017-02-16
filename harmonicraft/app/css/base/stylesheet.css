@@ -1,5 +1,20 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
 
+.icon-badge {
+    background: black;
+    border-radius: 30px;
+}
+
+.flex-vertical {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
 .hide {
     display: none;
 }
@@ -28,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .big {
-    font-size: 20px;
+    font-size: 100%;
 }
 
 .contact-flex {
@@ -39,8 +54,12 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
 }
 
-.full {
+.full, .full-width {
     width: 100%;
+}
+
+.full, .full-height {
+    height: 100%;
 }
 
 .contact-flex a {
