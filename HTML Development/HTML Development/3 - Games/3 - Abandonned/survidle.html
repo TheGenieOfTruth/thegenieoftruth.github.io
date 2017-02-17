@@ -1,0 +1,208 @@
+<head>
+<style>
+body{position:relative;left:50px;top:50px}
+#progress{background:green}
+.tall{height:20px}
+large{font-size:20px}
+indent{margin-left:5px}
+fill{font-size:0px}
+.ident{margin-left:5px}
+.large{font-size:20px}
+medium{font-size:16px}
+body{background-color:white}
+.left { float:left; }
+.right{float:right; margin-right:200px }
+.grayout {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* msie */
+    background-color: #000;
+}
+.transparent{
+opacity:0.4
+}
+.width{width:100px}
+.width2{width:50px;align:left}
+
+</style>
+</head>
+<body>
+  <link rel = "stylesheet" href = "http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.css"/>
+  <script src = "http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.1/jquery.qtip.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <!-- Main container -->
+  <div>
+  <!--- Forage button -->
+  <div class = "left">
+    <span id = "intro" data-toggle = "popover" title="<large>Getting food</large>" data-content="" data-placement = "right" data-html = "true" class = "btn btn-default" onclick = "setTimeout(function(){$('#intro').popover('destroy')},10);forage();next()">Forage for food (1 sec)</span>
+  <!-- Lazy spacing -->
+  <br/><br/><br/>
+<!-- Progress bar -->
+ <!-- Empty shell -->
+   <div id = "queueDisplay" class = "tall" data-toggle = "popover" title="<large>Doing stuff</large>" data-content="" data-placement = "right" data-html = "true" style = "width:200px;background: #ddd">
+ <!-- Green stuff in the loading bar -->
+    <div id = "progress" class="tall" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style = "width:0%">
+ <!-- Because I'm too lazy to google:  -->
+      <span class = "tall" style = "font-size:0px">content</span>
+    </div>
+  </div>
+  <div id = "materials">
+  Materials
+  </br>
+  <medium>Food: <span id= "food"></span></br></medium>
+  <medium>Wood: <span id= "wood"></span></span></br></medium>
+
+  <indent/>Tinder: <span id = "tinder"></span></br>
+  <indent/>Kindling: <span id = "kindling"></span></br>
+  <indent/>Fuel: <span id = "fuel"></span></br>
+    <span id=  "materialDisplay" data-toggle = "popover" title="<large>Materials</large>" data-content="" data-placement = "bottom" data-html = "true"><fill>content</fill></span>
+</div>
+	</div>
+	</div>
+	<span style = "margin-left:200px">
+	<div id = "fire" class = "right">
+	<label class = "hideGroup">Fire warmth</label> <div class = "tall hideGroup" style = "width:200px;background: #ddd">
+    <div id = "fire_warmth" class="tall hideGroup" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style = "width:0%">
+      <span class = "tall" style = "font-size:0px">content</span>
+    </div>
+  </div> <br/>
+  <span id = "buy_amount" class = "btn btn-default hideGroup wide-tooltip width" data-toggle = "tooltip" data-placement = "right" data-html = "true" title = "<button class = 'btn btn-default width2'>x1</button><br/><button class = 'btn btn-default width2'>x10</button><br/><button class = 'btn btn-default width2'>x100</button></br><button class = 'btn btn-default width2'>x1k</button><br/><button class = 'btn btn-default width2'>Max</button>">Buy amount</span>
+  <br/>
+	 <span id = "fireDisplay" data-toggle = "popover" id = "addTinder" title="<large>Lighting fires</large>" data-placement = "left" data-html = "true" class = "btn btn-default width" onclick = "setTimeout(function(){$('#queueDisplay').popover('destroy');$('#materialDisplay').popover('destroy')},10);$('#fireDisplay').popover('destroy');slide();addTinder();startFireKill()">Start fire</span>
+</span><br/>
+	<span class = "btn btn-default hideGroup width" id = "addKindling" onclick = "addKindling()">Add kindling</span>
+	<br/>
+	<span class = "btn btn-default hideGroup width" id = "addFuel" onclick = "addFuel()">Add fuel</span><br/>
+	<label class = "hideGroup">Growth</label> <span id = "growth" class = "hideGroup"></span><br/>
+	<label class = "hideGroup">Sustain</label> <span id = "sustain" class = "hideGroup"></span><br/>
+	<label class = "hideGroup">Decrease</label> <span id = "decrease" class = "hideGroup"></span><br/>
+	</div>
+	</div>
+<script>
+$("#buy_amount").tooltip();
+var tid;
+function mycode(times,delay,code) {
+ if(times>=0){
+
+  tid = setTimeout(mycode(times-1,delay,code), delay);code // repeat myself
+  }
+}
+mycode(5,30,console.log("hi"))
+var warmth = 25
+//#ff6666 pastel red
+//#ffff99 pastel orange
+//#ffb347 pastel yellow
+function startFireKill(){
+if(usable2){
+usable2 = false
+setInterval(function(){
+if(warmth>255){warmth=255}
+if(sustain<=0){warmth=warmth/decrease;sustain=0}
+else{warmth=warmth+growth/10}
+update()
+sustain=sustain-(decrease-1.005)
+growth=growth-(decrease-1.005)
+if(growth<0){
+growth=growth-growth
+}
+if(sustain<=0){sustain=0}
+},10)}
+}
+function slide(){
+
+$("#fire").animate({marginRight:"800px"},600);
+setTimeout(function(){document.getElementById('fireDisplay').innerHTML = 'Add tinder';$(".hideGroup").show()},650)}
+function addTinder(){
+if(tinder>=addAmount){
+tinder=tinder-addAmount
+growth=growth+1*addAmount;
+sustain=sustain+0.05*addAmount;
+update()}
+}
+function addKindling(){
+if(kindling>=addAmount&&warmth>50){
+kindling=kindling-addAmount
+growth=growth+0.1*addAmount;
+sustain=sustain+0.1*addAmount;
+update()}
+}
+function addFuel(){
+if(fuel>=addAmount&&warmth>125){
+fuel=fuel-addAmount
+growth=growth+0.01*addAmount;
+sustain=sustain+1*addAmount;
+update()}
+}
+$(".hideGroup").hide()
+$("#fireDisplay").hide()
+$("#queueDisplay").hide()
+$("#materials").hide()
+var addAmount = 1
+var decrease = 1.01
+var usable1 = true;
+var usable2 = true;
+var growth = 0
+var sustain = 0
+var food = 0
+var wood = 0
+var tinder = 0
+var kindling = 0
+var fuel = 0
+var yValueWarmth;
+function max(number,maximum){
+if(number>maximum){
+return maximum
+}
+else{return number}
+}
+function next(){
+if(usable1){
+usable1=false
+$("#queueDisplay").show()
+  change("#queueDisplay","A progress bar... This is how you get stuff done. As soon as it is full, it will empty and continue the action you had selected earlier.")
+  setTimeout(function(){$("#materials").show();change("#materialDisplay","In this game, there is a wide array of materials. You can use these to craft, start fires, and other scary things. Every material-yielding action you complete will give you a random amount of materials. Larger fonts symbolize a group of certain materials. For example the 'Wood' group contains three types of wood.")},7500)}
+  setTimeout(function(){$("#fireDisplay").show();change("#fireDisplay","Lighting fires is essential for survival. It provides heat and is an affordable oven... To start a fire you need to use kindling, and then you are able to use kindling or fuel after the fire is hot enough. Growth, sustain, and decrease are how the fire functions.")},15000)
+  }
+function rand(max,min){
+return Math.round(Math.random() * (max - min) + min)
+}
+function update(){
+document.getElementById("sustain").innerHTML = Math.round(sustain*100)/100
+if(warmth>=255||sustain<=0){$("#growth").addClass("transparent")}
+else{$("#growth").removeClass("transparent")}
+document.getElementById("growth").innerHTML = Math.round(growth*100)/100
+document.getElementById("decrease").innerHTML = Math.round(decrease-100)+"%"
+if(warmth<50){$("#addKindling").addClass("grayout")}
+else{$("#addKindling").removeClass("grayout")}
+if(warmth<125){$("#addFuel").addClass("grayout")}
+else{$("#addFuel").removeClass("grayout")}
+document.getElementById("fire_warmth").style.width = max(warmth*100/255,100) + "%"
+yValueWarmth = 255 - warmth;
+document.getElementById("fire_warmth").style.background = "rgb(255,"+Math.round(yValueWarmth)+",0)"
+document.getElementById("food").innerHTML = food
+document.getElementById("wood").innerHTML = wood
+document.getElementById("tinder").innerHTML = tinder
+document.getElementById("kindling").innerHTML = kindling
+document.getElementById("fuel").innerHTML = fuel
+}
+function change(element,input){
+$(element).attr('data-content', input)
+          .popover('fixTitle')
+          .popover('show');
+
+    }
+change("#intro","Hello! I bet you're starving about now. If want to not die, I suggest you search for some food. Click that button to go search for food.")
+var number = 10
+document.getElementById("progress").style.width = number+"%"
+function loop(times){}
+function forage(){
+setInterval(function(){if(number<=99){number=number+1;document.getElementById("progress").style.width = number+"%"} else{number = 0;food=food+rand(0,6);fuel=fuel+rand(0,2);kindling=kindling+rand(0,5);tinder=tinder+rand(2,15);wood=kindling+tinder+fuel;update()}},10)}
+</script>
+</body>

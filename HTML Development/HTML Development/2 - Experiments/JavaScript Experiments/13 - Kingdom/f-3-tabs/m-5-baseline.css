@@ -1,0 +1,29 @@
+.tab,.tab-mini {
+  position: absolute;
+  padding: 0px;
+  margin: 0px;
+  width: 225px;
+  display: inline-block;
+  height: 20px;
+  cursor: pointer;
+  text-align: center;
+  font-family: Raleway;
+  color: white;
+  font-size: 0px;
+  overflow: hidden;
+  transition: all 0.5s;
+  text-decoration: none;
+}
+.tab:hover,.tab-mini:hover {
+  height: 50px;
+  font-size: 32px;
+  color: white;
+  text-decoration: none
+}
+.tab-mini{
+    width:50px;
+}
+.active {
+  height: 50px;
+  font-size: 32px;
+}

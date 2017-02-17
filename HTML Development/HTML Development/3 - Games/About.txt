@@ -1,0 +1,8 @@
+About: Games
+The game folder is a very important folder. It is used for managing projects, and categorizing them.
+  - Finished
+   Games that are complete, and distributed. They can also be played.
+  - Unfinished
+   Games that are actively being worked on.
+  - Abandonned
+   Games that will never be worked on again. They were either too difficult, or a new idea was created during development

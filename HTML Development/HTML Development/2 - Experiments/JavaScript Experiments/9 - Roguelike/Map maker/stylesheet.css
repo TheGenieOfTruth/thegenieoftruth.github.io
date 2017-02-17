@@ -1,0 +1,102 @@
+.taller {
+    height: 50px;
+}
+
+.wider {
+    width: 50px;
+}
+
+.square {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 20px;
+}
+.square:hover{
+    cursor:default
+}
+
+.square,.border {
+    border: solid #000 1px !important;
+}
+
+body {
+    margin: 10px;
+    margin-left:75px;
+    margin-right:75px;
+    background:url("background.png")
+}
+
+.square-button {
+    border-radius: 0;
+}
+
+.block {
+    display: inline-block;
+}
+
+.btn-default {
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+}
+
+/*.btn-default override*/
+.inherit {
+    width: inherit;
+}
+.monospace{
+    font-family:monospace
+}
+.textarea-hide{
+    border:none;
+    resize:none;
+}
+.textarea-hide:focus{
+    outline:0
+}
+.textarea{
+    overflow:visible;
+}
+abs{
+    position:absolute;
+    background-color:white;
+    padding:10px;
+    width:50px;
+    height:50px
+}
+#pagewrapper{
+    background:white;
+    min-height:100%;
+    padding:10px
+}
+.btn-red{
+    color:white;
+    background:#e74c3c
+}
+.btn-red:hover{
+    background:#c0392b
+}
+.btn-green{
+    color:white;
+    background:#2ecc71
+}
+.btn-green:hover{
+    background:#27ae60
+}
+.btn-red{
+    background:#e74c3c
+}
+.btn:focus{
+    outline:0 !important;
+}
+.toggle-onoff button{
+    width:60px
+}
+.NA{
+    width:120px !important
+}
+.text-small{
+  font-size
+}

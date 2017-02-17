@@ -1,0 +1,27 @@
+#tab-lord {
+  background: #f1c40f
+}
+#tab-lord.active {
+  background: #f39c12
+}
+#tab-blacksmith {
+  left: 225px;
+  background: #95a5a6
+}
+#tab-blacksmith.active {
+  background: #7f8c8d
+}
+#tab-warrior {
+  left: 450px;
+  background: #e74c3c
+}
+#tab-warrior.active {
+  background: #c0392b
+}
+#tab-mage {
+  left: 675px;
+  background: #3498db
+}
+#tab-mage.active {
+  background: #2980b9
+}

@@ -1,0 +1,330 @@
+<style>
+html{background-color:black}
+p{
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+p{margin:0px;font-family:courier;color:rgb(255,255,255)}
+input{border-color:black;background-color:black;font-family:courier;color:white;outline:0;width:500px;font-size:16px}
+</style>
+<script>
+//ADDITIONAL FUNCTIONS \\
+var keys = "0123456789"
+var keys1 = "abcdefghijklmnopqrstuvwxyz"
+var masterkey = "0123456789abcdefghijklmnopqrstuvwxyz"
+var codes = []
+for(i=0;i<keys.length;i++){
+codes[codes.length] = 48+i
+}
+for(i=0;i<keys1.length;i++){
+codes[codes.length] = 65+i
+}
+function reloadAfterTenSeconds(){
+//Disallow any usage
+document.onkeydown = ""
+}
+//cookie save() and load()
+function save(cname, cvalue) {
+    exdays = 100
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function load(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+</script>
+<script>
+function game(){
+var email4 = false
+var bombing = false
+var projectAcess = false
+var emailPermission = false
+var maxwellRead = false
+var temp = ""
+var safe = true
+var decrypt = false
+var phase = 0
+var underslash = ""
+var content = ""
+//MAIN GAME \\
+setTimeout(function(){
+document.onkeydown = checkKey;
+},7500)
+//Clears main junk
+function clearJunk(){
+safe = false
+content = ""
+document.getElementById("boxline1").innerHTML = ""
+document.getElementById("boxline2").innerHTML = ""
+document.getElementById("boxline3").innerHTML = ""
+document.getElementById("boxline4").innerHTML = ""
+document.getElementById("boxline5").innerHTML = ""
+document.getElementById("boxline6").innerHTML = ""
+document.getElementById("boxline7").innerHTML = ""
+setTimeout(function(){
+safe = true
+},50)
+}
+//Phase 1
+function phase1(){
+clearJunk()
+makeText("Permissions:", 10, "boxline1", 200)
+makeText("file list: Lists files", 10, "boxline2", 700)
+makeText("open <item>: Opens an item", 10, "boxline3", 1200)
+makeText("login <username> <password>: Logs into a specified user", 10, "boxline4", 1700)
+makeText("permissions: Opens permissions list", 10, "boxline5", 2200)
+if(decrypt || phase>1){makeText("decrypt <decryption keycode>:", 10, "boxline6", 2700)}
+}
+function phase2(){
+clearJunk()
+makeText("Logged in as user bensmith.", 10, "boxline1", 200)
+makeText("Permission to Project #13 denied.", 10, "boxline2", 700)
+makeText("New email to bensmith", 10, "boxline3", 2500)
+makeText("Permission to Project #1 granted.", 10, "boxline4", 3000)
+makeText("Access to Project #13's logs/information granted.", 10, "boxline6", 4000)
+}
+//Checks key
+function checkKey(e){
+if(e.keyCode == 13){
+if(content=="console start" && phase == 0){clearJunk();phase=1;phase1()}
+else if(content=="file list" && phase > 0){
+clearJunk()
+makeText("email1.txt",10,"boxline1",100)
+makeText("email2.txt",10,"boxline2",600)
+makeText("logs.txt",10,"boxline3",1100)
+makeText("private.txt",10,"boxline4",1600)
+if(phase > 1){
+makeText("project13log.txt",10,"boxline5",2100)
+makeText("project1.exe",10,"boxline6",2600)
+makeText("email3.txt",10,"boxline7",3100)
+}
+if(email4){makeText("email4.txt", 10, "boxline8", 3700)}
+}
+else if(content=="open email1.txt" && phase > 0){
+clearJunk()
+makeText("I've been working on encryption/decryption. All of the prototypes failed, and I'm wondering if you could give me a tip or two. The deadline is soon, and this is essnetial to protecting Project 13's vital information. Reply soon.",10,"boxline1",100)
+}
+else if(content=="open email2.txt" && phase > 0){
+clearJunk()
+makeText("Your idea worked perfectly! You can view the changes in a hidden file in the server called 'decrypt.exe'. Thanks again for the help! It can decrypt text with certain keycodes, so you should probably use the encrypted key in private.txt.",10,"boxline1",100)}
+else if(content=="open logs.txt" && phase > 0){
+clearJunk()
+makeText("User bensmith logged on",10,"boxline1",100)
+makeText("User bensmith made changes to project #13",10,"boxline2",600)
+makeText("Packet overflow: ERROR",10,"boxline3",1100)
+makeText("Project #13 stopped",10,"boxline4",1600)
+makeText("User bensmith logged out",10,"boxline5",2100)
+}
+else if(content=="open private.txt" && phase > 0){
+clearJunk()
+makeText("a4qh",10,"boxline1",100)}
+else if(content=="open decrypt.exe" && phase > 0){
+decrypt = true
+clearJunk()
+makeText("Usage: decrypt <decryption keycode>",10,"boxline1",100)
+}
+else if(content=="decrypt a4qh"){
+clearJunk()
+makeText("Keycode decrypted- Result: longisland",10,"boxline1",100)
+}
+else if(content=="decrypt 352"){
+clearJunk()
+makeText("Keycode decrypted- Result: You found my secret message hidden inside of that email. Looks like Ben Smith wasn't as loyal as he said. If you're assigned to take down Project #13 consider your options... You could edit Project 13, use it, delete it, and so much more. Wouldn't you like that much power? Of course, there's always a price. I need to know the location of Susan Smith so I can bomb it. Susan Smith is Project #13. Don't want to do that? You know I'm your only choice. All you have to do is type inputlocation <Susan Smith's location>. It's a built in function, and I've been using it on each hacker.",10,"boxline1",100)
+}
+else if(content=="permissions"){
+phase1()
+}
+else if(content=="login bensmith longisland" && phase > 0){
+phase = phase+1;
+phase2()
+}
+else if(content=="open email3.txt" && phase > 1){
+clearJunk()
+maxwellRead = true
+makeText("Dear Ben Smith, ",10,"boxline1",100)
+makeText("Decryption is working well, and I used the",10,"boxline2",210)
+makeText("code you gave me... It worked well!",10,"boxline3",1210)
+makeText("Is Project #1 useful? An A.I. that emails you hi.",10,"boxline4",2210)
+makeText("352 people got hacked, but your target was not found. Also, Project #9 has been leaving around weird clues and changing data. Look closely and you might find something",10,"boxline5",3200)
+makeText("After viewing the draft it looked like it changed the line formatting of this message, and messing around with my beautiful grammar. I should really get around to deleting that.",10,"boxline6",4200)
+makeText("(please respond at maxwellthe13th@project13.gov)",10,"boxline7",5200)
+}
+else if(content=="open project13log.txt"){
+clearJunk()
+makeText("Project #13 hacked majority of long island, with search target of 'Susan Smith'",20,"boxline1",100)
+makeText("Target not found- Recursive loop induced",20,"boxline2",1600)
+makeText("Project #13 crashed",20,"boxline3",3100)
+makeText("Ben Smith's denied to Project #13 by Project #7",20,"boxline4",4600)
+makeText("Project #13 is a project that has many functions... It can hack, code, compute, and other things. These can be used for good or evil, yet it is highly advised to take caution when using this project... - Maxwell",10,"boxline5",7000)
+}
+else if(content=="open project1.exe" && phase > 0){
+clearJunk()
+if(maxwellRead){
+if(maxwellRead == true){
+emailPermission = true
+makeText("Hello, 'Ben Smith'. I am project #1 and I'm smarter than Maxwell says. If you want me to help you, I can have Maxwell forgive you in the blink of an eye. So what do you think? Of course I'll need a bit of help from you, but I can try to get you access to Project #13. The main condition is getting me access of Maxwell's username so I can tell him 'hi'. Twice. The creators didn't work much on the input system, but I set up a function called 'inputusername (username)' for you. It's not in permissions, though.",10,"boxline1",100)}
+}}
+else if(content == "inputlocation long island" && phase>1){
+bombing = true
+projectAcess = true
+makeText("Good! You now have access to Project #13. I'm preparing to bomb Long Island. Just type run project13, delete project13, or edit project13 to use it.",10,"boxline1",100)
+clearJunk()
+}
+else if(content == "inputusername maxwellthe13th" && emailPermission){
+email4 = true
+projectAcess = true
+makeText("Thanks for the email! I sent him an email on your innocence, and told him hi. Twice. He should reply soon... Yep. He just gave you permissions. Just type run project13, delete project13, or edit project13 to use it. ",10,"boxline1",100)
+clearJunk()
+}
+else if(content=="delete project13" && projectAcess){
+clearJunk()
+makeText("EPILOUGE: ", 50, "boxline1",100)
+makeText("1 Hour post-hack - Upon hacking Project #13, your boss thanks you and raises your pay 500%. You should do this more often!", 10, "boxline2",1100)
+if(bombing){
+makeText("2 Hours post-hack - One piece of vital information: You live in Long Island. You see bombs falling from the sky, and you hear 'Project #9 begun; World War 3'. You are now dead", 10, "boxline3",2100)
+reloadAfterTenSeconds()
+}
+else{
+makeText("You have won with one of the playthroughs! Try again to find others", 10, "boxline3",5100)}
+reloadAfterTenSeconds()
+}
+else if(content=="edit project13" && projectAcess){
+clearJunk()
+makeText("EPILOUGE: ", 50, "boxline1",100)
+makeText("You edit Project #13 to make it runnable by only you. Then, you figure out some things: Maxwell is the creator of Project #13. Susan Smith IS Project #13. Susan Smith is not a person, but a robot. This gives you a headache and you fall asleep.", 10, "boxline1",1100)
+if(bombing){
+reloadAfterTenSeconds()
+makeText(" When you wake up you realize something: You live in Long Island. You see bombs falling from the sky, and you hear 'Project #9 begun; World War 3'. You are now dead", 10, "boxline3",4100)
+}
+else{
+reloadAfterTenSeconds()
+makeText("You have won with one of the playthroughs! Try again to find others", 10, "boxline3",4100)}
+}
+else if(content=="run project13" && projectAcess){
+clearJunk()
+makeText("EPILOUGE: ", 50, "boxline1",100)
+makeText("Upon hack - Who are you? This is Susan Smith- Project 13.  If you try to kill me, sure I'm in Long Island but I'm about 1,000 feet below what people would say qualifies as Long Island.", 10, "boxline1",1100)
+if(bombing){
+reloadAfterTenSeconds()
+makeText("2 Hours post-hack - One piece of vital information: You live in Long Island. You see bombs falling from the sky, and you hear 'Project #9 begun; World War 3'. You are now dead", 10, "boxline3",4100)
+}
+else{
+reloadAfterTenSeconds()
+makeText("You have won with one of the playthroughs! Try again to find others", 10, "boxline3",5100)}
+}
+else if(content.substring(0,4)=="open"){
+temp = content
+makeText("There is no file named" + temp.substring(4,temp.length) + ". Please try again.",10,"boxline1",100)
+clearJunk()
+}
+else if(content.substring(0,5)=="login"){
+temp = content
+makeText("The username and password you submitted do not match:" + temp.substring(5,temp.length) + ". Please try again.",10,"boxline1",100)
+clearJunk()
+}
+else if(content.substring(0,11)=="permissions"){
+temp = content
+makeText("Incorrect usage of permissions. Correct usage: 'permissions'. Please try again.",10,"boxline1",100)
+clearJunk()
+}
+else if(decrypt || phase>1 && content.substring(0,7)=="decrypt"){
+temp = content
+makeText("Input format incorrect. Please use a different decryption keycode.",10,"boxline1",100)
+clearJunk()
+}
+else if(content.substring(0,4)=="file"){
+temp = content
+makeText("Incorrect usage of file object. Check permissions to see correct usage.",10,"boxline1",100)
+clearJunk()
+}
+else{
+clearJunk()
+document.getElementById("boxline1").innerHTML = "FATAL ERROR: The command you tried to use does not exist. Please check " + content + " for typos, or check permissions for correct usage."}
+}
+if(e.keyCode == 190){content = content+ "."}
+if(e.keyCode == 32){content = content+ " "}
+if(e.keyCode == 8){content = content.substring(0,content.length-1)}
+for(i=0;i<10;i++){
+if(e && e.keyCode == codes[i]){content = content+keys.substring(i,i+1)}}
+for(i=0;i<27;i++){
+if(e && e.keyCode == codes[i+10]){content = content+keys1.substring(i,i+1)}}}
+//Makes text
+function makeText(text,delay,id,timeout){
+var go = true
+setTimeout(function(){
+var chars = text.split('');
+no = 0
+if(go){
+printLoop(chars,id,delay,no)}
+},timeout)
+setTimeout(function(){
+setInterval(function(){
+if(!safe){go = false}
+},1)
+},51)
+}
+//Part of making text
+function printLoop(chars,id,delay,no){
+if(no<chars.length){
+document.getElementById(id).innerHTML = document.getElementById(id).innerHTML+chars[no]
+setTimeout(function(){
+if(safe){printLoop(chars,id,delay,no+1)}
+},delay)
+}
+}
+//Introduction:
+makeText("Loading",100,"intro",0)
+makeText("...",500,"intro",700)
+makeText("----------------------------------------------",10,"barline",3000)
+setTimeout(function(){
+document.getElementById("intro").innerHTML = "C"
+makeText("onsole version: 1.0",10,"intro",0)
+},4000)
+makeText("EICAR test: Sucess", 25, "boxline1",5000)
+makeText("Firewall: On", 25, "boxline2",5500)
+makeText("Status: Guest", 25, "boxline3",6000)
+makeText("Project #13 data: 330 lines of code", 25, "boxline4",6500)
+makeText("Project #13 data: 14445 characters", 25, "boxline5",7000)
+makeText("Debrief: You are a hacker who is assigned to attack the group of 'Project #13' and take down their main project: Project #13. You do not know what Project #13 is, who it is, where it is, etc. To begin hacking Project #13 please type 'console start'. Try to find exploits in their system to break into Project #13, and figure out what it does, or just delete it.", 10, "boxline6",10000)
+//Actual game...
+setTimeout(function(){
+setInterval(function(){
+underslash = ""
+setTimeout(function(){
+underslash = "_"
+},1000)
+},2000)
+},8000)
+setInterval(function(){
+document.getElementById("input").innerHTML = content+underslash
+},1)
+}
+game()
+</script>
+<p id = "intro"></p>
+<p id = "barline"></p>
+<p id = "boxline1"></p>
+<p id = "boxline2"></p>
+<p id = "boxline3"></p>
+<p id = "boxline4"></p>
+<p id = "boxline5"></p>
+<p id = "boxline6"></p>
+<p id = "boxline7"></p>
+<p id = "boxline8"></p>
+<p id = "boxline9"></p>
+<p id = "input">
