@@ -1,4 +1,8 @@
-
+.absolute-center{
+    left:50%;
+    transform:translateX(-50%);
+    position:absolute;
+}
 .icon-badge{
     min-height:50px;
     background:darken($base1,25%);
@@ -42,7 +46,4 @@ a.inline-block.logo.nav-item img{
 }
 a.inline-block.logo.nav-item img:hover{
     filter: brightness(80%)
-}
-a.inline-block.logo.nav-item span.absolute-center{
-    font-size:28px;
 }

@@ -1,3 +1,8 @@
+.absolute-center{
+    left:50%;
+    transform:translateX(-50%);
+    position:absolute;
+}
 .icon-badge{
     min-height:50px;
     background:darken($base1,25%);
