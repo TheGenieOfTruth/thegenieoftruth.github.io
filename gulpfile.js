@@ -27,7 +27,7 @@ var jadeprettify = require('gulp-pug-beautify');
 function
 def(x, callback) {
 	cwd = x;
-		runSequence('clean', 'images', 'jade', 'coffee', 'copy-base', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js','beautify-css','beautify-js','beautify-html', callback);
+		runSequence('clean','beautify-css','beautify-js','beautify-html', 'images', 'jade', 'coffee', 'copy-base', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js', callback);
 }
 gulp.task('coffee', function() {
 	return gulp.src(cwd + 'app/coffee/**/*.coffee')
@@ -55,7 +55,7 @@ gulp.task('jade', function() {
 	data.a = require("jade").renderFile
 	return gulp.src(cwd + 'app/**/*.jade')
 		.pipe(jade({
-			"pretty": true,
+            pretty:true,
 			"data": data
 		})) // pip to jade plugin
 		.pipe(gulp.dest(cwd + 'app')); // tell gulp our output folder
@@ -120,13 +120,8 @@ gulp.task('itr', function() {
 		.pipe(gulp.dest(cwd));
 });
 //Jade template clean
-gulp.task('jtc',function(){
-	return gulp.src('base/jade/**/*.jade')
-		.pipe(jadeprettify())
-		.pipe(gulp.dest('base/jade'))
-})
 gulp.task('build', ['default'], function() {});
-gulp.task('default',['jtc'], function(callback) {
+gulp.task('default',function(callback) {
 	var ct = 0
 
 	function loop() {
@@ -172,7 +167,10 @@ gulp.task('beautify-html', function(){
 });
 gulp.task('beautify-jade',function(){
 	return gulp.src(cwd + 'app/**/*.jade')
-		.pipe(jadeprettify())
+		.pipe(jadeprettify({
+			tab_size:1,
+			fill_tab:false
+		}))
 		.pipe(gulp.dest(cwd + "app"))
 })
 gulp.task('help', function() {

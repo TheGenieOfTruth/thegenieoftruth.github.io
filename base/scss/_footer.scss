@@ -1,0 +1,15 @@
+.contact-flex {
+   display: flex;
+   justify-content: space-between;
+   font-size: 40px;
+   width: 50%;
+   margin: 0 auto;
+}
+.contact-flex a {
+   color: #243342;
+   transition: 0.1s color ease-in-out;
+}
+
+.contact-flex a:hover {
+   color: #1b2631;
+}

@@ -1,0 +1,37 @@
+.margin-side-vw{
+    margin:0 20vw;
+}
+a.inline-block.logo.nav-item span.absolute-center{
+    display:none
+}
+@media only screen and (max-width : 768px) {
+    .margin-30-sm{
+        margin:0px 18px;
+    }
+    a.inline-block.logo.nav-item span.absolute-center{
+        display:inline
+    }
+}
+@media only screen and (max-width : 700px) {
+   .contact-flex {
+      width: 100%;
+      font-size:30px;
+   }
+   .margin-side-vw{
+       margin: 0 5px;
+   }
+   #head-gradient .display-1{
+       font-size:64px
+   }
+   #head-gradient .display-5{
+       font-size:32px
+   }
+}
+@media only screen and (max-width : 400px){
+    #head-gradient .display-1{
+        font-size:50px
+    }
+    #head-gradient .display-5{
+        font-size:25px
+    }
+}

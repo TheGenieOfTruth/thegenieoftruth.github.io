@@ -1,10 +1,11 @@
 .navbar-gradient
   nav.navbar.navbar-toggleable-sm.navbar-color
-    .navbar-toggler.navbar-toggler-right.pointer.full-height.flex-vertical.icon-badge(data-toggle="collapse", data-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation" style = "margin-right:-15px;")
+    .navbar-toggler.navbar-toggler-right.pointer.full-height.flex-vertical.icon-badge(data-toggle="collapse", data-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation" style = "margin-right:-17px;")
       span.fa.fa-bars.fa-lg.white
-    .nav-item
-      a.nav-link(href="/")
-        b TheGenieOfTruth
+    a.inline-block.logo.nav-item(href="/")
+      img(src="/base/assets/logo.png")
+      span.absolute-center TheGenieOfTruth
+     
     #navbarNavDropdown.collapse.navbar-collapse
       ul.navbar-nav  
         li.nav-item
