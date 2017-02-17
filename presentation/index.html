@@ -18,10 +18,12 @@
     <!-- SEO -->
     <title>TheGenieOfTruth - Web Design Presentation</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,700,700i%7CMaitree:200,300,400,600,700&amp;subset=latin-ext" rel="stylesheet">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" type='text/css' media='all' href="static/css/base.css">
     <link rel="stylesheet" type='text/css' media='all' href="static/css/colors.css">
     <link rel="stylesheet" type='text/css' media='all' href="static/css/svg-icons.css">
     <link rel="icon" href="/base/assets/favicon.ico" type="image/x-icon">
+    <link rel = "stylesheet" href = "stylesheet.css" type = "text/css">
 
   </head>
   <body>
@@ -33,278 +35,174 @@
           - <div class="wrap"> = container 1200px / <div class="wrap size-50"> = 600px;
         -->
         <section>
-         <span class="background" style="background-image:url('/base/assets/screenshot.png')"></span>
+         <span class="background" style="background-image:url('/base/assets/smartness.gif')"></span>
           <!--.wrap = container 1200px -->
-          <div class="wrap aligncenter">
-            <h1><strong>Create beautiful stories</strong></h1>
-            <p class="text-intro">WebSlides makes HTML presentations easy.<br>
-              Just the essentials and using lovely CSS.
+          <div class="wrap aligncenter embossed-text">
+            <h1><strong>Passion Project Presentation</strong></h1>
+            <p class="text-intro">By Luke Trenaman<br>
+              That one nerd that barely anyone knows
             </p>
             <p>
-              <a href="https://github.com/jlantunez/webslides/archive/master.zip" class="button zoomIn" title="Download WebSlides for free">
-                <svg class="fa-cloud-download">
-                  <use xlink:href="#fa-cloud-download"></use>
-                </svg>
-                WebSlides
-              </a>
+                <button class = "button zoomIn darkenHover" onclick = "go();$('#timer').show()">Let's go</button>
             </p>
           </div>
           <!-- .end .wrap -->
         </section>
         <section>
+            <div class = "zoomIn aligncenter">
+                <h1 class = "blackish"><strong>My Passion Project</strong></h1>
+                <h2><i>Web Design</i></h2>
+                <br><br>
+                <p class = "text-intro">Making websites with my <i>bare hands</i></p>
+            </div>
+        </section>
+        <section>
+            <span class="background" style="background-image:url('/base/assets/CUTENESS.jpg')"></span>
           <!--.wrap = container 1200px -->
-          <div class="wrap size-50 aligncenter">
-            <h2><strong>Why WebSlides?</strong></h2>
-            <p class="text-intro">Good karma and productivity.</p>
-            <div class="bg-white shadow">
-              <ul class="flexblock reasons">
-                <li>
-                  <h2>An opportunity to engage.</h2>
-                  <p>WebSlides is about telling the story, and sharing it in a beautiful way. Hypertext and clean code as narrative elements.</p>
-                </li>
-                <li>
-                  <h2>Work better, faster.</h2>
-                  <p>Designers, marketers, and journalists can now focus on the content. Simply <a href="demos/index.html" title="WebSlides Demos">choose a demo</a> and customize it in minutes.</p>
-                </li>
-              </ul>
+          <div class="wrap size-70">
+              <div class="shadow transparent">
+            <h2 class = "blackish"><strong>So uh, what exactly did you do?</strong></h2>
+            <p class="text-intro black">The depressing recap</p>
+            <br>
+                <h3>Passion Project Day One:</h3>
+                    <p>I broke my computer</p>
+                <h5>(Two days later...)</h5>
+                    <p>Kind of fixed it</p>
+                <h5>(Three weeks later...)</h5>
+                    <p>Broke it again</p>
+                <h5>(Later that day)</h5>
+                    <p>Fixed it again</p>
+                <h3>Passion Project Day Two:</h3>
+                    <p>Mostly just looked at cat memes</p>
             </div>
             <!-- .end .bg-white shadow -->
           </div>
           <!-- .end .wrap -->
         </section>
-        <section>
-          <!--.wrap = container 1200px -->
-          <div class="wrap">
-            <div class="grid vertical-align">
-              <div class="column">
-                <h3><strong>WebSlides is really easy</strong></h3>
-                <p class="text-intro">Each parent <code>&lt;section&gt;</code> in the #webslides element is an individual slide. </p>
-                <p>Code is clean and scalable. It uses <strong>intuitive markup</strong> with popular naming conventions. There's no need to overuse classes or nesting. <strong>Making an HTML presentation has never been so fast</strong>.</p>
-              </div>
-              <!-- .end .column -->
-              <div class="column">
-                <pre>&lt;article id="webslides"&gt;
-  <span class="code-comment">&lt;!-- Slide 1 --&gt;</span>
-  &lt;section&gt;
-    &lt;h1&gt;Design for trust&lt;/h1&gt;
-  &lt;/section&gt;
-  <span class="code-comment">&lt;!-- Slide 2 --&gt;</span>
-  &lt;section class="bg-primary"&gt;
-    &lt;div class="wrap"&gt;
-      &lt;h2&gt;.wrap = container 1200px&lt;/h2&gt;
-    &lt;/div&gt;
-  &lt;/section&gt;
-&lt;/article&gt;
-</pre>
-              </div>
-              <!-- .end .column -->
-            </div>
-            <!-- .end .grid -->
-          </div>
-          <!-- .end .wrap -->
+        <section class = "zoomIn">
+             <div class="wrap size-50 aligncenter">
+                 <h2>They were good cat memes!</h2>
+                 <h5>But I'm sad to say that I actually got stuff done...</h8>
+             </div>
+             <ul class="flexblock features">
+                 <li>
+                   <div>
+                     <h2>
+                       <span class="fa fa-television" aria-hidden="true"></span>
+                       Weird serverside stuff
+                     </h2>
+                     My life got about 5% easier via 20 hours of work...
+                   </div>
+                 </li>
+                 <li>
+                   <div>
+                     <h2>
+                       <span class="fa fa-terminal" aria-hidden="true"></span>
+                       The Command Line
+                     </h2>
+                     Now I can do all the stuff I could do before, but by typing...
+                   </div>
+                 </li>
+                 <li>
+                   <div>
+                     <h2>
+                       <span class="fa fa-github" aria-hidden="true"></span>
+                       Git
+                     </h2>
+                     With git and a <i>lot</i> of tutorials, I managed to host this ugly website.
+                   </div>
+                 </li>
+                 <li>
+                   <div>
+                     <h2>
+                       <span class="fa fa-mobile aligncenter" aria-hidden="true"></span>
+                       Mobile Friendliness
+                     </h2>
+                     Via many headaches, I've been able to make websites that kind of work on mobile devices.
+                   </div>
+                 </li>
+                 <li>
+                   <div>
+                     <h2>
+                        <span class="fa fa-free-code-camp" aria-hidden="true"></span>
+                       FreeCodeCamp
+                     </h2>
+                     I've been able to annoy the FreeCodeCamp community, and almost get certified in Web Development.
+                   </div>
+                 </li>
+                 <li>
+                   <div>
+                     <h2>
+                        <span class="fa fa-code" aria-hidden="true"></span>
+                       Web Design
+                     </h2>
+                     My design taste has definitely evolved over time, and the Passion Project is no exception.
+                   </div>
+                 </li>
+             </ul>
         </section>
         <section>
-          <div class="wrap">
-            <h2>Features</h2>
-            <ul class="flexblock features">
-              <li>
-                <div>
-                  <h2>
-                    <span>&rarr;</span>
-                    Simple Navigation
-                  </h2>
-                  with arrow keys and swipe.
-                </div>
-              </li>
-              <li>
-                <div>
-                  <h2>
-                    <svg class="fa-link">
-                      <use xlink:href="#fa-link"></use>
-                    </svg>
-                    Permalinks
-                  </h2>
-                  Go to a specific slide.
-                </div>
-              </li>
-              <li>
-                <div>
-                  <h2>
-                    <svg class="fa-clock-o">
-                      <use xlink:href="#fa-clock-o"></use>
-                    </svg>
-                    Slide Counter
-                  </h2>
-                  Current/Total number.
-                </div>
-              </li>
-              <li>
-                <div>
-                  <h2>
-                    <span>40<sup>+</sup></span>
-                    Beautiful Components
-                  </h2>
-                  Covers, cards, quotes...
-                </div>
-              </li>
-              <li>
-                <div>
-                  <h2>
-                    <svg class="fa-text-height">
-                      <use xlink:href="#fa-text-height"></use>
-                    </svg>
-                    Vertical Rhythm
-                  </h2>
-                  Use multiples of 8.
-                </div>
-              </li>
-              <li>
-                <div>
-                  <h2>
-                    <span>500<sup>+</sup></span>
-                    SVG Icons
-                  </h2>
-                  Font Awesome Kit.
-                </div>
-              </li>
+            <span class="background" style="background-image:url('/base/assets/web-design.jpg')"></span>
+             <div class="wrap size-60 shadow transparent">
+            <h2 class = "aligncenter">Bragging slide</h2>
+            <h4 class = "aligncenter">I am the <i>best</i> person</h4>
+            <ul>
+                <li><b>HTML</b> - Markup</li>
+                <li><b>CSS</b> - Styling</li>
+                <li><b>JavaScript</b> - Scripting</li>
+                <li><b>JQuery</b> - Utility</li>
+                <li><b>Bootstrap</b> - Framework</li>
+                <li><b>Sass</b> - Preprocess CSS</li>
+                <li><b>Jade</b> - Preprocess HTML</li>
+                <li><b>Gulp</b> - Task Runner</li>
             </ul>
-          </div>
-        </section>
-        <section>
-          <div class="wrap">
-            <h2><strong>WebSlides Demos</strong></h2>
-            <p>Contribute on <a href="https://github.com/jlantunez/webslides" title="Contribute on Github">Github</a>. <span class="alignright"><a href="demos/index.html" title="WebSlides Demos">View all &rsaquo;</a></span></p>
-            <ul class="flexblock gallery">
-              <li>
-                <a href="demos/why-webslides.html" title="Why WebSlides?">
-                  <figure>
-                    <img alt="Thumbnail Why WebSlides?" src="https://webslides.tv/static/images/demos-why.png">
-                    <figcaption>
-                      <h2>Why WebSlides?</h2>
-                    </figcaption>
-                  </figure>
-                </a>
-              </li>
-              <li>
-                <a href="demos/landings.html" title="Landings">
-                  <figure>
-                    <img alt="Thumbnail Landings" src="https://webslides.tv/static/images/demos-landings.png">
-                    <figcaption>
-                      <h2>Landings</h2>
-                    </figcaption>
-                  </figure>
-                </a>
-              </li>
-              <li>
-                <a href="demos/portfolios.html" title="Portfolios">
-                  <figure>
-                    <img alt="Thumbnail Portfolios" src="https://webslides.tv/static/images/demos-portfolios.png">
-                    <figcaption>
-                      <h2>Portfolios</h2>
-                    </figcaption>
-                  </figure>
-                </a>
-              </li>
-              <li>
-                <a href="demos/keynote.html" title="Apple Keynote">
-                  <figure>
-                    <img alt="Thumbnail Apple Keynote" src="https://webslides.tv/static/images/demos-apple.png">
-                    <figcaption>
-                      <h2>Apple Keynote</h2>
-                    </figcaption>
-                  </figure>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <!-- .end .wrap -->
-        </section>
-        <section>
-          <div class="wrap">
-            <div class="grid vertical-align">
-              <div class="column">
-                <h4>
-                  <svg class="fa-life-ring">
-                    <use xlink:href="#fa-life-ring"></use>
-                  </svg>
-                  <strong>Guides</strong>
-                </h4>
-                <p>If you need some help, here's just two tutorials. Just a basic knowledge of HTML is required:</p>
-                <ul class="description">
-                  <li><a href="demos/components.html" title="WebSlides Components">WebSlides Components</a>.</li>
-                  <li><a href="demos/classes.html" title="WebSlides Classes">WebSlides Classes</a>.</li>
-                </ul>
-              </div>
-              <div class="column">
-                <figure><img src="static/images/setup.png" alt="WebSlides Files"></figure>
-              </div>
-              <div class="column">
-                <h4>
-                  <svg class="fa-cubes">
-                    <use xlink:href="#fa-cubes"></use>
-                  </svg>
-                  <strong>Built to expand</strong>
-                </h4>
-                <p>The best way to <strong>inspire with your content</strong> is to connect on a personal level. We love these solutions:</p>
-                <ul class="description">
-                  <li>Background images: <a href="http://unsplash.com">Unsplash</a>.</li>
-                  <li>CSS animations: <a href="https://daneden.github.io/animate.css/">Animate.css</a>.</li>
-                </ul>
-              </div>
             </div>
-            <!--end .grid -->
-          </div>
-        </section>
-        <section class="aligncenter">
-          <!-- .wrap = container 1200px -->
-          <div class="wrap">
-            <h2><strong>Ready to Start?</strong> </h2>
-            <p class="text-intro">Create your own presentation instantly. <br>120+ premium slides ready to use.</p>
-            <p>
-              <a href="https://github.com/jlantunez/webslides/archive/master.zip" class="button" title="Download WebSlides">
-                <svg class="fa-cloud-download">
-                  <use xlink:href="#fa-cloud-download"></use>
-                </svg>
-                Free Download
-              </a>
-              <span class="try">
-                <a href="https://www.paypal.me/jlantunez/8" title="Thanks :)">
-                  <svg class="fa-paypal">
-                    <use xlink:href="#fa-paypal"></use>
-                  </svg>
-                  Pay what you want.
-                </a>
-              </span>
-            </p>
-          </div>
-          <!-- .end .wrap -->
-        </section>
-        <section class="slide-bottom">
-          <div class="wrap">
-            <div class="content-right text-serif">
-              <h2>
-                <strong>Thanks.</strong>
-                <a target="_blank" title="Share on Twitter" href="https://twitter.com/intent/tweet?text=Finally,%20everything%20you%20need%20to%20make%20HTML%20presentations%20in%20a%20fast/beautiful%20way.%20@WebSlides%20=%20Good%20karma%20&mdash;%20https://webslides.tv">
-                  <svg class="fa-twitter">
-                    <use xlink:href="#fa-twitter"></use>
-                  </svg>
-                </a>
-              </h2>
-              <p>People share content that makes them feel inspired. WebSlides is a very effective way to engage young audiences, customers, and teams. Best, <a href="https://twitter.com/jlantunez">@jlantunez</a>.</p>
-              <figure>
-                <a href="http://linkedin.com/in/jlantunez" title="LinkedIN — José Luis Antúnez">
-                  <img class="aligncenter fadeInUp" src="https://webslides.tv/static/images/signature.png" alt="Signature">
-                </a>
-              </figure>
-            </div>
-            <!-- .end .content-right -->
-          </div>
-          <!-- .end .wrap -->
-        </section>
 
+        </section>
+        <section class = "less-padding">
+            <h2 class = "aligncenter">Web Design</h2>
+            <h4 class = "aligncenter">In one minute</h4>
+            <div class="wrap size-50 shadow">
+                <h3>Web design takes several components:</h3>
+                <ul>
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>JavaScript</li>
+                    <li>A moderately smart person</li>
+                </ul>
+                <h3>How do you use them together?</h3>
+                <div class = "bigger">
+                <p><b>HTML</b> is basically a skeleton of a webpage. Its fairly useless when used by itself.</p>
+                <p>When <b>CSS</b> is added the the mix, things start to look nicer, and also become more useful.</p>
+                <p><b>JavaScript</b> is used for a number of things. It can add CSS and HTML to a page, and can manipulate them.</p>
+                <p>And finally, you need a <b>moderately smart person</b> to actually make all three of these.</p>
+            </div>
+            </div>
+        </section>
+        <section>
+            <span class="background blur" style="background-image:url('/base/assets/misc.jpg')"></span>
+             <!--.wrap = container 1200px -->
+             <div class="wrap embossed-text">
+                 <h2 class = "aligncenter">Miscellaneous</h2>
+                 <ul>
+                     <li>Made a website</li>
+                     <li>Drew the logo myself</li>
+                     <li>Made several games</li>
+                     <li>Programmed this slideshow</li>
+                     <li>Googled over 9000 times</li>
+                 </ul>
+             </div>
+        </section>
+        <section>
+            <h1 class = "zoomIn aligncenter">Thanks for watching!</h1>
+        </section>
       </article>
       <!-- end article -->
     </main>
+    <div id = "timer">
+        <div id = "timer-fill">
+        </div>
+    </div>
     <!-- end main -->
 
    <!-- Remove #webslides element :)
@@ -322,6 +220,26 @@
 
     <script type="text/javascript">
       var slide = jQuery('#webslides').webslides();
+      //300 seconds
+      var ct = 0;
+      var fill = 1;
+      function go(){
+          slide.nextSlide();
+          var timer = setInterval(function(){
+              $("#timer-fill").css("width",fill+"%")
+              fill+=0.1
+          },slides[ct])
+          setTimeout(function(){
+              if(ct<slides.length){
+                  ct++
+                  clearInterval(timer)
+                  go()
+                  fill = 1
+                  $("#timer-fill").css("width",fill+"%")
+              }
+          },slides[ct]*1000)
+      }
+      var slides = [15,30,90,60,30,30,15]
     </script>
 
     <!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) -->

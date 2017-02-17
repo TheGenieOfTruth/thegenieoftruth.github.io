@@ -1,0 +1,48 @@
+.embossed-text{
+    color:#eee;
+    background:rgba(16,16,16,0.6);
+    width:50%;
+    padding:30px;
+}
+.darkenHover:hover{
+    filter:brightness(80%)
+}
+.fourthsize{
+    width:25%;
+    height:25%
+}
+.transparent{
+    background:rgba(255,255,255,0.8)
+}
+.blackish{
+    color:#555
+}
+.black{
+    color:#222
+}
+ul li{
+    font-size:30px;
+    line-height:1.6
+}
+.bigger p{
+    font-size:28px
+}
+.less-padding{
+    padding:20px !important
+}
+.blur{
+    filter:blur(8px)
+}
+#timer{
+    top:99vh;
+    position:fixed;
+    background:#95a5a6;
+    height:1vh;
+    width:100%;
+    display:none;
+}
+#timer-fill{
+    background:#2ecc71;
+    position:absolute;
+    height:1vh;
+}
