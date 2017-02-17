@@ -225,6 +225,7 @@
       var fill = 1;
       function go(){
           slide.nextSlide();
+          clearInterval(timer)
           var timer = setInterval(function(){
               $("#timer-fill").css("width",fill+"%")
               fill+=0.1
@@ -232,7 +233,6 @@
           setTimeout(function(){
               if(ct<slides.length){
                   ct++
-                  clearInterval(timer)
                   go()
                   fill = 1
                   $("#timer-fill").css("width",fill+"%")
