@@ -72,8 +72,8 @@
                     <p>Broke it again</p>
                 <h5>(Later that day)</h5>
                     <p>Fixed it again</p>
-                <h3>Passion Project Day Two:</h3>
-                    <p>Mostly just looked at cat memes</p>
+                <h3>(Afterwards ~ Now)</h3>
+                    <p>80% cat petting, 20% programming</p>
             </div>
             <!-- .end .bg-white shadow -->
           </div>
@@ -81,7 +81,7 @@
         </section>
         <section class = "zoomIn">
              <div class="wrap size-50 aligncenter">
-                 <h2>They were good cat memes!</h2>
+                 <h2>They were cute cats.</h2>
                  <h5>But I'm sad to say that I actually got stuff done...</h8>
              </div>
              <ul class="flexblock features">
@@ -223,10 +223,11 @@
       //300 seconds
       var ct = 0;
       var fill = 1;
+      var timer = setInterval(function(){},1000000)
       function go(){
           slide.nextSlide();
           clearInterval(timer)
-          var timer = setInterval(function(){
+          timer = setInterval(function(){
               $("#timer-fill").css("width",fill+"%")
               fill+=0.1
           },slides[ct])
