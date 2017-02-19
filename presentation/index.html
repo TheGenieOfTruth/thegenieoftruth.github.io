@@ -228,21 +228,22 @@
           slide.nextSlide();
           clearInterval(timer)
           timer = setInterval(function(){
+              if(fill>=100){
+                  if(ct<slides.length){
+                      ct++
+                      go()
+                      fill = 1
+                      $("#timer-fill").css("width",fill+"%")
+                  } else{
+                      clearInterval(timer)
+                      $("#timer").hide()
+                  }
+              }
               $("#timer-fill").css("width",fill+"%")
               fill+=0.1
           },slides[ct])
-          setTimeout(function(){
-              if(ct<slides.length){
-                  ct++
-                  go()
-                  fill = 1
-                  $("#timer-fill").css("width",fill+"%")
-              } else{
-                  $("#timer").hide()
-              }
-          },slides[ct]*1000)
       }
-      var slides = [15,15,105,90,30,30,15]
+      var slides = [15,15,105,90,60,15]
     </script>
 
     <!-- OPTIONAL - svg-icons.js (fontastic.me - Font Awesome as svg icons) -->
