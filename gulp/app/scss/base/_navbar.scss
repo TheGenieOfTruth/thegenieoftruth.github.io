@@ -26,6 +26,9 @@ nav.navbar-color{
 .navbar-color a, .navbar-color li{
   color:#f8f8f8;
 }
+ul.navbar-nav li.nav-item{
+    padding:0px 5px;
+}
 .nav-item,.nav-brand{
     height:100%;
     padding:0px;
@@ -37,7 +40,13 @@ nav.navbar-color{
 .nav-item:hover,.nav-brand:hover{
     background-color:(darken($base1,20%));
 }
-
+/*Get confused*/
+li.nav-item:active{
+    background:darken($base1,25%)
+}
+li.nav-item.active{
+    background:darken($base1,30%)
+}
 .navbar-title{
     display:none
 }

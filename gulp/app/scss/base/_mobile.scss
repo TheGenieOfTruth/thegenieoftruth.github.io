@@ -4,13 +4,10 @@
 a.inline-block.logo.nav-item span.absolute-center{
     display:none
 }
-@media only screen and (max-width : 768px) {
+@media only screen and (max-width : 767px) {
     a.inline-block.logo.nav-item span.absolute-center{
         display:inline;
         font-size:30px;
-    }
-    .margin-30-sm{
-        margin:0px 18px;
     }
     .navbar-title{
         display:inline-block !important;
@@ -36,6 +33,9 @@ a.inline-block.logo.nav-item span.absolute-center{
    }
 }
 @media only screen and (max-width : 400px){
+    a.inline-block.logo.nav-item span.absolute-center{
+        display:none;
+    }
     #head-gradient .display-1{
         font-size:50px
     }

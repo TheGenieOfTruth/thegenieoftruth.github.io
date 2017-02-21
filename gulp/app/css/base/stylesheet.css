@@ -33,12 +33,10 @@ h1, h2, h3, h4, h5, h6 {
 a.inline-block.logo.nav-item span.absolute-center {
   display: none; }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   a.inline-block.logo.nav-item span.absolute-center {
     display: inline;
     font-size: 30px; }
-  .margin-30-sm {
-    margin: 0px 18px; }
   .navbar-title {
     display: inline-block !important; }
   .navbar-title-wrapper {
@@ -57,6 +55,8 @@ a.inline-block.logo.nav-item span.absolute-center {
     font-size: 32px; } }
 
 @media only screen and (max-width: 400px) {
+  a.inline-block.logo.nav-item span.absolute-center {
+    display: none; }
   #head-gradient .display-1 {
     font-size: 50px; }
   #head-gradient .display-5 {
@@ -89,6 +89,9 @@ nav.navbar-color {
 .navbar-color a, .navbar-color li {
   color: #f8f8f8; }
 
+ul.navbar-nav li.nav-item {
+  padding: 0px 5px; }
+
 .nav-item, .nav-brand {
   height: 100%;
   padding: 0px;
@@ -99,6 +102,13 @@ nav.navbar-color {
 
 .nav-item:hover, .nav-brand:hover {
   background-color: #196090; }
+
+/*Get confused*/
+li.nav-item:active {
+  background: #16527a; }
+
+li.nav-item.active {
+  background: #124364; }
 
 .navbar-title {
   display: none; }
