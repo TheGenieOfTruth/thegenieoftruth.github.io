@@ -5,9 +5,13 @@ a.inline-block.logo.nav-item span.absolute-center{
     display:none
 }
 @media only screen and (max-width : 767px) {
+    .contact-flex{
+      width: 100%;
+    }
     a.inline-block.logo.nav-item span.absolute-center{
         display:inline;
         font-size:30px;
+        top:5px;
     }
     .navbar-title{
         display:inline-block !important;

@@ -4,17 +4,18 @@
       span.fa.fa-bars.fa-lg.white
     a.inline-block.logo.nav-item(href="/")
       img(src="/base/assets/logo.png")
-      span.absolute-center TheGenieOfTruth
-     
+      span.absolute-center TheGenieOfTruth   
     #navbarNavDropdown.collapse.navbar-collapse
       ul.navbar-nav 
-        li.nav-item.active
-          a.nav-link(href="/") Home
-        li.nav-item
-          a.nav-link(href="/htmlproject") Learn
-        li.nav-item
-          a.nav-link(href="/gulp") Sample
-        li.nav-item
-          a.nav-link(href="/gulp") Resources
-        li.nav-item
-          a.nav-link(href="/gulp") Games      
+        - var sites = ["Home|/","Learn|/htmlproject","Sample|/gulp","Games|/arcade"];for(i=0;i<sites.length;i++) var a = sites[i].split("|")[0]
+        = a
+        //li.nav-item.active
+        //  a.nav-link(href="/") Home
+        //li.nav-item
+        //  a.nav-link(href="/htmlproject") Learn
+        //li.nav-item
+        //  a.nav-link(href="/gulp") Sample
+        //li.nav-item
+        //  a.nav-link(href="/gulp") Resources
+        //li.nav-item
+        //  a.nav-link(href="/gulp") Games      

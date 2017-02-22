@@ -3,10 +3,12 @@ body, html {
   color: #1b2631;
   /*Dark blue used instead of black, less intense*/
   font-size: 18px;
-  width: 100%; }
+  width: 100%;
+  line-height: 1.4; }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 400; }
+  font-weight: 400;
+  line-height: 1.4; }
 
 .gradient-darken {
   background: black; }
@@ -26,41 +28,6 @@ h1, h2, h3, h4, h5, h6 {
 #head-gradient .display-1, #head-gradient .display-5 {
   word-wrap: break-word;
   width: 100%; }
-
-.margin-side-vw {
-  margin: 0 20vw; }
-
-a.inline-block.logo.nav-item span.absolute-center {
-  display: none; }
-
-@media only screen and (max-width: 767px) {
-  a.inline-block.logo.nav-item span.absolute-center {
-    display: inline;
-    font-size: 30px; }
-  .navbar-title {
-    display: inline-block !important; }
-  .navbar-title-wrapper {
-    margin: 0 auto !important;
-    display: inline-block; } }
-
-@media only screen and (max-width: 700px) {
-  .contact-flex {
-    width: 100%;
-    font-size: 30px; }
-  .margin-side-vw {
-    margin: 0 5px; }
-  #head-gradient .display-1 {
-    font-size: 64px; }
-  #head-gradient .display-5 {
-    font-size: 32px; } }
-
-@media only screen and (max-width: 400px) {
-  a.inline-block.logo.nav-item span.absolute-center {
-    display: none; }
-  #head-gradient .display-1 {
-    font-size: 50px; }
-  #head-gradient .display-5 {
-    font-size: 25px; } }
 
 .absolute-center {
   left: 50%;
@@ -102,6 +69,13 @@ ul.navbar-nav li.nav-item {
 
 .nav-item:hover, .nav-brand:hover {
   background-color: black; }
+
+/*Get confused*/
+li.nav-item:active {
+  background: black; }
+
+li.nav-item.active {
+  background: black; }
 
 .navbar-title {
   display: none; }
@@ -154,3 +128,44 @@ a.inline-block.logo.nav-item img:hover {
 
 .contact-flex a:hover {
   color: #1b2631; }
+
+.contact-flex-text {
+  font-size: 18px; }
+
+.margin-side-vw {
+  margin: 0 20vw; }
+
+a.inline-block.logo.nav-item span.absolute-center {
+  display: none; }
+
+@media only screen and (max-width: 767px) {
+  .contact-flex {
+    width: 100%; }
+  a.inline-block.logo.nav-item span.absolute-center {
+    display: inline;
+    font-size: 30px;
+    top: 5px; }
+  .navbar-title {
+    display: inline-block !important; }
+  .navbar-title-wrapper {
+    margin: 0 auto !important;
+    display: inline-block; } }
+
+@media only screen and (max-width: 700px) {
+  .contact-flex {
+    width: 100%;
+    font-size: 30px; }
+  .margin-side-vw {
+    margin: 0 5px; }
+  #head-gradient .display-1 {
+    font-size: 64px; }
+  #head-gradient .display-5 {
+    font-size: 32px; } }
+
+@media only screen and (max-width: 400px) {
+  a.inline-block.logo.nav-item span.absolute-center {
+    display: none; }
+  #head-gradient .display-1 {
+    font-size: 50px; }
+  #head-gradient .display-5 {
+    font-size: 25px; } }
