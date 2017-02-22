@@ -10,25 +10,6 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   line-height: 1.4; }
 
-.gradient-darken {
-  background: black; }
-
-#head-gradient {
-  width: 100%;
-  color: #f8f8f8;
-  flex-wrap: wrap;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 10px 0 20px 0;
-  margin-bottom: 30px;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.05), rgba(255, 255, 255, 0.05)); }
-
-#head-gradient .display-1, #head-gradient .display-5 {
-  word-wrap: break-word;
-  width: 100%; }
-
 .absolute-center {
   left: 50%;
   transform: translateX(-50%);
