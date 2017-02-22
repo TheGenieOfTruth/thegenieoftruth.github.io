@@ -1,0 +1,25 @@
+.navbar-gradient
+    nav.navbar.navbar-toggleable-sm.navbar-color
+        .navbar-toggler.navbar-toggler-right.pointer.full-height.flex-vertical.icon-badge(data-toggle="collapse", data-target="#navbarNavDropdown", aria-controls="navbarNavDropdown", aria-expanded="false", aria-label="Toggle navigation" style = "margin-right:-17px;width:50px;")
+            span.fa.fa-bars.fa-lg.white
+        a.inline-block.logo.nav-item(href="/")
+            img(src="/base/assets/logo.png")
+            span.absolute-center TheGenieOfTruth
+        #navbarNavDropdown.collapse.navbar-collapse
+            ul.navbar-nav
+                -
+                    sites = config.sites;
+
+                each val, index in sites
+                    li.nav-item
+                        a.nav-link(href=val.split("|")[1])= val.split("|")[0]
+                //li.nav-item.active
+                //  a.nav-link(href="/") Home
+                //li.nav-item
+                //  a.nav-link(href="/htmlproject") Learn
+                //li.nav-item
+                //  a.nav-link(href="/gulp") Sample
+                //li.nav-item
+                //  a.nav-link(href="/gulp") Resources
+                //li.nav-item
+                //  a.nav-link(href="/gulp") Games
