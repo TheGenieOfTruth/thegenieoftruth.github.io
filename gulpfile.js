@@ -185,6 +185,17 @@ gulp.task('beautify-root-pug',function(){
 		}))
 		.pipe(gulp.dest("base/pug"))
 })
+gulp.task('blog',function(){
+    var blog = JSON.parse(fs.readFileSync('blog.json', 'utf8'));
+    blog.forEach(function(val,index){
+				if(!fs.existsSync('blog/'+(index+1).toString())){
+					fs.mkdirSync('blog/'+(index+1).toString())
+				}
+
+        fs.writeFileSync('blog/'+(index+1).toString()+"/index.html", '<h2>'+val.title+'</h2>'+'<p>'+val.content+'</p>');
+        //Clean up and get better page later. Perhaps a pug thing?
+    })
+})
 gulp.task('help', function() {
 	console.log("watch:")
 	console.log("-a <param> - set a custom directory to watch")
