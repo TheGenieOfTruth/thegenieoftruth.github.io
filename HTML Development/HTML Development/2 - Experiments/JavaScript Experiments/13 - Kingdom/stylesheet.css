@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway|Open Sans');
+*[unhighlightable=true]{
+-webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Chrome/Safari/Opera */
+   -khtml-user-select: none; /* Konqueror */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                not supported by any browser */
+}
+#content {
+  padding: 55px 10px 10px 10px
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 5px 0px 7px 0px !important;
+}
+#wrapper {
+  width: 1050px;
+  height: 700px;
+  transition: background 0.3s;
+  font-size: 20px;
+  font-family: Open Sans;
+}
+#buyAmount{
+
+}
