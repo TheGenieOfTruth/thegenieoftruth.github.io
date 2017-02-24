@@ -2,7 +2,7 @@
 body, html {
   color: #1b2631;
   /*Dark blue used instead of black, less intense*/
-  font-size: 18px;
+  font-size: 22px;
   width: 100%;
   line-height: 1.4; }
 
@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #head-gradient {
   padding: 40px 0 40px 0;
-  background: url("/base/assets/sunset.png");
+  background: url("/base/assets/sunset.jpg");
   /* fix background */
   background-attachment: fixed;
   /* center it */

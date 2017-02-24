@@ -41,15 +41,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .icon-badge {
   min-height: 50px;
-  background: black;
+  background: #151515;
   border-radius: 0;
   transition: background 0.1s; }
 
 .icon-badge:hover {
-  background: black; }
+  background: #090909; }
 
 .navbar-gradient {
-  background: black;
+  background: #2f2f2f;
   min-height: 45px; }
 
 nav.navbar-color {
@@ -73,14 +73,14 @@ ul.navbar-nav li.nav-item {
   font-size: 20px; }
 
 .nav-item:hover, .nav-brand:hover {
-  background-color: black; }
+  background-color: #222222; }
 
 /*Get confused*/
 li.nav-item:active {
-  background: black; }
+  background: #151515; }
 
 li.nav-item.active {
-  background: black; }
+  background: #090909; }
 
 .navbar-title {
   display: none; }

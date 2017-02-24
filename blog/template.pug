@@ -1,0 +1,14 @@
+doctype html
+html
+    head
+        != a(head,{"title":"Gulp - Whalescome to the page of holy hallos!"})
+        link(rel="stylesheet" href="../app/css/base/stylesheet.css")
+    body
+        != a(navbar,{"selected":"Blog"})
+        != a(header,{"name":"Blog","sub":"<i>"+title+"</i>"})
+        div(class="container")
+            br
+            p #{content}
+
+        != a(footer)
+        != a(analytics)
