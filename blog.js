@@ -54,5 +54,5 @@ function readWriteSync(value) {
     //
     // Log the results.
     //
-    readWriteSync({"title":result.title,"author":result.title,"content":result.content,"date": timeStamp()})
+    readWriteSync({"title":result.title,"author":result.author,"content":result.content,"date": timeStamp()})
   });
