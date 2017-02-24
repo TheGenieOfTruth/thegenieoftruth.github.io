@@ -1,14 +1,18 @@
 doctype html
 html
     head
-        != a(head,{"title":"Gulp - Whalescome to the page of holy hallos!"})
+        != a(head,{"title":"TheGenieOfTruth - Blog | " + title})
         link(rel="stylesheet" href="../app/css/base/stylesheet.css")
     body
         != a(navbar,{"selected":"Blog"})
-        != a(header,{"name":"Blog","sub":"<i>"+title+"</i>"})
-        div(class="container")
+        != a(header,{"name":"Blog","sub":"Eh, this is a blog"})
+        div(class="container line-height-1.2")
             br
+            h2 #{title}
+            p.small By #{author} <br/> #{date}
             p #{content}
-
+            != previous
+            != next
+        a(href="list/") All posts
         != a(footer)
         != a(analytics)

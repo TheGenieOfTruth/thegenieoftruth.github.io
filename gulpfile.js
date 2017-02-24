@@ -18,7 +18,7 @@ var replace = require('gulp-replace');
 var fs = require('fs');
 var argv = require('yargs')
     .argv;
-var loc = ["gulp/", "harmonicraft/"];
+var loc = ["gulp/", "harmonicraft/","blog/"];
 var cwd = "";
 var htmlprettify = require('gulp-html-beautify');
 var jsprettify = require('gulp-jsbeautifier');
@@ -92,7 +92,12 @@ gulp.task('watch', function(callback) {
             gulp.watch('base/scss/*.scss', ['copy-base', 'pug']);
             gulp.watch("base/pug/*.pug", ["pug"]);
             if (argv.b) {
-                gulp.watch(cwd + "**/*", ['build'])
+                gulp.watch(cwd + '**/*.coffee', ['coffee']); //reload via javascript change
+                gulp.watch(cwd + '**/*.pug', ['pug']); //reload via HTML change
+                gulp.watch(cwd + '**/*.scss', ['sass']); //reload via CSS change
+                gulp.watch(cwd + '**/*.html', browserSync.reload); //reload
+                gulp.watch(cwd + '**/*.js', browserSync.reload); //reload
+                gulp.watch(cwd + '**/*.css', browserSync.reload); //reload
             } else {
                 gulp.watch(cwd + 'app/coffee/**/*.coffee', ['coffee']); //reload via javascript change
                 gulp.watch(cwd + 'app/*.pug', ['pug']); //reload via HTML change
@@ -217,6 +222,19 @@ gulp.task('blog', function() {
             var hold = Object.assign({},data)
             hold.title = blog[ct].title
             hold.content = blog[ct].content
+            hold.date = blog[ct].date
+            hold.author = blog[ct].author
+            if(ct>0){
+
+            hold.previous = "<a class = 'smallish' href = '../"+(ct).toString()+"'><i class = 'fa fa-long-arrow-left' aria-hidden = 'true'></i> Previous</a>"
+          } else{
+            hold.previous = "<span class = 'gray smallish'>Previous</span>"
+          }
+            if(ct+2<=blog.length){
+              hold.next = "<a class = 'smallish pull-right' href = '../"+(ct+2).toString()+"'>Next <i class = 'fa fa-long-arrow-right' aria-hidden = 'true'></i></a>"
+            } else{
+              hold.next = "<span class = 'gray smallish pull-right'>Next</span>"
+            }
             gulp.src('blog/template.pug')
                 .pipe(pug({
                     "pretty": true,

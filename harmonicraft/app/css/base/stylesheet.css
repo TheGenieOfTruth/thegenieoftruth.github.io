@@ -120,6 +120,19 @@ a.inline-block.logo.nav-item img:hover {
 .white {
   color: white; }
 
+.gray {
+  color: #aaa; }
+
+.smallish {
+  font-size: 16px; }
+
+.small {
+  font-size: 14px;
+  color: #aaa; }
+
+.line-height-1.2 {
+  line-height: 1.2; }
+
 .contact-flex {
   display: flex;
   justify-content: space-between;
