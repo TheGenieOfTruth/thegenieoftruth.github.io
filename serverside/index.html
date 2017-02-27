@@ -3,17 +3,18 @@
 function publish(){
     $.ajax({
             "type": "POST",
-            "url": "http://192.168.1.114:8000",
+            "url": "http://d03fdcff.ngrok.io",
             "crossDomain": true,
             "dataType": "json",
             "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val()})
         })
-        //.done(function(data) {})
+        .done(function(data) {
+            alert("Blog post sent!")
+        })
 
 }
 $(document).ready(function(){
-    $.get("http://192.168.1.114:8000",function(data){
-        console.log(data)
+    $.get("http://d03fdcff.ngrok.io",function(data){
     })
 })
 </script>
