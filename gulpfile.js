@@ -29,7 +29,7 @@ var rename = require("gulp-rename");
 function
 def(x, callback) {
     cwd = x;
-    runSequence('clean', 'beautify-css', 'beautify-js', 'beautify-html', 'beautify-pug', 'images', 'pug', 'coffee', 'copy-base', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js', 'blog', callback);
+    runSequence('clean', 'beautify-css', 'beautify-js', 'beautify-html', 'beautify-pug', 'images', 'pug', 'coffee', 'copy-base', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js', callback);
 }
 
 function makeData() {
@@ -48,7 +48,7 @@ function makeData() {
             a = a.split(".")[0];
             data[a] = val
         });
-    data.config = JSON.parse(fs.readFileSync('config.json', 'utf8'));
+    data.config = JSON.parse(fs.readFileSync('serverside/config.json', 'utf8'));
     data.a = function() {
         arguments[1] = arguments[1] === undefined || arguments[1] === null ? {} : arguments[1]
         return require("pug")
@@ -141,11 +141,12 @@ gulp.task('itr', function() {
 });
 //pug template clean
 gulp.task('build', function(callback) {
+    cwd = argv.a != undefined ? argv.a : ""
     console.log("\x1b[34mRunning tasks under directory: " + cwd + "\x1b[0m")
     def(cwd, callback)
     browserSync.reload()
 });
-gulp.task('default', ['beautify-root-pug'], function(callback) {
+gulp.task('default', ['beautify-root-pug','blog'], function(callback) {
     var ct = 0
 
     function loop() {
@@ -206,7 +207,7 @@ gulp.task('beautify-root-pug', function() {
         .pipe(gulp.dest("base/pug"))
 })
 gulp.task('blog', function() {
-    var blog = JSON.parse(fs.readFileSync('blog.json', 'utf8'));
+    var blog = JSON.parse(fs.readFileSync('serverside/blog.json', 'utf8'));
     makeData()
     var ct = 0
 
@@ -249,6 +250,15 @@ gulp.task('blog', function() {
         }
     }
     loop()
+    var hold = Object.assign({},data)
+    hold.list = blog
+    gulp.src('blog/all.pug')
+        .pipe(pug({
+            pretty:true,
+            data:hold
+        }))
+        .pipe(rename("index.html"))
+        .pipe(gulp.dest('blog/all/'))
 })
 gulp.task('help', function() {
     console.log("watch:")

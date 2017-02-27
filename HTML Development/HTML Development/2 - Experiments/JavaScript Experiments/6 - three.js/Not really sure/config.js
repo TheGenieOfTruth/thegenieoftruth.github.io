@@ -13,4 +13,7 @@ Libraries:
   Includes Flatly, Bootstrap, and JQuery
 
 */
+get("essentials")
 get("three")
+get("jquery")
+get("modulink.js")

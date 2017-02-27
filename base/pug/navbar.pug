@@ -11,7 +11,7 @@
                     sites = config.sites;
 
                 each val, index in sites
-                    li.nav-item
+                    li.nav-item(class=selected != val.split("|")[0] ? "" : "active")
                         a.nav-link(href=val.split("|")[1])= val.split("|")[0]
                 //li.nav-item.active
                 //  a.nav-link(href="/") Home

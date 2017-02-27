@@ -1,0 +1,23 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script>
+function publish(){
+    $.ajax({
+            "type": "POST",
+            "url": "http://192.168.1.114:8000",
+            "crossDomain": true,
+            "dataType": "json",
+            "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val()})
+        })
+        //.done(function(data) {})
+
+}
+$(document).ready(function(){
+    $.get("http://192.168.1.114:8000",function(data){
+        console.log(data)
+    })
+})
+</script>
+<input type = "text" placeholder = "title" id = "title">
+<input type = "text" placeholder = "author" id = "author">
+<textarea placeholder = "content" id = "content"></textarea>
+<button onclick = "publish()">Publish</button>
