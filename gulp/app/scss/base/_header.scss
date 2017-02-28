@@ -1,3 +1,5 @@
+$img: url("/base/assets/sunset.jpg") !default;
+$header-padding: 40px !default;
 .gradient-darken{
     width:100%;
     color:#f8f8f8;
@@ -6,8 +8,8 @@
     background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
 }
 #head-gradient{
-    padding:40px 0 40px 0;
-    background:url("/base/assets/sunset.jpg");
+    padding:$header-padding 0 $header-padding 0;
+    background:$img;
 
     /* fix background */
     background-attachment: fixed;

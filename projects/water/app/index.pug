@@ -1,0 +1,37 @@
+doctype html
+html
+    head
+        != a(head,{"title":"Gulp - Whalescome to the page of holy hallos!"})
+        //build:js js/main.min.js
+        // endbuild
+        //build:css css/styles.min.css
+        link(rel="stylesheet" href="css/base/stylesheet.css")
+        //endbuild
+    body
+        != a(header,{"name":"Water Cycle","sub":""})
+        div(class="container")
+            br
+            h2
+              hb What is this "Water Cycle"?
+            p Typically, when figuring something out, you want to break it up into parts.
+            ul
+              li Water: H#[sub 2]0, the stuff you drink so you don't die
+              li Cycle: The greek root for circle
+            p So... A water circle? Sounds like a demonic cult, but this its actually the scientific term for how water travels and transforms.
+            br
+            h2
+              hb States of Matter
+              .small (Sorted in order of awesomeness)
+            p This is going to be the most boring part, but you'll get through. Matter (pretty much everything that isn't nothing) can be in different states, with different properties...
+            h4
+              hb Solid
+              br
+            h4
+              hb Liquid
+              br
+            h4
+              hb Gas
+              br
+
+        != a(analytics)
+        != a(footer)
