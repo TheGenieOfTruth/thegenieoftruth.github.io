@@ -18,7 +18,12 @@ var replace = require('gulp-replace');
 var fs = require('fs');
 var argv = require('yargs')
     .argv;
-var loc = ["gulp/", "harmonicraft/","blog/","projects/water/"];
+var loc = [
+    "gulp/",
+    "harmonicraft/",
+    "blog/",
+    "projects/water/",
+];
 var cwd = "";
 var htmlprettify = require('gulp-html-beautify');
 var jsprettify = require('gulp-jsbeautifier');
