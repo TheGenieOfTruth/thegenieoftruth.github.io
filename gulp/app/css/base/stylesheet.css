@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #head-gradient {
   padding: 40px 0 40px 0;
-  background: url("/base/assets/sunset.jpg");
+  background: url("/base/assets/sunset.jpg"), #3498db;
   /* fix background */
   background-attachment: fixed;
   /* center it */

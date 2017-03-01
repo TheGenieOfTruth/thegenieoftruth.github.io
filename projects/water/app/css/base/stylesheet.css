@@ -1,10 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 body, html {
   color: #1b2631;
   /*Dark blue used instead of black, less intense*/
   font-size: 22px;
   width: 100%;
-  line-height: 1.4; }
+  line-height: 1.4;
+  font-family: -apple-system, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #head-gradient {
   padding: 60px 0 60px 0;
-  background: url("/base/assets/water.jpg");
+  background: url("/base/assets/water.jpg"), #3498db;
   /* fix background */
   background-attachment: fixed;
   /* center it */

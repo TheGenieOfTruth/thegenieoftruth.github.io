@@ -9,7 +9,7 @@ $header-padding: 40px !default;
 }
 #head-gradient{
     padding:$header-padding 0 $header-padding 0;
-    background:$img;
+    background:$img,$base1;
 
     /* fix background */
     background-attachment: fixed;

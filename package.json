@@ -42,7 +42,10 @@
     "prompt": "^1.0.0",
     "querystring": "^0.2.0",
     "run-sequence": "^1.2.2",
+    "script-loader": "^0.7.0",
     "useref": "^1.2.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1",
     "yargs": "^6.6.0"
   }
 }
