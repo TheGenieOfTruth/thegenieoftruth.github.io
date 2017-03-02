@@ -3,6 +3,8 @@ hr.margin-side-vw
     .margin-side-vw
         p.contact-flex-text Site built with 
             i.fa.fa-heart.red(aria-hidden='true')
+            - if(locals.bonus===undefined) locals.bonus = ""
+            != locals.bonus
             |  by Luke.
         p
         br
