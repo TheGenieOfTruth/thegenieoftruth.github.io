@@ -111,6 +111,9 @@ hb {
 .red {
   color: #e74c3c; }
 
+.blue {
+  color: #3498db; }
+
 .inline, .inline * {
   display: inline; }
 
