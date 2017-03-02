@@ -44,19 +44,11 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(1);
-	(function webpackMissingModule() { throw new Error("Cannot find module \"dev-server\""); }());
+	__webpack_require__(1)()
 
 
 /***/ },
 /* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	__webpack_require__(2)()
-
-
-/***/ },
-/* 2 */
 /***/ function(module, exports) {
 
 	module.exports = function(){
