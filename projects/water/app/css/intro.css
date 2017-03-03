@@ -1,21 +1,26 @@
 .title-container::before {
-    width:inherit;
-    content:"";
+    width: inherit;
+    content: "";
     border-top: 5px solid white;
     border-bottom: 5px solid white;
     display: inline-block;
-    padding:5px 0 30px 0;
-    margin:0px 5px;
+    padding: 5px 0 30px 0;
+    margin: 0px 5px;
     animation-name: example;
 }
+
 @keyframes example {
     from {
         border-top: 0px solid white;
         border-bottom: 0px solid white;
     }
-    to {border-top: 5px solid white;
-    border-bottom: 5px solid white;}
+
+    to {
+        border-top: 5px solid white;
+        border-bottom: 5px solid white;
+    }
 }
+
 #head-gradient {
     padding-bottom: 85px;
 }
