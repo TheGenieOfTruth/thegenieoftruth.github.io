@@ -1,0 +1,265 @@
+<body style = "background-color:white">
+
+</body>
+<style>
+canvas{border-style:solid;border-color:black;border-width:1px}
+.ov{margin-left:3px}
+body{font-family:lato}
+</style>
+<script>
+function rando(){
+function xx(){
+switch(String(Math.round(Math.random()*5))){
+case '0':
+var op = "+"
+break;
+case '1':
+var op = "-"
+break;
+case '2':
+var op = "*"
+break;
+case '3':
+var op = "/"
+break;
+case '4':
+var op = "%"
+break;
+default:
+var op = "+"
+}
+if(Math.round(Math.random())==1){
+return "x"+op
+}
+else{return ""}
+}
+var times = Math.round(Math.random()*50)+1
+var exit = ""
+for(i=1;i<times;i++){
+exit=exit+String(Math.round(Math.random()*50))
+switch(String(Math.round(Math.random()*5))){
+case '0':
+exit=exit+"+"+xx()
+break;
+case '1':
+exit=exit+"-"+xx()
+break;
+case '2':
+exit=exit+"*"+xx()
+break;
+case '3':
+exit=exit+"/"+xx()
+break;
+case '4':
+exit=exit+"%"+xx()
+break;
+default:
+exit=exit+"+"+xx()
+}
+}
+exit=exit+"x"
+return exit
+}
+function save(cname, cvalue) {
+    exdays = 100
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+function load(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
+    
+  function isNumeric (evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode (key);
+    var regex = /[0-9]|\./;
+    if ( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+
+function run(){
+var lines = document.getElementById("line").checked
+var origin = document.getElementById("origin").checked
+var seed = document.getElementById("export").value
+var presetc = document.getElementById('presetcolor').value
+var preset = document.getElementById('preset').checked
+var seed4 = document.getElementById("seed4").value
+var seed3 = document.getElementById("seed3").value
+var seed2 = document.getElementById("seed2").value
+var seed1 = document.getElementById("seed1").value
+var black = document.getElementById("black").checked
+var gray = document.getElementById("gray").checked
+var rainbow = document.getElementById("rainbow").checked
+var rawsize = document.getElementById("form").value
+var size = document.getElementById("form").value +"px"
+document.write("<canvas id = 'canvas' height = '"+size+"' width = '"+size+"'></canvas>")
+document.write("<body style = 'background-color:white'></body>")
+var c = document.getElementById("canvas");
+var context = c.getContext("2d");
+context.strokeStyle="black";
+function clear(){
+context.clearRect(0, 0, c.width, c.height);
+}
+function line(point1x,point1y,point2x,point2y){
+context.moveTo(point1x,point1y);
+context.lineTo(point2x,point2y);
+context.stroke();
+}
+function cube(point1x,point1y,point2x,point2y){
+var dist = Math.sqrt(Math.pow(point1x-point2x,2)+Math.pow(point1y-point2y,2))
+var distx = Math.abs(point2x-point1x)
+var disty = Math.abs(point2y-point1y)
+var perdistx = disty*-1
+var perdisty = distx
+square(point1x,point1y,point2x,point2y)
+square(point1x+distx,point1y,point2x+distx,point2y)
+context.fillRect(point1x,point1y,distx,1);
+context.fillRect(point2x,point2y,distx,1);
+context.fillRect(point1x+perdistx,point1y+perdisty,distx,1);
+context.fillRect(point2x+perdistx,point2y+perdisty,distx,1);
+}
+function square(point1x,point1y,point2x,point2y){
+var dist = Math.sqrt(Math.pow(point1x-point2x,2)+Math.pow(point1y-point2y,2))
+var distx = Math.abs(point2x-point1x)
+var disty = Math.abs(point2y-point1y)
+var perdistx = disty*-1
+var perdisty = distx
+context.beginPath();
+line(point1x,point1y,point2x,point2y);
+line(point2x,point2y,point2x+perdistx,point2y+perdisty)
+line(point1x,point1y,point1x+perdistx,point1y+perdisty)
+line(point1x+perdistx,point1y+perdisty,point2x+perdistx,point2y+perdisty)
+}
+var rand = 100
+var x = 0
+setInterval(function(){
+rand=Math.round(Math.random()*255)
+if(black){
+context.strokeStyle="black";
+context.fillStyle="black"}
+if(gray){
+context.strokeStyle="rgb("+rand+","+rand+","+rand+")"
+context.fillStyle="rgb("+rand+","+rand+","+rand+")"
+}
+if(preset){
+context.strokeStyle=presetc;
+context.fillStyle=presetc
+}
+if(rainbow){
+context.strokeStyle="rgb("+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+")"
+context.fillStyle="rgb("+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+","+Math.round(Math.random()*255)+")"
+}
+if(origin&&lines){line(eval(seed1)+rawsize/2,eval(seed2)+rawsize/2,eval(seed3)+rawsize/2,eval(seed4)+rawsize/2)}
+else if (origin){cube(eval(seed1)+rawsize/2,eval(seed2)+rawsize/2,eval(seed3)+rawsize/2,eval(seed4)+rawsize/2)}
+else if (lines){line(eval(seed1),eval(seed2),eval(seed3),eval(seed4))}
+else{cube(eval(seed1),eval(seed2),eval(seed3),eval(seed4))}
+x=x+1
+},1)
+function copyToClipboard(text) {
+  window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+}
+document.body.addEventListener('keyup', function(e) {
+    if(e.keyCode==13){location.reload()}
+	if(e.keyCode==83){copyToClipboard(seed)}
+});
+}
+function update(){document.getElementById("form").value = document.getElementById("graphic").value}
+</script>
+<link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+<label>Graphics:</label>
+<select id = 'graphic'  onclick = "update();"  oninput = 'update()'>
+  <option value="1000" onclick = 'document.getElementById("")'>1000px - Poor</option>
+  <option value="2500">2500px - Low</option>
+  <option value="5000">5000px - Medium</option>
+  <option value="10000">10000px - High</option>
+  <option id = "custom" selected = "selected">Custom</option>
+</select>
+<input style = 'width:60px' id='form' type="number" value = '5000' maxlength = '5' oninput = "document.getElementById('custom').selected = 'selected'" onkeypress="return isNumeric(event)" oninput = 'maxLengthCheck(this)'/><label style = "margin-left:5px">px</label>
+<form>
+Color options:
+<br>
+  <input type="radio" id="black" name = 'color' value="black" checked> Black &amp; White<br>
+  <input type="radio" id="gray" name = 'color' value="gray"> 255 Shades of gray<br>
+  <input type="radio" id="rainbow" name = 'color' value="rainbow"   > Random colors<br>
+  <input type="radio" id="preset" name = 'color' value="rainbow"   >Preset colors <select id = 'presetcolor' onclick = 'document.getElementById("preset").checked = "true"' oninput = 'document.getElementById("preset").checked = "true"'>
+  <option value="red">Red</option>
+  <option value="orange">Orange</option>
+  <option value="yellow">Yellow</option>
+  <option value="green">Green</option>
+  <option value="blue">Blue</option>
+  <option value="purple">Purple</option>
+</select>
+</form>
+<input type="checkbox" id = "origin"/>Set center of canvas as origin<br/>
+<input type="checkbox" id = "line"/>Use line drawing instead of cube drawing<br/>
+Seed:
+<br>
+Import:  <input class = 'ov' id = "import" oninput = "impor()" onclick = "impor()" onkeypress = "impor()"/>
+<br>
+Point1x <input value = "50*(x%100)" oninput = 'expor()' id = "seed1"/>
+<br>
+Point1y <input value = "50/(x%100)" oninput = 'expor()' id = "seed2"/>
+<br>
+Point2x <input value = "60+x" oninput = 'expor()' id = "seed3">
+<br>
+Point2y <input value = "60-x" oninput = 'expor()' value = "60-x" id = "seed4"/>
+<br>
+Export:  <input value = '["50*(x%100)","50/(x%100)","60+x","60-x"]' class = 'ov' id = 'export' onkeypress = 'return false' />
+<br>
+<button onclick = "document.getElementById('seed1').value = rando()
+document.getElementById('seed2').value = rando()
+document.getElementById('seed3').value = rando()
+document.getElementById('seed4').value = rando()
+expor()">Random seed</button>
+<br>
+<button onclick = "run()">
+Run
+</button>
+<p style ="margin:0px">
+To create a seed, use operators +, -, *, /, and %(modulo, finds remainders Eg: 5%8 = 5). Confused? Use the randomize option to create a random seed!
+</p>
+<br>
+<p style = "color:red;margin:0px">
+WARNING -- THIS PROGRAM LIKES TO MAKE COMPUTERS DO LOTS OF STUFF! IF YOUR COMPUTER IS NOT AMAZING YOU SHOULD SET GRAPHICS TO MEDIUM OR LOWER
+</p>
+<script>
+function expor(){
+document.getElementById("export").value = '["'+document.getElementById("seed1").value+'","'+document.getElementById("seed2").value+'","'+document.getElementById("seed3").value+'","'+document.getElementById("seed4").value+'"]'
+}
+function impor(){
+var x = 0
+var arrayr = eval(document.getElementById("import").value)
+document.getElementById("seed1").value = arrayr[0]
+document.getElementById("seed2").value = arrayr[1]
+document.getElementById("seed3").value = arrayr[2]
+document.getElementById("seed4").value = arrayr[3]
+document.getElementById("export").value = document.getElementById("import").value 
+}
+if(!load("graphic")>0){save("graphic",5000)}
+else{document.getElementById("form").value=load("graphic")}
+setInterval(function(){
+save('graphic',document.getElementById('form').value)
+},50)
+ function maxLengthCheck(object) {
+    if (object.value.length > object.maxLength)
+      object.value = object.value.slice(0, object.maxLength)
+  }
+</script>
+
+
+
+
+
+

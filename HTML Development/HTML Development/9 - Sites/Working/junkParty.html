@@ -1,0 +1,79 @@
+<html>
+
+<head>
+<style>span{background-color:white;height:5px;position:absolute}
+html{overflow:hidden}</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<script>
+var extra = 0
+window.addEventListener("keydown", dealWithKeyboard, false);
+function dealWithKeyboard(e) {
+ if (e.keyCode == "37") {
+    extra = extra+0.1}
+    if (e.keyCode == "39") {
+    extra=extra-0.1}
+}
+var elements = []
+var no = 0
+function makeCorElement(){
+var rand = Math.round(Math.random()*7+3)
+var btn = document.createElement("SPAN");
+    var t = document.createTextNode("");
+    btn.appendChild(t);
+    btn.style.borderRadius = rand/2 + "px"
+    btn.id = no
+    elements[elements.length] = Array(btn.id)
+    elements[btn.id][0] = Math.round(Math.random()*600)
+    elements[btn.id][1] = Math.round(Math.random()*3200)-1600
+    btn.style.left = elements[btn.id][1] + "px"
+    btn.style.top = elements[btn.id][0] + "px"
+    btn.style.width = rand + "px"
+    btn.style.height = rand + "px"
+    btn.onclick = function() { 
+    extra = 0
+    alert("System: Erath \n test")
+    };
+    document.body.appendChild(btn);
+    setInterval(function(){ 
+    document.getElementById(btn.id).style.left = elements[btn.id][1] + "px"
+    elements[btn.id][1] = elements[btn.id][1]+extra
+    }, 0.1);
+    no=no+1}
+    for(i=0;i<50;i=i+1){
+    makeCorElement()}
+</script>
+<body style = "background-color:black">
+
+</body>
+</html>
+<!-- Krish backup:
+<body style="background:url(https://pixelsharing.files.wordpress.com/2010/11/271-background-tileable-and-seamless-pattern.jpg)">
+  <!--Title -->
+  <p style="color:white
+;font-family:arial;font-size:20px;margin:0px;border-width:5
+px;border-color:white;border-style:double;background:url(https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRKYxYxQ7PtzWWevsaLCvPTZwR-JsFyeFNwGe_U670tW56cGFts);text-shadow:1px 1px black;text-align:center;position:fixed">I am amazing!
+    <!--Link to about -->
+  </p>
+  <!--Puts a space because why not -->
+  <br>
+  <!--List of awesomeness reasons -->
+  <ul style="color:white;font-family:arial">
+    <!--1st item in list -->
+    <li>Because I am me</li>
+    <!--2nd item in list -->
+    <li>Becuase of cheese</li>
+    <!--3rd item in list -->
+    <li>Since i am</li>
+    <!--4th item in list -->
+    <li>Umm, why not?</li>
+  </ul>
+<h1 style="color:white"id="AMAZINGNESS"class="extra">about</h1>
+<p style="color:white"class="paragraph">This is my website!</p>
+<h2 id = "junk">junk</h2>
+<img style="width:200px;height:100px"src="https://upload.wikimedia.org/wikipedia/commons/0/0c/Cow_female_black_white.jpg"/>
+<span style="position:absolute;background-color:#641616
+;height:50px;width:50px;border-radius:25px"></span>
+</body>
+
+#AMAZINGNESS{font-family:calibri;font-size:30px;margin:0px;border-width:5px;border-color:white;border-style:dotted;width:80px}

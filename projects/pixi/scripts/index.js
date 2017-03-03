@@ -1,4 +1,4 @@
-require("./my-soul.js")()
+
 // create an new instance of a pixi stage
 	var stage = new PIXI.Stage();
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -27,6 +27,7 @@ require("./my-soul.js")()
         x+=0.01
 	    requestAnimationFrame( animate );
 	    // render the stage
-        cat.rotation+=0.01
+        cat.y = 150+Math.sin(x)*50
+				cat.x += 1
 	    renderer.render(stage);
 	}

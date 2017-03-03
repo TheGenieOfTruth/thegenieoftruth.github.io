@@ -1,0 +1,98 @@
+findProject = 1
+soulPower = 1
+comment = 0
+function openWin(lnk) {
+    myWindow = window.open(lnk, "myWindow", "width=200,height=100");   // Opens a new window
+}
+ 
+function closeWin() {
+    myWindow.close();   // Closes the new window
+}
+function clickify(targetNode){
+if (targetNode) {
+    //--- Simulate a natural mouse-click sequence.
+    triggerMouseEvent (targetNode, "mouseover");
+    triggerMouseEvent (targetNode, "mousedown");
+    triggerMouseEvent (targetNode, "mouseup");
+    triggerMouseEvent (targetNode, "click");
+}
+else{
+    console.log ("*** Target node not found!");
+}}
+function triggerMouseEvent (node, eventType) {
+    var clickEvent = document.createEvent ('MouseEvents');
+    clickEvent.initEvent (eventType, true, true);
+    node.dispatchEvent (clickEvent);
+}
+if(findProject&&window.location.pathname.substring(0,10)
+==="/explore/p"){
+    //Get more projects
+var int = setInterval(myMethod, 250);
+var ct = 1
+var times = 100
+function myMethod( )
+{
+  clickify(document.getElementById("projectBox").children[1])
+if(ct>=times){
+   
+    window.clearInterval(int)
+    var proj = []
+    setTimeout(function(){
+for(i=0;i<document.getElementById("projectBox").children[0].children[0].children.length;i++){
+proj[i] = document.getElementById("projectBox").children[0].children[0].children[i].children[0].href
+}
+var cet = 0
+var extra = 0
+if(comment){interval = [29000,30000]}
+else{interval = [2400,3000]}
+var int2 = setInterval(function(){
+    openWin(proj[cet+6])
+    setTimeout(function(){closeWin()},interval[0])
+    cet++;
+    if(cet>proj.length-4){window.clearInterval(int2)}},interval[1])
+    },10)
+}
+ct++
+}
+}
+//Extract project href
+ 
+if(soulPower&&window.location.pathname.substring(0,10)==="/projects/"){
+    if(comment){
+function r(){
+    return Math.round(Math.random())
+}
+var rand = [r,r,r,r,r]
+var prt1 = "Wow, your projects are amazing! "
+var prt2 = "I hope to see more from you in the future, "
+var prt3 = "And I love what you've worked on so far. "
+var prt4 = "Keep it up. "
+var prt5 = " :D"
+if(r()===1){
+    prt1 = "Woah! You are a good Scratcher. "
+}
+if(r()===1){
+    prt2 = "I want to see more of your stuff and see what you create! "
+}
+if(r()===1){
+    prt3 = "And I have enjoyed viewing what you've created so far. "
+}
+if(r()===1){
+    prt4 = "Keep up the great work. "
+}
+if(r()===1){
+    prt5 = " Bye!"
+}
+var msg = prt1+prt2+prt3+prt4+prt5
+document.getElementById("main-post-form").children[0].children[0].innerHTML = msg
+ 
+ 
+clickify(document.getElementById("main-post-form").children[1].children[0])
+}
+if(document.getElementById("stats").children[1].children[1].className.substring(document.getElementById("stats").children[1].children[1].className.length-7,document.getElementById("stats").children[1].children[1].className.length) === "icon on"){
+}
+else{clickify(document.getElementById("stats").children[1].children[1])}
+if(document.getElementById("stats").children[0].children[1].className.substring(document.getElementById("stats").children[0].children[1].className.length-7,document.getElementById("stats").children[0].children[1].className.length) === "icon on"){
+}
+else{clickify(document.getElementById("stats").children[0])}
+}
