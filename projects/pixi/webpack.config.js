@@ -2,7 +2,8 @@
 //For dev: webpack-dev-server --progress --colors
 //For compile: webpack
 module.exports = {
-    entry:'./index.js',
+    devServer:{inline:true},
+    entry:'./scripts/index.js',
     output: {
         path: __dirname,
         filename: "bundle.js"
