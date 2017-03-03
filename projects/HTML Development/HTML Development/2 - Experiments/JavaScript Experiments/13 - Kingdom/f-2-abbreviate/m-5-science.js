@@ -1,1 +1,0 @@
-GMD.abbreviations.science = true

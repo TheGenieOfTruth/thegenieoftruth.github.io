@@ -1,7 +1,0 @@
-span{display:inline-block;width:150px;height:150px;border: 1px solid black;margin:-1px;float:left}
-div{display:inline-block;width:150px;height:150px;border: 1px solid black}
-div,span{font-family:arial}
-ct{display:inline-block;margin:10px}
-.droppable,.draggable, .clonedrag{background-color:white}
-.red{background:red}
-.blue{background:blue}
