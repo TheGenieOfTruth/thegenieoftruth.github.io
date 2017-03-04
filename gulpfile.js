@@ -18,6 +18,7 @@ var replace = require('gulp-replace');
 var fs = require('fs');
 var argv = require('yargs')
     .argv;
+var webpack = require('gulp-webpack');
 var loc = [
     "gulp/",
     "harmonicraft/",
@@ -89,13 +90,28 @@ gulp.task('sass', function() {
         .pipe(sass()) // Using gulp-sass
         .pipe(gulp.dest(cwd + 'app/css'));
 });
+gulp.task('webpack',function(){
+    return gulp.src("")
+    .pipe(webpack(require('./webpack.js')(cwd)))
+    .pipe(gulp.dest(""))
+})
 gulp.task('watch', function(callback) {
-    runSequence('default', 'browserSync', function() {
+    tasks = ["browserSync"]
+    if(argv.d === undefined){
+        tasks.push("default")
+    }
+    runSequence(tasks, function() {
             cwd = argv.a != undefined ? argv.a : ""
             var all = argv.b != undefined
+            var webpack = argv.c != undefined
             browserSync.reload()
             gulp.watch('base/scss/*.scss', ['copy-base', 'pug']);
             gulp.watch("base/pug/*.pug", ["pug"]);
+            if(argv.c){
+                gulp.watch(cwd + 'scripts/**/*.js', ['webpack']); //reload
+                gulp.watch(cwd + '**/*.js', browserSync.reload); //reload
+                gulp.watch(cwd + 'index.html', browserSync.reload); //reload
+            } else{
             if (argv.b) {
                 gulp.watch(cwd + '**/*.coffee', ['coffee']); //reload via javascript change
                 gulp.watch(cwd + '**/*.pug', ['pug']); //reload via HTML change
@@ -110,7 +126,7 @@ gulp.task('watch', function(callback) {
                 gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
                 gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload
                 gulp.watch(cwd + 'app/css/**/*.css', browserSync.reload); //reload
-            }
+            }}
         })
         // Other stoof
 });

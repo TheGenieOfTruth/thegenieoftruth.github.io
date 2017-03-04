@@ -1,4 +1,4 @@
-
+var key = require("./key-press.js")
 // create an new instance of a pixi stage
 	var stage = new PIXI.Stage();
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
@@ -18,7 +18,7 @@
     cat.scale.x = 5;
     cat.scale.y = 5;
 	// move the sprite t the center of the screen
-	cat.position.x = 200;
+	cat.position.x = 100;
 	cat.position.y = 150;
 
 	stage.addChild(cat);
@@ -28,6 +28,6 @@
 	    requestAnimationFrame( animate );
 	    // render the stage
         cat.y = 150+Math.sin(x)*50
-				cat.x += 1
+				cat.x += Math.sin(x)
 	    renderer.render(stage);
 	}
