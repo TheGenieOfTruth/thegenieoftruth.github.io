@@ -69,9 +69,9 @@ function setup() {
                 }
             },20)
             if(p1score.width<400){
-                p2score.width = 0
                 setup()
             } else{
+                p2score.width = 0
                 var c = 1
                 var win = setInterval(function(){
                     p1score.height=Math.pow(c,2)+ct*4+20
@@ -108,9 +108,9 @@ function setup() {
                 }
             },20)
             if(p2score.width<400){
-                p1score.width = 0
                 setup()
             } else{
+                p1score.width = 0
                 var c = 1;
                 var win = setInterval(function(){
                     p2score.height=Math.pow(c,2)+ct*4+20
