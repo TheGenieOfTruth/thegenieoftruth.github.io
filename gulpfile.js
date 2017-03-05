@@ -94,6 +94,7 @@ gulp.task('webpack',function(){
     return gulp.src("")
     .pipe(webpack(require('./webpack.js')(cwd)))
     .pipe(gulp.dest(""))
+    .pipe(browserSync.stream());
 })
 gulp.task('watch', function(callback) {
     tasks = ["browserSync"]
@@ -108,8 +109,8 @@ gulp.task('watch', function(callback) {
             gulp.watch('base/scss/*.scss', ['copy-base', 'pug']);
             gulp.watch("base/pug/*.pug", ["pug"]);
             if(argv.c){
+
                 gulp.watch(cwd + 'scripts/**/*.js', ['webpack']); //reload
-                gulp.watch(cwd + '**/*.js', browserSync.reload); //reload
                 gulp.watch(cwd + 'index.html', browserSync.reload); //reload
             } else{
             if (argv.b) {
