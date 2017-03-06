@@ -50,7 +50,7 @@
 	        var shapes = __webpack_require__(3)
 	        var contain = __webpack_require__(4)
 	        var fps = __webpack_require__(5)
-	        key.listen("loud")
+	        key.listen()
 	            // create an new instance of a pixi stage
 	        var all = new PIXI.Container()
 	        stage = new PIXI.Container();
@@ -170,27 +170,30 @@
 	                                powerup.x = Math.round(Math.random() * (renderer.width / 16)) * 16
 	                                powerup.y = Math.round(Math.random() * (renderer.height / 16)) * 16
 	                            } while ((powerup.x === player.x) && (powerup.y === player.y) || trail.filter(function(val) {
-	                                    powerup.x === val.x && powerup.y === val.y
+	                                    return powerup.x === val.x && powerup.y === val.y
 	                                })
 	                                .length > 0 || enemies.filter(function(val) {
-	                                    powerup.x === val.x && powerup.y === val.y
+	                                    return powerup.x === val.x && powerup.y === val.y
 	                                })
 	                                .length > 0
 	                            )
 	                            }
 	                            stage.addChild(powerup)
 	                        }
-	                        if (frames % 50 === 1) {
+	                        if (frames % 1 === 0) {
 	                            enemies.push(new PIXI.Sprite(shapes.rectangle(16, 16, "#e74c3c")))
 	                            var e = enemies[enemies.length - 1]
 	                            do {
+	                                console.log(trail.filter(function(val) {
+	                                        e.x === val.x && e.y === val.y
+	                                    }))
 	                                e.x = Math.round(Math.random() * (renderer.width / 16)) * 16
 	                                e.y = Math.round(Math.random() * (renderer.height / 16)) * 16
 	                            } while ((e.x === powerup.x && e.y === powerup.y) || trail.filter(function(val) {
-	                                    e.x === val.x && e.y === val.y
+	                                    return e.x === val.x && e.y === val.y
 	                                })
 	                                .length > 0 || enemies.filter(function(val) {
-	                                    e.x === val.x && e.y === val.y
+	                                    return e.x === val.x && e.y === val.y
 	                                })
 	                                .length > 1||(function(){
 	                                    for(i=-2;i<2;i++){
