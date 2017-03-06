@@ -1,0 +1,1 @@
+var cookie = 5;
