@@ -69,7 +69,6 @@ window.onload = function() {
                                 setTimeout(function() {
                                     if(("Nooo! Snake died D:").length>piece.length){
                                     loop()
-                                    console.log("ye")
                                 } else{
                                     piece = piece.join("")+"\n"
                                     renderer.render(all)
@@ -117,12 +116,11 @@ window.onload = function() {
                     }
                     //Left
                 })
-                    if (frames % 30 === 1) {
                         if (!powerup.ingame) {
                             powerup.ingame = true
                             do {
-                                powerup.x = Math.round(Math.random() * (renderer.width / 16)) * 16
-                                powerup.y = Math.round(Math.random() * (renderer.height / 16)) * 16
+                                powerup.x = Math.floor(Math.random() * (renderer.width / 16)) * 16
+                                powerup.y = Math.floor(Math.random() * (renderer.height / 16)) * 16
                             } while ((powerup.x === player.x) && (powerup.y === player.y) || trail.filter(function(val) {
                                     return powerup.x === val.x && powerup.y === val.y
                                 })
@@ -131,18 +129,14 @@ window.onload = function() {
                                 })
                                 .length > 0
                             )
-                            }
                             stage.addChild(powerup)
-                        }
-                        if (frames % 50 === 1) {
+                            }
+                        if (frames % 100 === 1) {
                             enemies.push(new PIXI.Sprite(shapes.rectangle(16, 16, "#e74c3c")))
                             var e = enemies[enemies.length - 1]
                             do {
-                                console.log(trail.filter(function(val) {
-                                        e.x === val.x && e.y === val.y
-                                    }))
-                                e.x = Math.round(Math.random() * (renderer.width / 16)) * 16
-                                e.y = Math.round(Math.random() * (renderer.height / 16)) * 16
+                                e.x = Math.floor(Math.random() * (renderer.width / 16)) * 16
+                                e.y = Math.floor(Math.random() * (renderer.height / 16)) * 16
                             } while ((e.x === powerup.x && e.y === powerup.y) || trail.filter(function(val) {
                                     return e.x === val.x && e.y === val.y
                                 })
