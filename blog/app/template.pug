@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        != a(head,{"title":"TheGenieOfTruth - Blog | " + title})
+        link(rel="stylesheet" href="../app/css/base/stylesheet.css")
+    body
+        != a(navbar,{"selected":"Blog"})
+        != a(header,{"name":"Blog","sub":"Eh, this is a blog"})
+        div(class="container line-height-1.2")
+            br
+            h2 #{title}
+            p.small By #{author} <br/> #{date}
+            p #{content}
+            != previous
+            != next
+            br
+            .text-center
+                a.smallish(href="../all/") All posts
+        br
+        != a(footer)
+        != a(analytics)

@@ -64,21 +64,21 @@ function makeData() {
     }
 }
 gulp.task('coffee', function() {
-    return gulp.src(cwd + a+'coffee/**/*.coffee')
+    return gulp.src(cwd + 'app/coffee/**/*.coffee')
         .pipe(coffee())
-        .pipe(gulp.dest(cwd+a+'js'));
+        .pipe(gulp.dest(cwd+'app/js'));
 });
 gulp.task('babel',function(){
-    return gulp.src(cwd + a+'babel/**/*.+(babel|es5|js)')
+    return gulp.src(cwd + 'app/babel/**/*.+(babel|es5|js)')
     .pipe(babel({
         presets: ['es2015-without-strict'],
     }))
-        .pipe(gulp.dest(cwd+a+'scripts'));
+        .pipe(gulp.dest(cwd+'app/scripts'));
 })
 gulp.task('pug', function() {
     //locals.root, used for building via relative paths. NEVER USE IN FRONTEND OR YOU WILL DIE, CHILD
     makeData()
-    return gulp.src(cwd + a+'**/*.pug')
+    return gulp.src(cwd + 'app/**/*.pug')
         .pipe(pug({
             pretty: true,
             "data": data
@@ -95,9 +95,9 @@ gulp.task('browserSync', function() {
     });
 });
 gulp.task('sass', function() {
-    return gulp.src(cwd + a+'scss/**/*.scss')
+    return gulp.src(cwd + 'app/scss/**/*.scss')
         .pipe(sass()) // Using gulp-sass
-        .pipe(gulp.dest(cwd + a+'css'));
+        .pipe(gulp.dest(cwd + 'app/css'));
 });
 gulp.task('webpack',function(){
     return gulp.src("")
@@ -130,18 +130,18 @@ gulp.task('watch', function(callback) {
                 gulp.watch(cwd + '**/*.js', browserSync.reload); //reload
                 gulp.watch(cwd + '**/*.css', browserSync.reload); //reload
             } else {
-                gulp.watch(cwd + a+'coffee/**/*.coffee', ['coffee']); //reload via javascript change
-                gulp.watch(cwd + a+'*.pug', ['pug']); //reload via HTML change
-                gulp.watch(cwd + a+'**/*.scss', ['sass']); //reload via CSS change
-                gulp.watch(cwd + a+'*.html', browserSync.reload); //reload
-                gulp.watch(cwd + a+'js/**/*.js', browserSync.reload); //reload
-                gulp.watch(cwd + a+'css/**/*.css', browserSync.reload); //reload
+                gulp.watch(cwd + 'app/coffee/**/*.coffee', ['coffee']); //reload via javascript change
+                gulp.watch(cwd + 'app/*.pug', ['pug']); //reload via HTML change
+                gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
+                gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
+                gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload
+                gulp.watch(cwd + 'app/css/**/*.css', browserSync.reload); //reload
             }}
         })
         // Other stoof
 });
 gulp.task('useref', function() {
-    return gulp.src(cwd + a+'*.html')
+    return gulp.src(cwd + 'app/*.html')
         .pipe(useref())
         .pipe(gulpIf('*.js', uglify()))
         .pipe(gulpIf('*.css', autoprefixer({
@@ -151,12 +151,12 @@ gulp.task('useref', function() {
         .pipe(gulp.dest(cwd + 'dist'));
 });
 gulp.task('images', function() {
-    return gulp.src(cwd + a+'images/**/*.+(png|jpg|gif|svg)')
+    return gulp.src(cwd + 'app/images/**/*.+(png|jpg|gif|svg)')
         .pipe(imagemin())
         .pipe(gulp.dest(cwd + "dist/images"));
 });
 gulp.task('fonts', function() {
-    return gulp.src(cwd + a+'fonts/**/*')
+    return gulp.src(cwd + 'app/fonts/**/*')
         .pipe(gulp.dest(cwd + 'dist/fonts'));
 });
 gulp.task('clean', function() {
@@ -199,30 +199,30 @@ gulp.task('copy-base', function() {
         .pipe(gulp.dest(cwd + "app/scss/base"));
 })
 gulp.task('copy-js', function() {
-    return gulp.src(cwd + a+'js/**/*.min.js')
+    return gulp.src(cwd + 'app/js/**/*.min.js')
         .pipe(gulp.dest(cwd + 'dist/js'));
 })
 gulp.task('copy-css', function() {
-    return gulp.src(cwd + a+'css/**/*.min.css')
+    return gulp.src(cwd + 'app/css/**/*.min.css')
         .pipe(gulp.dest(cwd + 'dist/css'));
 })
 gulp.task('beautify-css', function() {
-    return gulp.src(cwd + a+'css/**/*.css')
+    return gulp.src(cwd + 'app/css/**/*.css')
         .pipe(cssprettify())
         .pipe(gulp.dest(cwd + "app/css"))
 });
 gulp.task('beautify-js', function() {
-    return gulp.src(cwd + a+'js/**/*.js')
+    return gulp.src(cwd + 'app/js/**/*.js')
         .pipe(jsprettify())
         .pipe(gulp.dest(cwd + "app/js"))
 });
 gulp.task('beautify-html', function() {
-    return gulp.src(cwd + a+'**/*.html')
+    return gulp.src(cwd + 'app/**/*.html')
         .pipe(htmlprettify())
         .pipe(gulp.dest(cwd + "app"))
 });
 gulp.task('beautify-pug', function() {
-    return gulp.src(cwd + a+'**/*.pug')
+    return gulp.src(cwd + 'app/**/*.pug')
         .pipe(pugprettify({
             tab_size: 4,
             fill_tab: false
