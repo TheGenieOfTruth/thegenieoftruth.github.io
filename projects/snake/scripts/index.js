@@ -134,7 +134,7 @@ window.onload = function() {
                             }
                             stage.addChild(powerup)
                         }
-                        if (frames % 1 === 0) {
+                        if (frames % 50 === 1) {
                             enemies.push(new PIXI.Sprite(shapes.rectangle(16, 16, "#e74c3c")))
                             var e = enemies[enemies.length - 1]
                             do {
