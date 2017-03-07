@@ -239,7 +239,7 @@
 	                        contain(player, renderer.width, renderer.height, function(handle) {
 	                            end()
 	                        })
-	                        if (frames < 10) {
+	                        if (frames < 1) {
 	                            trail.push(new PIXI.Sprite(shapes.rectangle(16, 16, "#2ecc71")))
 	                            stage.addChild(trail[trail.length - 1])
 	                        }

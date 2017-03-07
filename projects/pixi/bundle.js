@@ -97,7 +97,7 @@
 	     ball = new PIXI.Sprite(shapes.rectangle(10,10,"#ffffff"))
 	    ball.position.x = 195;
 	    ball.position.y = 150;
-	    ball.direction = 45; //Prevents weird aliasing crap
+	    ball.direction = 55-Math.random()*20; //Prevents weird aliasing crap
 	    ball.vel = 5;
 	    var offset = 0;
 	    stage.addChild(ball);
