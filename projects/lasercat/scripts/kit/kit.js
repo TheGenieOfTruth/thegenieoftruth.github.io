@@ -20,7 +20,7 @@ module.exports = new function(){
             bullet.y = a.sprite.y+2*a.sprite.height/3
             dx = a.renderer.plugins.interaction.mouse.global.x-bullet.x;
             dy = a.renderer.plugins.interaction.mouse.global.y-bullet.y;
-            bullet.rotation = Math.atan2(dy,dx);
+            bullet.rotation = Math.atan2(dy,dx)+0.04-Math.random()*0.04;
             a.bullets.push(bullet)
             a.stage.addChild(bullet)
         }

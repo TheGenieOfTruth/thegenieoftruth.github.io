@@ -355,7 +355,7 @@
 	            bullet.y = a.sprite.y+2*a.sprite.height/3
 	            dx = a.renderer.plugins.interaction.mouse.global.x-bullet.x;
 	            dy = a.renderer.plugins.interaction.mouse.global.y-bullet.y;
-	            bullet.rotation = Math.atan2(dy,dx);
+	            bullet.rotation = Math.atan2(dy,dx)+0.04-Math.random()*0.04;
 	            a.bullets.push(bullet)
 	            a.stage.addChild(bullet)
 	        }
@@ -383,11 +383,9 @@
 	    var shapes = __webpack_require__(4)
 	    if(type==="laser"){
 	        var bullet = new PIXI.Sprite(PIXI.utils.TextureCache["assets/laser.png"])
-	        bullet.cooldown = 20
-	        bullet.vel = 0
-	        bullet.acc = 2
-	        bullet.scale.x = 2
-	        bullet.scale.y = 2
+	        bullet.cooldown = 0
+	        bullet.vel = 20
+	        bullet.acc = 0
 	        bullet.anchor.x = 0.5
 	        bullet.anchor.y = 0.5
 	        return bullet
