@@ -46,15 +46,18 @@
 
 	window.onload = function(){
 	var key = __webpack_require__(1)
-	var collide = __webpack_require__(2)
-	var shapes = __webpack_require__(3)
-	var contain = __webpack_require__(4)
-	var move = __webpack_require__(5)
-	var fps = __webpack_require__(6)
-	key.listen()
-
-	    // create an new instance of a pixi stage
-	var all = new PIXI.Container()
+	var click = __webpack_require__(2)
+	var collide = __webpack_require__(3)
+	var shapes = __webpack_require__(4)
+	var contain = __webpack_require__(5)
+	var move = __webpack_require__(6)
+	var fps = __webpack_require__(7)
+	var kit = __webpack_require__(9)
+	key.listen("loud")
+	PIXI.loader
+	  .add("assets/laser.png")
+	  .load(setup);
+	// create an new instance of a pixi stage
 	var stage = new PIXI.Container();
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
@@ -64,17 +67,22 @@
 	shapes.renderer = renderer
 	document.body.appendChild(renderer.view);
 	// create a new Sprite using the texture
+	stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
+	stage.interactive = true;
+	click.listen(stage)
 	setup()
 
 	function setup() {
-
-	    var cat = new PIXI.Sprite(shapes.rectangle(100,50,"#e67e22"))
-	    var laser = new PIXI.Sprite(shapes.rectangle(10,4,"#e74c3c"))
+	    var cat = new PIXI.Sprite(shapes.rectangle(100,50,"#e67e22"));
 	    stage.addChild(cat)
-	    stage.addChild(laser)
-	    fps(30,function(){
+	    kit.init(cat,stage,renderer)
+	    fps(30,function(f,obj){
+	        kit.loop(f)
+	        if(click.clicked){
+	            kit.shoot("laser")
+	        }
+	        kit.bullet()
 	        renderer.render(stage)
-	        laser.x+=15
 	    })
 	}
 	}
@@ -124,6 +132,31 @@
 /* 2 */
 /***/ function(module, exports) {
 
+	module.exports = new function(){
+	    a = this
+	    function down(){
+	        a.clicked = true
+	        console.log("DOWN")
+	    }
+	    function up(){
+	        a.clicked = false
+	    }
+	    this.listen = function(sprite){
+	        sprite
+	            .on('mousedown', down)
+	            .on('mouseup', up)
+	            .on('mouseupoutside', up)
+	            .on('touchstart', down)
+	            .on('touchend', up)
+	            .on('touchendoutside', up);
+	    }
+	}
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
 	module.exports = function(r1, r2,callback) {
 	    var dx=(r1.x+r1.width/2)-(r2.x+r2.width/2);
 	    var dy=(r1.y+r1.height/2)-(r2.y+r2.height/2);
@@ -146,7 +179,7 @@
 
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = new function(){
@@ -183,22 +216,26 @@
 
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = function(sprite,width,height,callback){
 	    var exit = []
 	    if (sprite.position.x < 0) {
 	        exit.push("l")
+	        exit.push("y")
 	    }
-	    if(sprite.position.x+sprite.width > width){
+	    if(sprite.position.x > width){
 	        exit.push("r")
+	        exit.push("y")
 	    }
 	    if (sprite.position.y-sprite.width/2 < 0) {
 	        exit.push("u")
+	        exit.push("y")
 	    }
 	    if(sprite.position.y+sprite.width/2 > height){
 	        exit.push("d")
+	        exit.push("y")
 	    }
 	    function handle(code,cb){
 	        if(exit.indexOf(code)!=-1){
@@ -210,7 +247,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = function(object, distance,direction) {
@@ -220,8 +257,8 @@
 
 
 /***/ },
-/* 6 */
-/***/ function(module, exports) {
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(fps,cb){
 	this.going = true
@@ -235,6 +272,9 @@
 	this.pause = this.stop
 	this.toggle = function(){
 	    this.going = !this.going
+	}
+	this.latch = function(a){
+	    cb = __webpack_require__(8)(cb,a)
 	}
 	var a = this
 	var now;
@@ -269,11 +309,89 @@
 
 	        then = now - (delta % interval);
 
-	        cb(ct,this.stop)
+	        cb(ct,a)
 	    }
 	}
 
 	draw();
+	}
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = function(a,b){
+	    return function(){
+	        a.call(this,arguments)
+	        b.call(this,arguments)
+	    }
+	}
+
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = new function(){
+	    var contain = __webpack_require__(5)
+	    var move = __webpack_require__(6)
+	    var a = this
+	    this.cooldown = 0
+	    this.bullets = []
+	    this.init = function(sprite,stage,renderer){
+	        a.sprite = sprite
+	        a.stage = stage
+	        a.renderer = renderer
+	    }
+	    this.loop = function(){
+	        a.cooldown--
+	    }
+	    this.shoot = function(bullet){
+	        bullet = __webpack_require__(10)(bullet)
+	        if(a.cooldown<=0){
+	            a.cooldown = bullet.cooldown
+	            bullet.x = a.sprite.x+a.sprite.width+bullet.width*bullet.anchor.x-5
+	            bullet.y = a.sprite.y+2*a.sprite.height/3
+	            dx = a.renderer.plugins.interaction.mouse.global.x-bullet.x;
+	            dy = a.renderer.plugins.interaction.mouse.global.y-bullet.y;
+	            bullet.rotation = Math.atan2(dy,dx);
+	            a.bullets.push(bullet)
+	            a.stage.addChild(bullet)
+	        }
+	    }
+	    this.bullet = function(){
+	    a.bullets.forEach(function(bullet,index){
+	        move(bullet,bullet.vel, (bullet.rotation* (180 / Math.PI)))
+	        bullet.vel+=bullet.acc
+	        contain(bullet,a.renderer.width,a.renderer.height,function(handle){
+	            handle("y",function(){
+	                a.stage.removeChild(bullet)
+	                a.bullets.splice(index,1)
+	            })
+	        })
+	    })
+	}
+	}
+
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(type){
+	    var shapes = __webpack_require__(4)
+	    if(type==="laser"){
+	        var bullet = new PIXI.Sprite(PIXI.utils.TextureCache["assets/laser.png"])
+	        bullet.cooldown = 20
+	        bullet.vel = 0
+	        bullet.acc = 2
+	        bullet.scale.x = 2
+	        bullet.scale.y = 2
+	        bullet.anchor.x = 0.5
+	        bullet.anchor.y = 0.5
+	        return bullet
+	    }
 	}
 
 

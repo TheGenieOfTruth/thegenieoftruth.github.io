@@ -1,1 +1,0 @@
-var cookie = 5;

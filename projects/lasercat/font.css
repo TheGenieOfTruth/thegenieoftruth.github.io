@@ -6,5 +6,6 @@
 body{
     background:#222;
     color:white;
-    font-family:"Pixel"
+    font-family:"Pixel";
+    cursor:default;
 }

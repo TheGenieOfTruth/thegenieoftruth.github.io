@@ -11,6 +11,9 @@ this.pause = this.stop
 this.toggle = function(){
     this.going = !this.going
 }
+this.latch = function(a){
+    cb = require("./../tools/merge")(cb,a)
+}
 var a = this
 var now;
 var then = Date.now();
@@ -44,7 +47,7 @@ function draw() {
 
         then = now - (delta % interval);
 
-        cb(ct,this.stop)
+        cb(ct,a)
     }
 }
 
