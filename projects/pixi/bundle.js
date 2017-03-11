@@ -70,12 +70,10 @@
 	p1score = new PIXI.Sprite(shapes.rectangle(1,25,"#3498db"));
 	p1score.position.x = -1;
 	p1score.position.y = 675;
-	p1score.width = 400
 	p1score.xvel = 0;
 	p2score = new PIXI.Sprite(shapes.rectangle(1,25,"#e74c3c"));
 	p2score.position.x = -1;
 	p2score.position.y = 0;
-	p2score.width = 400
 	p2score.xvel = 0;
 	score.addChild(p1score);
 	score.addChild(p2score);

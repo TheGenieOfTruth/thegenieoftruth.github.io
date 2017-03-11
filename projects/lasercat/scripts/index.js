@@ -10,6 +10,7 @@ var kit = require("./kit/kit.js")
 key.listen("loud")
 PIXI.loader
   .add("assets/laser.png")
+  .add("assets/cat.png")
   .load(setup);
 // create an new instance of a pixi stage
 var stage = new PIXI.Container();
@@ -27,15 +28,17 @@ click.listen(stage)
 setup()
 
 function setup() {
-    var cat = new PIXI.Sprite(shapes.rectangle(100,50,"#e67e22"));
+    var cat = new PIXI.Sprite(PIXI.utils.TextureCache["assets/cat.png"]);
+    cat.scale.x = -3
+    cat.anchor.x =1
+    cat.scale.y = 3
     stage.addChild(cat)
     kit.init(cat,stage,renderer)
     fps(30,function(f,obj){
-        kit.loop(f)
+        kit.bullet()
         if(click.clicked){
             kit.shoot("laser")
         }
-        kit.bullet()
         renderer.render(stage)
     })
 }

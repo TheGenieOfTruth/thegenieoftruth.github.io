@@ -56,6 +56,7 @@
 	key.listen("loud")
 	PIXI.loader
 	  .add("assets/laser.png")
+	  .add("assets/cat.png")
 	  .load(setup);
 	// create an new instance of a pixi stage
 	var stage = new PIXI.Container();
@@ -73,15 +74,17 @@
 	setup()
 
 	function setup() {
-	    var cat = new PIXI.Sprite(shapes.rectangle(100,50,"#e67e22"));
+	    var cat = new PIXI.Sprite(PIXI.utils.TextureCache["assets/cat.png"]);
+	    cat.scale.x = -3
+	    cat.anchor.x =1
+	    cat.scale.y = 3
 	    stage.addChild(cat)
 	    kit.init(cat,stage,renderer)
 	    fps(30,function(f,obj){
-	        kit.loop(f)
+	        kit.bullet()
 	        if(click.clicked){
 	            kit.shoot("laser")
 	        }
-	        kit.bullet()
 	        renderer.render(stage)
 	    })
 	}
@@ -219,21 +222,27 @@
 /* 5 */
 /***/ function(module, exports) {
 
-	module.exports = function(sprite,width,height,callback){
+	module.exports = function(sprite,width,height,callback,extra){
+	    if(extra===undefined){
+	        extra = {
+	            "height":0,
+	            "width":0
+	        }
+	    }
 	    var exit = []
-	    if (sprite.position.x < 0) {
+	    if (sprite.position.x < -extra.width) {
 	        exit.push("l")
 	        exit.push("y")
 	    }
-	    if(sprite.position.x > width){
+	    if(sprite.position.x > width-extra.width){
 	        exit.push("r")
 	        exit.push("y")
 	    }
-	    if (sprite.position.y-sprite.width/2 < 0) {
+	    if (sprite.position.y-sprite.height/2 < -extra.height) {
 	        exit.push("u")
 	        exit.push("y")
 	    }
-	    if(sprite.position.y+sprite.width/2 > height){
+	    if(sprite.position.y+sprite.width/2 > height-extra.height){
 	        exit.push("d")
 	        exit.push("y")
 	    }
@@ -344,32 +353,43 @@
 	        a.stage = stage
 	        a.renderer = renderer
 	    }
-	    this.loop = function(){
-	        a.cooldown--
-	    }
 	    this.shoot = function(bullet){
 	        bullet = __webpack_require__(10)(bullet)
 	        if(a.cooldown<=0){
 	            a.cooldown = bullet.cooldown
-	            bullet.x = a.sprite.x+a.sprite.width+bullet.width*bullet.anchor.x-5
-	            bullet.y = a.sprite.y+2*a.sprite.height/3
+	            bullet.x = a.sprite.x+a.sprite.width+bullet.width*bullet.anchor.x
+	            bullet.y = a.sprite.y+a.sprite.height/3
 	            dx = a.renderer.plugins.interaction.mouse.global.x-bullet.x;
 	            dy = a.renderer.plugins.interaction.mouse.global.y-bullet.y;
-	            bullet.rotation = Math.atan2(dy,dx)+0.04-Math.random()*0.04;
+	            bullet.rotation = Math.atan2(dy,dx)+bullet.shake/100-Math.random()*bullet.shake/50;
 	            a.bullets.push(bullet)
 	            a.stage.addChild(bullet)
 	        }
 	    }
+	    function extrender(sprite){
+	        return {
+	            "width":sprite.width,
+	            "height":sprite.height
+	        }
+	    }
 	    this.bullet = function(){
+	    a.cooldown--
 	    a.bullets.forEach(function(bullet,index){
-	        move(bullet,bullet.vel, (bullet.rotation* (180 / Math.PI)))
+	        move(bullet,bullet.vel+bullet.burst/100-Math.random()*bullet.vel*bullet.burst/50, (bullet.rotation* (180 / Math.PI)))
 	        bullet.vel+=bullet.acc
 	        contain(bullet,a.renderer.width,a.renderer.height,function(handle){
 	            handle("y",function(){
+	                if(bullet.counting === undefined){
+	                    bullet.counting = bullet.width/Math.abs(bullet.vel)+1
+	                } else{
+	                    bullet.counting--
+	                }
+	                if(bullet.counting <= 0){
 	                a.stage.removeChild(bullet)
 	                a.bullets.splice(index,1)
+	                }
 	            })
-	        })
+	        },extrender(bullet))
 	    })
 	}
 	}
@@ -381,12 +401,23 @@
 
 	module.exports = function(type){
 	    var shapes = __webpack_require__(4)
+	    //If someone runs bullet("laser"), create a bullet in the following way
 	    if(type==="laser"){
+	        //Creates a new bullet based on the laser image
 	        var bullet = new PIXI.Sprite(PIXI.utils.TextureCache["assets/laser.png"])
-	        bullet.cooldown = 0
+	        bullet.scale.y = 0.5
+	        //Wait five frames before shooting again
+	        bullet.cooldown = 10
+	        //Move 5 pixels forward every frame
 	        bullet.vel = 20
+	        //Increase velocity every frame
 	        bullet.acc = 0
-	        bullet.anchor.x = 0.5
+	        //Sideways shaking
+	        bullet.shake = 0
+	        //Speed increase shake
+	        bullet.burst = 0
+	        //Roots the bullet at the cat's face correctly
+	        bullet.anchor.x = 0
 	        bullet.anchor.y = 0.5
 	        return bullet
 	    }
