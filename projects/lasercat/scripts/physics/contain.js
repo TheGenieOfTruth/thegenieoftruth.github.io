@@ -22,6 +22,9 @@ module.exports = function(sprite,width,height,callback,extra){
         exit.push("d")
         exit.push("y")
     }
+    if(exit.length===0){
+        exit.push("n")
+    }
     function handle(code,cb){
         if(exit.indexOf(code)!=-1){
             cb()

@@ -36,7 +36,7 @@ module.exports = new function(){
         contain(bullet,a.renderer.width,a.renderer.height,function(handle){
             handle("y",function(){
                 if(bullet.counting === undefined){
-                    bullet.counting = bullet.width/Math.abs(bullet.vel)+1
+                    bullet.counting = bullet.width*2/Math.abs(bullet.vel)
                 } else{
                     bullet.counting--
                 }
@@ -44,6 +44,9 @@ module.exports = new function(){
                 a.stage.removeChild(bullet)
                 a.bullets.splice(index,1)
                 }
+            })
+            handle("n",function(){
+                bullet.counting = undefined
             })
         },extrender(bullet))
     })

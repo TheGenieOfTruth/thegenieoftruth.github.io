@@ -34,8 +34,7 @@ var pugprettify = require('gulp-pug-beautify');
 var rename = require("gulp-rename");
 var standard = argv.b != undefined || argv.c != undefined
 var a = standard ? "" : "app/"
-function
-def(x, callback) {
+function def(x, callback) {
     cwd = x;
     runSequence('clean', 'beautify-css', 'beautify-js', 'beautify-html', 'beautify-pug', 'images', 'pug', 'coffee', 'copy-base', 'sass', 'useref', 'fonts', 'itr', 'copy-css', 'copy-js', callback);
 }

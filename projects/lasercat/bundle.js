@@ -44,22 +44,24 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
+	
 	window.onload = function(){
-	var key = __webpack_require__(1)
-	var click = __webpack_require__(2)
-	var collide = __webpack_require__(3)
-	var shapes = __webpack_require__(4)
-	var contain = __webpack_require__(5)
-	var move = __webpack_require__(6)
-	var fps = __webpack_require__(7)
-	var kit = __webpack_require__(9)
-	key.listen("loud")
-	PIXI.loader
-	  .add("assets/laser.png")
-	  .add("assets/cat.png")
-	  .load(setup);
+	var key = __webpack_require__(1);
+	var click = __webpack_require__(2);
+	var collide = __webpack_require__(3);
+	var shapes = __webpack_require__(4);
+	var contain = __webpack_require__(5);
+	var move = __webpack_require__(6);
+	var fps = __webpack_require__(7);
+	var kit = __webpack_require__(9);
+	var particles = __webpack_require__(11);
+	key.listen("loud");
 	// create an new instance of a pixi stage
+	var all = new PIXI.Container();
 	var stage = new PIXI.Container();
+	var particleContainer = new PIXI.Container();
+	all.addChild(stage);
+	all.addChild(particleContainer);
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
 	var renderer = PIXI.autoDetectRenderer(772, 480);
@@ -70,23 +72,67 @@
 	// create a new Sprite using the texture
 	stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
 	stage.interactive = true;
-	click.listen(stage)
-	setup()
+	click.listen(stage);
+	setup();
 
 	function setup() {
-	    var cat = new PIXI.Sprite(PIXI.utils.TextureCache["assets/cat.png"]);
-	    cat.scale.x = -3
-	    cat.anchor.x =1
-	    cat.scale.y = 3
-	    stage.addChild(cat)
-	    kit.init(cat,stage,renderer)
+	    var player = new PIXI.Sprite(shapes.rectangle(25,25),"#2ecc71");
+	    var ground = new PIXI.Sprite(shapes.rectangle(772,35,"#2ecc71"))
+	    ground.y = 445;
+	    ground.abs = ground.y-player.height
+	    player.y =ground.abs;
+	    player.xvel = 0;
+	    player.yvel = 0;
+	    stage.addChild(player);
+	    stage.addChild(ground);
+	    kit.init(player,stage,renderer);
 	    fps(30,function(f,obj){
-	        kit.bullet()
+	        kit.bullet();
+	        particleContainer.children.forEach(function(val){
+	            if(val.kill !== 0){
+	                val.x+=20-Math.round(Math.random()*40)-player.xvel
+	                val.y+=20-Math.round(Math.random()*30)-player.yvel
+	                val.kill--
+	                val.alpha = val.kill/val.killMax
+	            } else{
+	                particleContainer.removeChild(val)
+	            }
+	        })
 	        if(click.clicked){
-	            kit.shoot("laser")
+	            kit.shoot("laser");
 	        }
-	        renderer.render(stage)
-	    })
+	        key.check([65,37], function() {
+	            player.xvel += -2;
+	                //Left
+	        })
+	        key.check([68,39], function() {
+	            player.xvel += 2;
+	                //Right
+	        })
+	        key.check([87,38,32], function() {
+	            player.yvel += 1.2
+	            particles({
+	            "amount":50,
+	            "x":player.x+player.width/2,
+	            "y":player.y+player.height,
+	            "width":5,
+	            "height":5,
+	            "colors":["#e74c3c","#e67e22","#f1c40f"],
+	            "wrapper":particleContainer
+	        })
+	        },function(){
+	            player.yvel -= 1
+	        })
+	        key.check([83,40], function() {
+	                //Down
+	        })
+	        player.x+=player.xvel;
+	        player.y+=-player.yvel;
+	        if(player.y < 0){player.yvel *= -0.5;player.y = 0}
+	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.5;player.y=ground.abs}
+	        player.xvel*=0.8;
+	        renderer.render(all);
+	    });
 	}
 	}
 
@@ -95,41 +141,49 @@
 /* 1 */
 /***/ function(module, exports) {
 
-	module.exports = new function(){
+	module.exports = new function() {
 	    var a = this
 	    this.map = [];
-	    this.listen = function(){
+	    this.listen = function() {
 	        var param = arguments[0] == undefined ? false : arguments[0]
-	        document.onkeydown = function (e) {
+	        document.onkeydown = function(e) {
 	            e = e || window.event;
 	            e = e.which || e.keyCode || 0
-	            if(a.map.indexOf(e) == -1){
+	            if (a.map.indexOf(e) == -1) {
 	                a.map.push(e)
 	            }
-	            if(param == "loud"){
+	            if (param == "loud") {
 	                console.log(a.map)
 	            }
 	        };
-	        document.onkeyup = function (e) {
+	        document.onkeyup = function(e) {
 	            e = e || window.event;
 	            e = e.which || e.keyCode || 0
-	            // use e.keyCode
-	            if(a.map.indexOf(e) != -1){
-	                a.map.splice(a.map.indexOf(e),1)
+	                // use e.keyCode
+	            if (a.map.indexOf(e) != -1) {
+	                a.map.splice(a.map.indexOf(e), 1)
 	            }
-	            if(param == "loud"){
+	            if (param == "loud") {
 	                console.log(a.map)
 	            }
 	        };
 	    }
-	    this.check = function(key,callback){
-	        if(a.map.indexOf(key)!=-1){
-	            callback()
+	    this.check = function(key, callback, not) {
+	        if (typeof key != "object") {
+	            key = [key]
+	        }
+	        for (i = 0; i < key.length; i++) {
+	            if (a.map.indexOf(key[i]) != -1) {
+	                callback()
+	                i = key.length
+	                return;
+	            }
+	        }
+	        if (not !== undefined) {
+	            not()
 	        }
 	    }
-
 	}
-
 
 /***/ },
 /* 2 */
@@ -245,6 +299,9 @@
 	    if(sprite.position.y+sprite.width/2 > height-extra.height){
 	        exit.push("d")
 	        exit.push("y")
+	    }
+	    if(exit.length===0){
+	        exit.push("n")
 	    }
 	    function handle(code,cb){
 	        if(exit.indexOf(code)!=-1){
@@ -380,7 +437,7 @@
 	        contain(bullet,a.renderer.width,a.renderer.height,function(handle){
 	            handle("y",function(){
 	                if(bullet.counting === undefined){
-	                    bullet.counting = bullet.width/Math.abs(bullet.vel)+1
+	                    bullet.counting = bullet.width*2/Math.abs(bullet.vel)
 	                } else{
 	                    bullet.counting--
 	                }
@@ -388,6 +445,9 @@
 	                a.stage.removeChild(bullet)
 	                a.bullets.splice(index,1)
 	                }
+	            })
+	            handle("n",function(){
+	                bullet.counting = undefined
 	            })
 	        },extrender(bullet))
 	    })
@@ -423,6 +483,22 @@
 	    }
 	}
 
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(obj){
+		var shapes = __webpack_require__(4)
+		for(i=0;i<obj.amount;i++){
+		var particle = new PIXI.Sprite(shapes.rectangle(obj.width,obj.height,obj.colors[Math.floor(Math.random()*obj.colors.length)]))
+		particle.x = obj.x
+		particle.y = obj.y
+		particle.kill = 10
+		particle.killMax = 10
+		obj.wrapper.addChild(particle)
+	}
+	}
 
 /***/ }
 /******/ ]);
