@@ -1,0 +1,11 @@
+
+@font-face{
+    font-family: "Pixel";
+    src: url("assets/pixel.ttf") format("truetype");
+}
+body{
+    background:#222;
+    color:white;
+    font-family:"Pixel";
+    cursor:default;
+}
