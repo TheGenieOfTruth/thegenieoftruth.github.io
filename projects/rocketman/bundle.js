@@ -86,27 +86,28 @@
 	    player.yvel = 0;
 	    stage.addChild(player);
 	    stage.addChild(ground);
-	    kit.init(player,stage,renderer);
+	    kit.init(player,stage,renderer,ground);
 	    fps(30,function(f,obj){
 	        kit.bullet();
+	        if(click.clicked){
+	            kit.shoot("laser");
+	        }
 	        particleContainer.children.forEach(function(val){
 
 	            if(val.kill !== 0){
-	                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))+player.xvel
-	                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))-player.yvel
+	                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
+	                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
 	                val.kill--
 	                val.alpha = val.kill/val.killMax
 	            } else{
 	                particleContainer.removeChild(val)
 	            }
 	        })
-	        if(click.clicked){
-	            kit.shoot("laser");
-	        }
 	        key.check([65,37], function() {
-	            player.xvel += -2;
+	            player.xvel += -2.5;
+	            if(player.y<ground.abs){
 	            particles({
-	            "amount":5,
+	            "amount":3,
 	            "x":player.x+player.width,
 	            "y":player.y+player.height/2,
 	            "width":5,
@@ -116,12 +117,14 @@
 	            "colors":["#e74c3c","#e67e22","#f1c40f"],
 	            "wrapper":particleContainer
 	        })
+	        }
 	                //Left
 	        })
 	        key.check([68,39], function() {
-	            player.xvel += 2;
+	            player.xvel += 2.5;
+	            if(player.y<ground.abs){
 	            particles({
-	            "amount":5,
+	            "amount":3,
 	            "x":player.x,
 	            "y":player.y+player.height/2,
 	            "width":5,
@@ -131,6 +134,7 @@
 	            "colors":["#e74c3c","#e67e22","#f1c40f"],
 	            "wrapper":particleContainer
 	        })
+	        }
 	                //Right
 	        })
 	        key.check([87,38,32], function() {
@@ -141,7 +145,7 @@
 	            "y":player.y+player.height,
 	            "width":5,
 	            "height":5,
-	            "rangex":[15,-15],
+	            "rangex":[10,-10],
 	            "rangey":[30,-10],
 	            "colors":["#e74c3c","#e67e22","#f1c40f"],
 	            "wrapper":particleContainer
@@ -151,14 +155,16 @@
 	          })
 	        key.check([40,83],function(){
 	          //Down
-	          player.yvel-= 1.2
+	          player.yvel-= .6
 	          particles({
-	          "amount":15,
+	          "amount":3,
+	           "yd":-player.yvel+5,
+	            "xd":player.xvel,
 	          "x":player.x+player.width/2,
 	          "y":player.y,
 	          "width":5,
 	          "height":5,
-	          "rangex":[15,-15],
+	          "rangex":[10,-10],
 	          "rangey":[-30,10],
 	          "colors":["#e74c3c","#e67e22","#f1c40f"],
 	          "wrapper":particleContainer
@@ -167,9 +173,9 @@
 
 	        player.x+=player.xvel;
 	        player.y+=-player.yvel;
-	        if(player.y < 0){player.yvel *= -0.5;player.y = 0}
-	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.5;player.y=ground.abs}
-	        player.xvel*=0.8;
+	        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.8;}
+	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.8;}
+	        else{player.xvel*=0.85};
 	        renderer.render(all);
 	    });
 	}
@@ -444,20 +450,22 @@
 	    var a = this
 	    this.cooldown = 0
 	    this.bullets = []
-	    this.init = function(sprite,stage,renderer){
+	    this.init = function(sprite,stage,renderer,ground){
 	        a.sprite = sprite
 	        a.stage = stage
 	        a.renderer = renderer
+	        a.ground = ground
 	    }
 	    this.shoot = function(bullet){
 	        bullet = __webpack_require__(10)(bullet)
 	        if(a.cooldown<=0){
 	            a.cooldown = bullet.cooldown
-	            bullet.x = a.sprite.x+a.sprite.width+bullet.width*bullet.anchor.x
-	            bullet.y = a.sprite.y+a.sprite.height/3
+	            bullet.x = a.sprite.x+a.sprite.xvel+a.sprite.width/2+bullet.width*bullet.anchor.x
+	            bullet.y = a.sprite.y+a.sprite.yvel+a.sprite.height/2
 	            dx = a.renderer.plugins.interaction.mouse.global.x-bullet.x;
 	            dy = a.renderer.plugins.interaction.mouse.global.y-bullet.y;
 	            bullet.rotation = Math.atan2(dy,dx)+bullet.shake/100-Math.random()*bullet.shake/50;
+	            move(bullet,a.sprite.width/2,(bullet.rotation* (180 / Math.PI)))
 	            a.bullets.push(bullet)
 	            a.stage.addChild(bullet)
 	        }
@@ -473,10 +481,10 @@
 	    a.bullets.forEach(function(bullet,index){
 	        move(bullet,bullet.vel+bullet.burst/100-Math.random()*bullet.vel*bullet.burst/50, (bullet.rotation* (180 / Math.PI)))
 	        bullet.vel+=bullet.acc
-	        contain(bullet,a.renderer.width,a.renderer.height,function(handle){
+	        contain(bullet,a.renderer.width,a.renderer.height-a.ground.height,function(handle){
 	            handle("y",function(){
 	                if(bullet.counting === undefined){
-	                    bullet.counting = bullet.width*2/Math.abs(bullet.vel)
+	                    bullet.counting = 120
 	                } else{
 	                    bullet.counting--
 	                }
@@ -503,7 +511,7 @@
 	    //If someone runs bullet("laser"), create a bullet in the following way
 	    if(type==="laser"){
 	        //Creates a new bullet based on the laser image
-	        var bullet = new PIXI.Sprite(shapes.rectangle(1000,500,"#e74c3c"))
+	        var bullet = new PIXI.Sprite(shapes.rectangle(30,10,"#e74c3c"))
 	        bullet.scale.y = 0.5
 	        //Wait five frames before shooting again
 	        bullet.cooldown = 10

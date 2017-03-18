@@ -40,27 +40,28 @@ function setup() {
     player.yvel = 0;
     stage.addChild(player);
     stage.addChild(ground);
-    kit.init(player,stage,renderer);
+    kit.init(player,stage,renderer,ground);
     fps(30,function(f,obj){
         kit.bullet();
+        if(click.clicked){
+            kit.shoot("laser");
+        }
         particleContainer.children.forEach(function(val){
 
             if(val.kill !== 0){
-                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))+player.xvel
-                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))-player.yvel
+                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
+                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
                 val.kill--
                 val.alpha = val.kill/val.killMax
             } else{
                 particleContainer.removeChild(val)
             }
         })
-        if(click.clicked){
-            kit.shoot("laser");
-        }
         key.check([65,37], function() {
-            player.xvel += -2;
+            player.xvel += -2.5;
+            if(player.y<ground.abs){
             particles({
-            "amount":5,
+            "amount":3,
             "x":player.x+player.width,
             "y":player.y+player.height/2,
             "width":5,
@@ -70,12 +71,14 @@ function setup() {
             "colors":["#e74c3c","#e67e22","#f1c40f"],
             "wrapper":particleContainer
         })
+        }
                 //Left
         })
         key.check([68,39], function() {
-            player.xvel += 2;
+            player.xvel += 2.5;
+            if(player.y<ground.abs){
             particles({
-            "amount":5,
+            "amount":3,
             "x":player.x,
             "y":player.y+player.height/2,
             "width":5,
@@ -85,6 +88,7 @@ function setup() {
             "colors":["#e74c3c","#e67e22","#f1c40f"],
             "wrapper":particleContainer
         })
+        }
                 //Right
         })
         key.check([87,38,32], function() {
@@ -95,7 +99,7 @@ function setup() {
             "y":player.y+player.height,
             "width":5,
             "height":5,
-            "rangex":[15,-15],
+            "rangex":[10,-10],
             "rangey":[30,-10],
             "colors":["#e74c3c","#e67e22","#f1c40f"],
             "wrapper":particleContainer
@@ -105,14 +109,16 @@ function setup() {
           })
         key.check([40,83],function(){
           //Down
-          player.yvel-= 1.2
+          player.yvel-= .6
           particles({
-          "amount":15,
+          "amount":3,
+           "yd":-player.yvel+5,
+            "xd":player.xvel,
           "x":player.x+player.width/2,
           "y":player.y,
           "width":5,
           "height":5,
-          "rangex":[15,-15],
+          "rangex":[10,-10],
           "rangey":[-30,10],
           "colors":["#e74c3c","#e67e22","#f1c40f"],
           "wrapper":particleContainer
@@ -121,9 +127,9 @@ function setup() {
 
         player.x+=player.xvel;
         player.y+=-player.yvel;
-        if(player.y < 0){player.yvel *= -0.5;player.y = 0}
-        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.5;player.y=ground.abs}
-        player.xvel*=0.8;
+        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.8;}
+        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.8;}
+        else{player.xvel*=0.85};
         renderer.render(all);
     });
 }

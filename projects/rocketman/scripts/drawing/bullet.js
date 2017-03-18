@@ -3,7 +3,7 @@ module.exports = function(type){
     //If someone runs bullet("laser"), create a bullet in the following way
     if(type==="laser"){
         //Creates a new bullet based on the laser image
-        var bullet = new PIXI.Sprite(shapes.rectangle(1000,500,"#e74c3c"))
+        var bullet = new PIXI.Sprite(shapes.rectangle(30,10,"#e74c3c"))
         bullet.scale.y = 0.5
         //Wait five frames before shooting again
         bullet.cooldown = 10

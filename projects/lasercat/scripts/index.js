@@ -37,6 +37,8 @@ function setup() {
     player.y =ground.abs;
     player.xvel = 0;
     player.yvel = 0;
+    player.anchor.x = 0.5;
+    player.anchor.y = 0.5;
     stage.addChild(player);
     stage.addChild(ground);
     kit.init(player,stage,renderer);
