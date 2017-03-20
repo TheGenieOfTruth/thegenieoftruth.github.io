@@ -9,3 +9,34 @@ body{
     font-family:"Pixel";
     cursor:default;
 }
+div span{
+	padding:10px;
+	background:#34495e;
+	cursor:pointer;
+}
+div span:hover{
+	background:#2c3e50;
+
+}
+.active{
+	background:#2ecc71;
+}
+.active:hover{
+	background:#27ae60;
+}
+canvas{
+	position:absolute;
+	bottom:487px;
+}
+.unselectable {
+   -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+
+   /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+   -ms-user-select: none;
+   user-select: none;
+}

@@ -20,7 +20,11 @@ var then = Date.now();
 var interval = 1000/fps;
 var delta;
 var ct = 0;
-
+function every(count,callback){
+    if(ct % count == 0){
+        callback()
+    }
+}
 function draw() {
     if(a.going){
         requestAnimationFrame(draw);
@@ -47,7 +51,7 @@ function draw() {
 
         then = now - (delta % interval);
 
-        cb(ct,a)
+        cb(ct,a,every)
     }
 }
 

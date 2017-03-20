@@ -7,18 +7,30 @@ var shapes = require("./drawing/shapes");
 var contain = require("./physics/contain");
 var move = require("./physics/move");
 var fps = require("./tools/fps");
-var kit = require("./kit/kit.js");
-var particles = require("./drawing/particles.js");
-key.listen("loud");
+var kit = require("./misc/kit");
+var obstacle = require("./misc/obstacle")
+var particles = require("./drawing/particles");
+key.listen();
 // create an new instance of a pixi stage
 var all = new PIXI.Container();
 var stage = new PIXI.Container();
+var obstacles = new PIXI.Container()
 var particleContainer = new PIXI.Container();
+all.addChild(obstacles);
 all.addChild(particleContainer);
 all.addChild(stage);
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 // create a renderer instance.
-var renderer = PIXI.autoDetectRenderer(772, 480);
+var height = 500
+var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
+function fit(val){
+    val.width = renderer.width
+    val.height = renderer.height
+}
+fit(all)
+fit(stage)
+fit(obstacles)
+fit(particleContainer)
 renderer.backgroundColor = 0x888888
     // add the renderer view element to the DOM
 shapes.renderer = renderer
@@ -31,9 +43,9 @@ setup();
 
 function setup() {
     var player = new PIXI.Sprite(shapes.rectangle(25,25),"#2ecc71");
-    var ground = new PIXI.Sprite(shapes.rectangle(772,35,"#2ecc71"));
+    var ground = new PIXI.Sprite(shapes.rectangle(renderer.width,35,"#2ecc71"));
     player.zOrder = 1;
-    ground.y = 445;
+    ground.y = renderer.height-ground.height;
     ground.abs = ground.y-player.height
     player.y =ground.abs;
     player.xvel = 0;
@@ -41,24 +53,22 @@ function setup() {
     stage.addChild(player);
     stage.addChild(ground);
     kit.init(player,stage,renderer,ground);
-    fps(30,function(f,obj){
+    obstacle.init(player,obstacles,renderer,ground);
+    fps(60,function(f,obj,every){
+        //Custom function loops
         kit.bullet();
+        every(100,function(){
+            obstacle.create();
+        })
+        obstacle.move();
         if(click.clicked){
             kit.shoot("laser");
         }
-        particleContainer.children.forEach(function(val){
+        particles("handle",particleContainer)
 
-            if(val.kill !== 0){
-                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
-                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
-                val.kill--
-                val.alpha = val.kill/val.killMax
-            } else{
-                particleContainer.removeChild(val)
-            }
-        })
+        //Keypress handling
         key.check([65,37], function() {
-            player.xvel += -2.5;
+            player.xvel += -1.2;
             if(player.y<ground.abs){
             particles({
             "amount":3,
@@ -75,7 +85,7 @@ function setup() {
                 //Left
         })
         key.check([68,39], function() {
-            player.xvel += 2.5;
+            player.xvel += 1.2;
             if(player.y<ground.abs){
             particles({
             "amount":3,
@@ -92,7 +102,7 @@ function setup() {
                 //Right
         })
         key.check([87,38,32], function() {
-            player.yvel += 1.2
+            player.yvel += .75
             particles({
             "amount":15,
             "x":player.x+player.width/2,
@@ -105,11 +115,11 @@ function setup() {
             "wrapper":particleContainer
           })}
           ,function(){
-              player.yvel -= 1
+              player.yvel -= .6
           })
         key.check([40,83],function(){
           //Down
-          player.yvel-= .6
+          player.yvel-= .3
           particles({
           "amount":3,
            "yd":-player.yvel+5,
@@ -125,11 +135,16 @@ function setup() {
       })
         })
 
+        //Bonus physics
         player.x+=player.xvel;
         player.y+=-player.yvel;
-        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.8;}
-        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.8;}
+        if(player.y < 0){player.yvel *= -0.6;player.y = 0;player.xvel*=0.75;}
+        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.6;player.y=ground.abs;player.xvel*=0.75;}
         else{player.xvel*=0.85};
+        if(player.yvel>0){
+            player.yvel*=0.9
+        }
+        //Render
         renderer.render(all);
     });
 }

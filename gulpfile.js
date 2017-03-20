@@ -120,6 +120,7 @@ gulp.task('watch', function(callback) {
                 gulp.watch(cwd + 'babel/**/*.+(babel|es5|js)',['babel'])
                 gulp.watch(cwd + 'scripts/**/*.js', ['webpack']); //reload
                 gulp.watch(cwd + 'index.html', browserSync.reload); //reload
+                gulp.watch(cwd + '/**/*.css', browserSync.reload); //reload
             } else{
             if (argv.b) {
                 gulp.watch(cwd + '**/*.coffee', ['coffee']); //reload via javascript change

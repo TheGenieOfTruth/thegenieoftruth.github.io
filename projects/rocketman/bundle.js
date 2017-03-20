@@ -54,17 +54,29 @@
 	var move = __webpack_require__(6);
 	var fps = __webpack_require__(7);
 	var kit = __webpack_require__(9);
-	var particles = __webpack_require__(11);
-	key.listen("loud");
+	var obstacle = __webpack_require__(11)
+	var particles = __webpack_require__(12);
+	key.listen();
 	// create an new instance of a pixi stage
 	var all = new PIXI.Container();
 	var stage = new PIXI.Container();
+	var obstacles = new PIXI.Container()
 	var particleContainer = new PIXI.Container();
+	all.addChild(obstacles);
 	all.addChild(particleContainer);
 	all.addChild(stage);
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
-	var renderer = PIXI.autoDetectRenderer(772, 480);
+	var height = 500
+	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
+	function fit(val){
+	    val.width = renderer.width
+	    val.height = renderer.height
+	}
+	fit(all)
+	fit(stage)
+	fit(obstacles)
+	fit(particleContainer)
 	renderer.backgroundColor = 0x888888
 	    // add the renderer view element to the DOM
 	shapes.renderer = renderer
@@ -77,9 +89,9 @@
 
 	function setup() {
 	    var player = new PIXI.Sprite(shapes.rectangle(25,25),"#2ecc71");
-	    var ground = new PIXI.Sprite(shapes.rectangle(772,35,"#2ecc71"));
+	    var ground = new PIXI.Sprite(shapes.rectangle(renderer.width,35,"#2ecc71"));
 	    player.zOrder = 1;
-	    ground.y = 445;
+	    ground.y = renderer.height-ground.height;
 	    ground.abs = ground.y-player.height
 	    player.y =ground.abs;
 	    player.xvel = 0;
@@ -87,24 +99,22 @@
 	    stage.addChild(player);
 	    stage.addChild(ground);
 	    kit.init(player,stage,renderer,ground);
-	    fps(30,function(f,obj){
+	    obstacle.init(player,obstacles,renderer,ground);
+	    fps(60,function(f,obj,every){
+	        //Custom function loops
 	        kit.bullet();
+	        every(100,function(){
+	            obstacle.create();
+	        })
+	        obstacle.move();
 	        if(click.clicked){
 	            kit.shoot("laser");
 	        }
-	        particleContainer.children.forEach(function(val){
+	        particles("handle",particleContainer)
 
-	            if(val.kill !== 0){
-	                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
-	                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
-	                val.kill--
-	                val.alpha = val.kill/val.killMax
-	            } else{
-	                particleContainer.removeChild(val)
-	            }
-	        })
+	        //Keypress handling
 	        key.check([65,37], function() {
-	            player.xvel += -2.5;
+	            player.xvel += -1.2;
 	            if(player.y<ground.abs){
 	            particles({
 	            "amount":3,
@@ -121,7 +131,7 @@
 	                //Left
 	        })
 	        key.check([68,39], function() {
-	            player.xvel += 2.5;
+	            player.xvel += 1.2;
 	            if(player.y<ground.abs){
 	            particles({
 	            "amount":3,
@@ -138,7 +148,7 @@
 	                //Right
 	        })
 	        key.check([87,38,32], function() {
-	            player.yvel += 1.2
+	            player.yvel += .75
 	            particles({
 	            "amount":15,
 	            "x":player.x+player.width/2,
@@ -151,11 +161,11 @@
 	            "wrapper":particleContainer
 	          })}
 	          ,function(){
-	              player.yvel -= 1
+	              player.yvel -= .6
 	          })
 	        key.check([40,83],function(){
 	          //Down
-	          player.yvel-= .6
+	          player.yvel-= .3
 	          particles({
 	          "amount":3,
 	           "yd":-player.yvel+5,
@@ -171,11 +181,16 @@
 	      })
 	        })
 
+	        //Bonus physics
 	        player.x+=player.xvel;
 	        player.y+=-player.yvel;
-	        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.8;}
-	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.8;}
+	        if(player.y < 0){player.yvel *= -0.6;player.y = 0;player.xvel*=0.75;}
+	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.6;player.y=ground.abs;player.xvel*=0.75;}
 	        else{player.xvel*=0.85};
+	        if(player.yvel>0){
+	            player.yvel*=0.9
+	        }
+	        //Render
 	        renderer.render(all);
 	    });
 	}
@@ -238,7 +253,6 @@
 	    a = this
 	    function down(){
 	        a.clicked = true
-	        console.log("DOWN")
 	    }
 	    function up(){
 	        a.clicked = false
@@ -393,7 +407,11 @@
 	var interval = 1000/fps;
 	var delta;
 	var ct = 0;
-
+	function every(count,callback){
+	    if(ct % count == 0){
+	        callback()
+	    }
+	}
 	function draw() {
 	    if(a.going){
 	        requestAnimationFrame(draw);
@@ -420,7 +438,7 @@
 
 	        then = now - (delta % interval);
 
-	        cb(ct,a)
+	        cb(ct,a,every)
 	    }
 	}
 
@@ -535,7 +553,79 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
+	module.exports = new function(){
+		var a = this
+		this.obstacles = []
+		this.init = function(player,stage,renderer,ground){
+			a.player = player
+			a.stage = stage
+			a.renderer = renderer
+			a.ground = ground
+		}
+		this.create = function(){
+			var sprite = a.player
+			var renderer = a.renderer
+			var stage = a.stage
+			var ground = a.ground
+
+			var shapes = __webpack_require__(4)
+			var loc = renderer.width
+			var height = renderer.height
+			var pc = new PIXI.Container()
+			pc.width = 20
+			var obstacle = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
+			obstacle.x = loc
+			obstacle.height=Math.random()*(height-ground.height-sprite.height*5)
+			pc.addChild(obstacle);
+			var counter = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
+			counter.x = loc
+			counter.y = obstacle.height+sprite.height*5
+			counter.height = height - obstacle.height
+			pc.addChild(counter);
+			stage.addChild(pc);
+			a.obstacles.push(pc);
+		}
+		this.move = function(){
+			var sprite = a.player
+			var renderer = a.renderer
+			var stage = a.stage
+			var ground = a.ground
+			var collide = __webpack_require__(3)
+			a.obstacles.forEach(function(val,index){
+				collide(sprite,val,function(handle){
+	            handle("y",function(){
+	                console.log("u wot m8")
+	            })
+
+	        })
+				val.x-=2
+				if(val.x+val.width<-renderer.width){
+					
+				}
+			})
+		}
+	}
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
 	module.exports = function(obj){
+		if(obj==="handle"){
+			particleContainer = arguments[1]
+			particleContainer.children.forEach(function(val){
+
+	            if(val.kill !== 0){
+	                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
+	                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
+	                val.kill--
+	                val.alpha = val.kill/val.killMax
+	            } else{
+	                particleContainer.removeChild(val)
+	            }
+	        })
+	        return;
+		}
 		var shapes = __webpack_require__(4)
 		for(i=0;i<obj.amount;i++){
 		var particle = new PIXI.Sprite(shapes.rectangle(obj.width,obj.height,obj.colors[Math.floor(Math.random()*obj.colors.length)]))
@@ -543,8 +633,8 @@
 		particle.x = obj.x
 		particle.y = obj.y
 		particle.zOrder = 2;
-		particle.kill = 10
-		particle.killMax = 10
+		particle.kill = 12
+		particle.killMax = 12
 		obj.wrapper.addChild(particle)
 	}
 	}

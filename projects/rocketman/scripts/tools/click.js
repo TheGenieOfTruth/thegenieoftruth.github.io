@@ -2,7 +2,6 @@ module.exports = new function(){
     a = this
     function down(){
         a.clicked = true
-        console.log("DOWN")
     }
     function up(){
         a.clicked = false
