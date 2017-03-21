@@ -100,6 +100,9 @@ function setup() {
         pause(obj,key,pauseScreen) //Handles pausing
         kit.bullet();
         obstacle.move(obj);
+        every(50,function(){
+            obstacle.shoot()
+        })
         every(100,function(){
             obstacle.create();
         })
