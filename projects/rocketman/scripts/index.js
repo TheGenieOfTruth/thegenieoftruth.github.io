@@ -24,7 +24,6 @@ all.addChild(stage);
 PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 // create a renderer instance.
 var height = 500
-<<<<<<< HEAD
 var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
 function fit(val){
     val.width = renderer.width
@@ -37,9 +36,6 @@ fit(particleContainer)
 var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
 all.addChild(pauseScreen);
 pauseScreen.visible = false;
-=======
-var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
->>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 renderer.backgroundColor = 0x888888
     // add the renderer view element to the DOM
 shapes.renderer = renderer
@@ -103,10 +99,10 @@ function setup() {
         //Custom function loops
         pause(obj,key,pauseScreen) //Handles pausing
         kit.bullet();
-        every(500,function(){
+        obstacle.move(obj);
+        every(100,function(){
             obstacle.create();
         })
-        obstacle.move(obj);
         if(click.clicked){
             kit.shoot("laser");
         }

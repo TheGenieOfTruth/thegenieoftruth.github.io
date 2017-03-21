@@ -1,19 +1,50 @@
-module.exports = function(r1, r2,callback) {
-<<<<<<< HEAD
-    var dx=(r1.worldTransform.tx+r1.width/2)-(r2.worldTransform.tx+r2.width/2);
-    var dy=(r1.worldTransform.ty+r1.height/2)-(r2.worldTransform.ty+r2.height/2);
-=======
-    var dx=(r1.worldTransform.dx+r1.width/2)-(r2.worldTransform.dx+r2.width/2);
-    var dy=(r1.worldTransform.d+r1.height/2)-(r2.worldTransform.dy+r2.height/2);
->>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
-    var width=(r1.width+r2.width)/2;
-    var height=(r1.height+r2.height)/2;
-    var crossWidth=width*dy;
-    var crossHeight=height*dx;
-    var collision=false;
-    //
-    if(Math.abs(dx)<=width && Math.abs(dy)<=height){
-        collision = true
+module.exports = function(r1, r2) {
+
+  //Define the variables we'll need to calculate
+  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+  //hit will determine whether there's a collision
+  hit = false;
+
+  //Find the center points of each sprite
+  r1.centerX = r1.worldTransform.tx + r1.width / 2;
+  r1.centerY = r1.worldTransform.ty + r1.height / 2;
+  r2.centerX = r2.worldTransform.tx + r2.width / 2;
+  r2.centerY = r2.worldTransform.ty + r2.height / 2;
+
+  //Find the half-widths and half-heights of each sprite
+  r1.halfWidth = r1.width / 2;
+  r1.halfHeight = r1.height / 2;
+  r2.halfWidth = r2.width / 2;
+  r2.halfHeight = r2.height / 2;
+
+  //Calculate the distance vector between the sprites
+  vx = r1.centerX - r2.centerX;
+  vy = r1.centerY - r2.centerY;
+
+  //Figure out the combined half-widths and half-heights
+  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+  //Check for a collision on the x axis
+  if (Math.abs(vx) < combinedHalfWidths) {
+
+    //A collision might be occuring. Check for a collision on the y axis
+    if (Math.abs(vy) < combinedHalfHeights) {
+
+      //There's definitely a collision happening
+      hit = true;
+    } else {
+
+      //There's no collision on the y axis
+      hit = false;
     }
-    return collision
-}
+  } else {
+
+    //There's no collision on the x axis
+    hit = false;
+  }
+
+  //`hit` will be either `true` or `false`
+  return hit;
+};

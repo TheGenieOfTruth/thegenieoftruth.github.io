@@ -70,7 +70,6 @@
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
 	var height = 500
-<<<<<<< HEAD
 	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
 	function fit(val){
 	    val.width = renderer.width
@@ -83,9 +82,6 @@
 	var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
 	all.addChild(pauseScreen);
 	pauseScreen.visible = false;
-=======
-	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
->>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 	renderer.backgroundColor = 0x888888
 	    // add the renderer view element to the DOM
 	shapes.renderer = renderer
@@ -149,10 +145,10 @@
 	        //Custom function loops
 	        pause(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
-	        every(500,function(){
+	        obstacle.move(obj);
+	        every(100,function(){
 	            obstacle.create();
 	        })
-	        obstacle.move(obj);
 	        if(click.clicked){
 	            kit.shoot("laser");
 	        }
@@ -335,25 +331,56 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = function(r1, r2,callback) {
-<<<<<<< HEAD
-	    var dx=(r1.worldTransform.tx+r1.width/2)-(r2.worldTransform.tx+r2.width/2);
-	    var dy=(r1.worldTransform.ty+r1.height/2)-(r2.worldTransform.ty+r2.height/2);
-=======
-	    var dx=(r1.worldTransform.dx+r1.width/2)-(r2.worldTransform.dx+r2.width/2);
-	    var dy=(r1.worldTransform.d+r1.height/2)-(r2.worldTransform.dy+r2.height/2);
->>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
-	    var width=(r1.width+r2.width)/2;
-	    var height=(r1.height+r2.height)/2;
-	    var crossWidth=width*dy;
-	    var crossHeight=height*dx;
-	    var collision=false;
-	    //
-	    if(Math.abs(dx)<=width && Math.abs(dy)<=height){
-	        collision = true
+	module.exports = function(r1, r2) {
+
+	  //Define the variables we'll need to calculate
+	  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+
+	  //hit will determine whether there's a collision
+	  hit = false;
+
+	  //Find the center points of each sprite
+	  r1.centerX = r1.worldTransform.tx + r1.width / 2;
+	  r1.centerY = r1.worldTransform.ty + r1.height / 2;
+	  r2.centerX = r2.worldTransform.tx + r2.width / 2;
+	  r2.centerY = r2.worldTransform.ty + r2.height / 2;
+
+	  //Find the half-widths and half-heights of each sprite
+	  r1.halfWidth = r1.width / 2;
+	  r1.halfHeight = r1.height / 2;
+	  r2.halfWidth = r2.width / 2;
+	  r2.halfHeight = r2.height / 2;
+
+	  //Calculate the distance vector between the sprites
+	  vx = r1.centerX - r2.centerX;
+	  vy = r1.centerY - r2.centerY;
+
+	  //Figure out the combined half-widths and half-heights
+	  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+	  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+
+	  //Check for a collision on the x axis
+	  if (Math.abs(vx) < combinedHalfWidths) {
+
+	    //A collision might be occuring. Check for a collision on the y axis
+	    if (Math.abs(vy) < combinedHalfHeights) {
+
+	      //There's definitely a collision happening
+	      hit = true;
+	    } else {
+
+	      //There's no collision on the y axis
+	      hit = false;
 	    }
-	    return collision
-	}
+	  } else {
+
+	    //There's no collision on the x axis
+	    hit = false;
+	  }
+
+	  //`hit` will be either `true` or `false`
+	  return hit;
+	};
 
 
 /***/ },
@@ -626,8 +653,8 @@
 	        a.ground = ground
 	    }
 	    this.create = function() {
-	        var types = ["smash","gap"]
-	        var type = types[Math.round(Math.random()*types.length)]
+	        var types = ["smash"]
+	        var type = types[Math.floor(Math.random()*types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
 	        var stage = a.stage
@@ -662,73 +689,43 @@
 	        stage.children.forEach(function(obstacle, index) {
 	            obstacle.x -= 2
 	            if(obstacle.type == "smash"){
+	            	function smash(x){
+	            			return Math.sin(x/60)*60
+	            		}
 	            		var s1 = obstacle.children[0]
 	            		var s2 = obstacle.children[1]
-	            		s1.height = s1.oriheight+Math.sin(obstacle.x/50)*50
-	            		s2.height = s2.oriheight+Math.sin(obstacle.x/50)*50
-	            		s2.y = s1.oriheight + sprite.height * 5 - Math.sin(obstacle.x/50)*50
+	            		s1.height = s1.oriheight+smash(obstacle.x+s1.oriheight) > 0 ? s1.oriheight+smash(obstacle.x+s1.oriheight) : 0
+	            		s2.height = s2.oriheight+smash(obstacle.x+s1.oriheight)
+	            		if(smash(obstacle.x+s1.oriheight)>=60){
+									console.log("pop!")            			
+	            			}
+	            		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
 	            	}
-	            debug("Obstacle x " + Math.floor(index), obstacle.children[0].worldTransform.tx)
-	            obstacle.children.forEach(function(val) {
-
-<<<<<<< HEAD
-	      
-	                collide(val, sprite, function(handle) {
-	                    handle("y", function() {
-	                        document.getElementById("resume")
+	            debug("Obstacle x " + index, obstacle.children[0].worldTransform.tx)
+	            obstacle.children.forEach(function(val,i) {
+	            	 debug("Obstacle x " + index + " - " + i, obstacle.children[0].worldTransform.tx)
+	                if(collide(val, sprite)){
+	                	console.log("Hit an obstacle")
+	                	console.log("Sprite X"+sprite.worldTransform.tx)
+	                	console.log("Sprite Y"+sprite.worldTransform.ty)
+	                	console.log("Obstacle X" + val.worldTransform.tx)
+	                	console.log("Obstacle Y" + val.worldTransform.ty)
+	                	console.log("Sprite Width: " + sprite.width)
+	                	console.log("Sprite Height: " + sprite.height)
+	                	console.log("ObstacleWidth: "+val.width)
+	                	console.log("ObstacleHeight: "+val.height)
+	                	document.getElementById("resume")
 	                            .onclick()
-	                    })
+	                            }
 	                })
-	            })
-	            if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width < 0) {
+	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width < 0) {
 	                stage.removeChild(obstacle)
 	            }
-	        })
+	            })
+	        
+	        }
 	    }
-	}
-=======
-			var shapes = __webpack_require__(4)
-			var loc = renderer.width
-			var height = renderer.height;
-			var obstacle = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
-			obstacle.x = loc
-			obstacle.height=Math.random()*(height-ground.height-sprite.height*5)
-			var counter = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
-			counter.x = loc
-			counter.y = obstacle.height+sprite.height*5
-			counter.height = height - obstacle.height
-			var ct = new PIXI.Container();
-			ct.scale.x = -1;
-			ct.x = a.renderer.width
-			ct.width = 20
-			ct.addChild(counter);
-	      ct.addChild(obstacle);
-	      stage.addChild(ct);
-		}
-		this.move = function(){
-			var sprite = a.player
-			var renderer = a.renderer
-			var stage = a.stage
-			var ground = a.ground
-			var collide = __webpack_require__(3)
-			a.stage.children.forEach(function(val,index){
-				console.log(val.y)
-				val.x-=2
-				val.children.forEach(function(obstacle){
-				if(collide(obstacle,sprite)){
-						console.log("doot")				
-					}
-								
-					
-				})
-				if(obstacle.x+obstacle.width<0){			
-						stage.removeChild(val);
-					}
-	      })
-			}
-		}
 
->>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 
 /***/ },
 /* 12 */

@@ -24,6 +24,10 @@ div span:hover{
 .active:hover{
 	background:#27ae60;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 .unselectable {
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -36,8 +40,11 @@ div span:hover{
    -ms-user-select: none;
    user-select: none;
 }
+<<<<<<< HEAD
 dbg{
   font-size:18px;
   display:block;
   margin:10px 0;
 }
+=======
+>>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
