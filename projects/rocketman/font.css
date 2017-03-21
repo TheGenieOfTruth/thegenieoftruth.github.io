@@ -24,10 +24,7 @@ div span:hover{
 .active:hover{
 	background:#27ae60;
 }
-canvas{
-	position:absolute;
-	bottom:487px;
-}
+
 .unselectable {
    -moz-user-select: -moz-none;
    -khtml-user-select: none;
@@ -39,4 +36,9 @@ canvas{
    */
    -ms-user-select: none;
    user-select: none;
+}
+dbg{
+  font-size:18px;
+  display:block;
+  margin:10px 0;
 }

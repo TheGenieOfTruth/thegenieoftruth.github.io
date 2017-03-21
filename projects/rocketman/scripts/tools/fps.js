@@ -2,6 +2,7 @@ module.exports = function(fps,cb){
 this.going = true
 this.start = function(){
     this.going = true
+    requestAnimationFrame(draw);
 }
 this.resume = this.start
 this.stop = function(){

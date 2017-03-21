@@ -55,7 +55,9 @@
 	var fps = __webpack_require__(7);
 	var kit = __webpack_require__(9);
 	var obstacle = __webpack_require__(11)
-	var particles = __webpack_require__(12);
+	var particles = __webpack_require__(13);
+	var pause = __webpack_require__(14);
+	var debug = __webpack_require__(12)
 	key.listen();
 	// create an new instance of a pixi stage
 	var all = new PIXI.Container();
@@ -68,7 +70,7 @@
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
 	var height = 500
-	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
+	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
 	function fit(val){
 	    val.width = renderer.width
 	    val.height = renderer.height
@@ -77,6 +79,9 @@
 	fit(stage)
 	fit(obstacles)
 	fit(particleContainer)
+	var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
+	all.addChild(pauseScreen);
+	pauseScreen.visible = false;
 	renderer.backgroundColor = 0x888888
 	    // add the renderer view element to the DOM
 	shapes.renderer = renderer
@@ -86,8 +91,33 @@
 	stage.interactive = true;
 	click.listen(stage);
 	setup();
-
 	function setup() {
+	    var iteration = 1;
+	    var particleMp = 1;
+	    (function(){
+	    function resetP(){
+	        console.log("oi")
+	        document.querySelectorAll(".p").forEach(function(val){
+	            val.className = "p"
+	        })
+	    }
+	    var targets = [["none",0],["low",.5],["high",1],["ridiculous",2],["max",15]]
+	    targets.forEach(function(val){
+	        document.getElementById(val[0]).onclick = function(){
+	            resetP()
+	            this.className+= " active"
+	            particleMp = val[1]
+	        }
+	    })
+	    })()
+	    document.getElementById("resume").onclick = function(){
+	        iteration++
+	        player.x = 0;
+	        player.y = ground.abs;
+	        player.xvel = 0;
+	        player.yvel = 0;
+	        obstacles.children = [];
+	    }
 	    var player = new PIXI.Sprite(shapes.rectangle(25,25),"#2ecc71");
 	    var ground = new PIXI.Sprite(shapes.rectangle(renderer.width,35,"#2ecc71"));
 	    player.zOrder = 1;
@@ -100,13 +130,25 @@
 	    stage.addChild(ground);
 	    kit.init(player,stage,renderer,ground);
 	    obstacle.init(player,obstacles,renderer,ground);
+	    debug("Renderer width",renderer.width)
 	    fps(60,function(f,obj,every){
+	        debug("X",Math.round(player.x*1000)/1000)
+	        debug("Y",Math.round(player.y*1000)/1000)
+	        debug("X Velocity",Math.round(player.xvel*1000)/1000)
+	        debug("Y Velocity",Math.round(player.yvel*1000)/1000)
+	        debug("Obstacles",obstacles.children.length)
+	        debug("Particles",particleContainer.children.length)
+	        debug("Tethers",key.tethers.length)
+	        debug("Keymap",JSON.stringify(key.map))
+	        debug("Running",obj.going)
+	        debug("Iteration",iteration)
 	        //Custom function loops
+	        pause(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
-	        every(100,function(){
+	        every(500,function(){
 	            obstacle.create();
 	        })
-	        obstacle.move();
+	        obstacle.move(obj);
 	        if(click.clicked){
 	            kit.shoot("laser");
 	        }
@@ -117,7 +159,7 @@
 	            player.xvel += -1.2;
 	            if(player.y<ground.abs){
 	            particles({
-	            "amount":3,
+	            "amount":3*particleMp,
 	            "x":player.x+player.width,
 	            "y":player.y+player.height/2,
 	            "width":5,
@@ -134,7 +176,7 @@
 	            player.xvel += 1.2;
 	            if(player.y<ground.abs){
 	            particles({
-	            "amount":3,
+	            "amount":3*particleMp,
 	            "x":player.x,
 	            "y":player.y+player.height/2,
 	            "width":5,
@@ -150,7 +192,7 @@
 	        key.check([87,38,32], function() {
 	            player.yvel += .75
 	            particles({
-	            "amount":15,
+	            "amount":15*particleMp,
 	            "x":player.x+player.width/2,
 	            "y":player.y+player.height,
 	            "width":5,
@@ -167,7 +209,7 @@
 	          //Down
 	          player.yvel-= .3
 	          particles({
-	          "amount":3,
+	          "amount":3*particleMp,
 	           "yd":-player.yvel+5,
 	            "xd":player.xvel,
 	          "x":player.x+player.width/2,
@@ -204,6 +246,7 @@
 	module.exports = new function() {
 	    var a = this
 	    this.map = [];
+	    this.tethers = [];
 	    this.listen = function() {
 	        var param = arguments[0] == undefined ? false : arguments[0]
 	        document.onkeydown = function(e) {
@@ -215,6 +258,14 @@
 	            if (param == "loud") {
 	                console.log(a.map)
 	            }
+	            a.tethers.forEach(function(tether,index){
+	                if(a.map.indexOf(tether.key)!=-1){
+	                   tether.func()
+	                   a.map.splice(a.map.indexOf(e), 1)
+	                   a.tethers.splice(index, 1)
+	                }
+	            })
+
 	        };
 	        document.onkeyup = function(e) {
 	            e = e || window.event;
@@ -226,6 +277,7 @@
 	            if (param == "loud") {
 	                console.log(a.map)
 	            }
+
 	        };
 	    }
 	    this.check = function(key, callback, not) {
@@ -242,6 +294,12 @@
 	        if (not !== undefined) {
 	            not()
 	        }
+	    }
+	    this.wait = function(key,func){
+	        a.tethers.push({
+	            "key":key,
+	            "func":func
+	        })
 	    }
 	}
 
@@ -274,8 +332,8 @@
 /***/ function(module, exports) {
 
 	module.exports = function(r1, r2,callback) {
-	    var dx=(r1.x+r1.width/2)-(r2.x+r2.width/2);
-	    var dy=(r1.y+r1.height/2)-(r2.y+r2.height/2);
+	    var dx=(r1.worldTransform.tx+r1.width/2)-(r2.worldTransform.tx+r2.width/2);
+	    var dy=(r1.worldTransform.ty+r1.height/2)-(r2.worldTransform.ty+r2.height/2);
 	    var width=(r1.width+r2.width)/2;
 	    var height=(r1.height+r2.height)/2;
 	    var crossWidth=width*dy;
@@ -389,6 +447,7 @@
 	this.going = true
 	this.start = function(){
 	    this.going = true
+	    requestAnimationFrame(draw);
 	}
 	this.resume = this.start
 	this.stop = function(){
@@ -553,61 +612,92 @@
 /* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = new function(){
-		var a = this
-		this.obstacles = []
-		this.init = function(player,stage,renderer,ground){
-			a.player = player
-			a.stage = stage
-			a.renderer = renderer
-			a.ground = ground
-		}
-		this.create = function(){
-			var sprite = a.player
-			var renderer = a.renderer
-			var stage = a.stage
-			var ground = a.ground
+	module.exports = new function() {
+	    var a = this
+	    this.obstacles = []
+	    this.init = function(player, stage, renderer, ground) {
+	        a.player = player
+	        a.stage = stage
+	        a.renderer = renderer
+	        a.ground = ground
+	    }
+	    this.create = function() {
+	        var types = ["smash","gap"]
+	        var type = types[Math.round(Math.random()*types.length)]
+	        var sprite = a.player
+	        var renderer = a.renderer
+	        var stage = a.stage
+	        var ground = a.ground
+	        var shapes = __webpack_require__(4)
+	        var loc = renderer.width
+	        var height = renderer.height
+	        var pc = new PIXI.Container()
+	        var obstacle = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
+	        obstacle.x = loc
+	        obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 5)
+	        obstacle.height = obstacle.oriheight
+	        var counter = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
+	        counter.x = loc
+	        counter.oriheight = height - obstacle.height
+	        counter.height = counter.oriheight
+	        counter.y = obstacle.height + sprite.height * 5
+	        pc.addChild(obstacle);
+	        pc.addChild(counter);
+	        pc.type = type
+	        stage.addChild(pc);
+	    }
+	    this.move = function(obj) {
+	        var sprite = a.player
+	        var renderer = a.renderer
+	        var stage = a.stage
+	        var ground = a.ground
+	        var collide = __webpack_require__(3)
+	        var debug = __webpack_require__(12)
+	        debug("Width", sprite.width)
+	        debug("Height", sprite.height)
+	        stage.children.forEach(function(obstacle, index) {
+	            obstacle.x -= 2
+	            if(obstacle.type == "smash"){
+	            		var s1 = obstacle.children[0]
+	            		var s2 = obstacle.children[1]
+	            		s1.height = s1.oriheight+Math.sin(obstacle.x/50)*50
+	            		s2.height = s2.oriheight+Math.sin(obstacle.x/50)*50
+	            		s2.y = s1.oriheight + sprite.height * 5 - Math.sin(obstacle.x/50)*50
+	            	}
+	            debug("Obstacle x " + Math.floor(index), obstacle.children[0].worldTransform.tx)
+	            obstacle.children.forEach(function(val) {
 
-			var shapes = __webpack_require__(4)
-			var loc = renderer.width
-			var height = renderer.height
-			var pc = new PIXI.Container()
-			pc.width = 20
-			var obstacle = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
-			obstacle.x = loc
-			obstacle.height=Math.random()*(height-ground.height-sprite.height*5)
-			pc.addChild(obstacle);
-			var counter = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
-			counter.x = loc
-			counter.y = obstacle.height+sprite.height*5
-			counter.height = height - obstacle.height
-			pc.addChild(counter);
-			stage.addChild(pc);
-			a.obstacles.push(pc);
-		}
-		this.move = function(){
-			var sprite = a.player
-			var renderer = a.renderer
-			var stage = a.stage
-			var ground = a.ground
-			var collide = __webpack_require__(3)
-			a.obstacles.forEach(function(val,index){
-				collide(sprite,val,function(handle){
-	            handle("y",function(){
-	                console.log("u wot m8")
+	      
+	                collide(val, sprite, function(handle) {
+	                    handle("y", function() {
+	                        document.getElementById("resume")
+	                            .onclick()
+	                    })
+	                })
 	            })
-
+	            if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width < 0) {
+	                stage.removeChild(obstacle)
+	            }
 	        })
-				val.x-=2
-				if(val.x+val.width<-renderer.width){
-					
-				}
-			})
-		}
+	    }
 	}
 
 /***/ },
 /* 12 */
+/***/ function(module, exports) {
+
+	module.exports = function(idMessage,value){
+		if(document.getElementById(idMessage) == null){
+			var elem = document.createElement("dbg")
+			elem.innerHTML = idMessage+": <label id = '"+idMessage+"'>"+value+"</label>"
+			document.getElementsByTagName("body")[0].appendChild(elem)
+			return;
+		}
+		document.getElementById(idMessage).innerHTML = value
+	}
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(obj){
@@ -639,6 +729,27 @@
 	}
 	}
 
+
+/***/ },
+/* 14 */
+/***/ function(module, exports) {
+
+	module.exports = function(obj,key,psc){
+		function wait(){
+			obj.start()
+			console.log("START")
+			psc.visible = false
+			key.tethers.splice(key.tethers.indexOf(wait),1)
+
+		}
+		key.check(80,function(){
+			obj.stop()
+			console.log("STOP")
+			psc.visible = true
+			key.wait(80,wait)
+		})
+
+	}
 
 /***/ }
 /******/ ]);
