@@ -70,6 +70,7 @@
 	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 	// create a renderer instance.
 	var height = 500
+<<<<<<< HEAD
 	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
 	function fit(val){
 	    val.width = renderer.width
@@ -82,6 +83,9 @@
 	var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
 	all.addChild(pauseScreen);
 	pauseScreen.visible = false;
+=======
+	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height);
+>>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 	renderer.backgroundColor = 0x888888
 	    // add the renderer view element to the DOM
 	shapes.renderer = renderer
@@ -332,23 +336,23 @@
 /***/ function(module, exports) {
 
 	module.exports = function(r1, r2,callback) {
+<<<<<<< HEAD
 	    var dx=(r1.worldTransform.tx+r1.width/2)-(r2.worldTransform.tx+r2.width/2);
 	    var dy=(r1.worldTransform.ty+r1.height/2)-(r2.worldTransform.ty+r2.height/2);
+=======
+	    var dx=(r1.worldTransform.dx+r1.width/2)-(r2.worldTransform.dx+r2.width/2);
+	    var dy=(r1.worldTransform.d+r1.height/2)-(r2.worldTransform.dy+r2.height/2);
+>>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 	    var width=(r1.width+r2.width)/2;
 	    var height=(r1.height+r2.height)/2;
 	    var crossWidth=width*dy;
 	    var crossHeight=height*dx;
-	    var collision='none';
+	    var collision=false;
 	    //
 	    if(Math.abs(dx)<=width && Math.abs(dy)<=height){
-	        collision = 'y'
+	        collision = true
 	    }
-	    function handle(code,cb){
-	        if(collision == code){
-	            cb()
-	        }
-	    }
-	    callback(handle)
+	    return collision
 	}
 
 
@@ -667,6 +671,7 @@
 	            debug("Obstacle x " + Math.floor(index), obstacle.children[0].worldTransform.tx)
 	            obstacle.children.forEach(function(val) {
 
+<<<<<<< HEAD
 	      
 	                collide(val, sprite, function(handle) {
 	                    handle("y", function() {
@@ -681,6 +686,49 @@
 	        })
 	    }
 	}
+=======
+			var shapes = __webpack_require__(4)
+			var loc = renderer.width
+			var height = renderer.height;
+			var obstacle = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
+			obstacle.x = loc
+			obstacle.height=Math.random()*(height-ground.height-sprite.height*5)
+			var counter = new PIXI.Sprite(shapes.rectangle(20,1,"#444444"))
+			counter.x = loc
+			counter.y = obstacle.height+sprite.height*5
+			counter.height = height - obstacle.height
+			var ct = new PIXI.Container();
+			ct.scale.x = -1;
+			ct.x = a.renderer.width
+			ct.width = 20
+			ct.addChild(counter);
+	      ct.addChild(obstacle);
+	      stage.addChild(ct);
+		}
+		this.move = function(){
+			var sprite = a.player
+			var renderer = a.renderer
+			var stage = a.stage
+			var ground = a.ground
+			var collide = __webpack_require__(3)
+			a.stage.children.forEach(function(val,index){
+				console.log(val.y)
+				val.x-=2
+				val.children.forEach(function(obstacle){
+				if(collide(obstacle,sprite)){
+						console.log("doot")				
+					}
+								
+					
+				})
+				if(obstacle.x+obstacle.width<0){			
+						stage.removeChild(val);
+					}
+	      })
+			}
+		}
+
+>>>>>>> 6c4f550e3b46fe73043e77adbd50db34d77340ae
 
 /***/ },
 /* 12 */
