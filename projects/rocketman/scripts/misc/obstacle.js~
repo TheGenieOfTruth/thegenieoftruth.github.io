@@ -91,7 +91,7 @@ module.exports = new function() {
                 if(collide({width:val.width,height:val.height,
                 worldTransform:{
 						ty:val.y,
-						tx:obstacle.x+val.x          	
+						tx:obstacle.x          	
                 	}}, sprite)){
                 	function log(name,data){
 							console.log(name+": " + data)                		

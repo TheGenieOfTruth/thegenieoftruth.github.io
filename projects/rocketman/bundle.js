@@ -71,15 +71,23 @@
 	// create a renderer instance.
 	var height = 500
 	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
-	function fit(val){
-	    val.width = renderer.width
-	    val.height = renderer.height
-	}
-	fit(all)
-	fit(stage)
-	fit(obstacles)
-	fit(particleContainer)
 	var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
+	var text = new PIXI.Text("Game paused", {
+	    font: "30px Pixel",
+	    fill: "white"
+	});
+	text.anchor.x = 0.5;
+	text.x = renderer.width / 2
+	text.y = 200
+	pauseScreen.addChild(text);
+	var score = new PIXI.Text("0", {
+	    font: "30px Pixel",
+	    fill: "white"
+	});
+	score.anchor.x = 0.5;
+	score.x = renderer.width / 2
+	score.y = 495-score.height
+	all.addChild(score)
 	all.addChild(pauseScreen);
 	pauseScreen.visible = false;
 	renderer.backgroundColor = 0x888888
@@ -132,6 +140,7 @@
 	    obstacle.init(player,obstacles,renderer,ground);
 	    debug("Renderer width",renderer.width)
 	    fps(60,function(f,obj,every){
+	    	  score.setText(f);
 	        debug("X",Math.round(player.x*1000)/1000)
 	        debug("Y",Math.round(player.y*1000)/1000)
 	        debug("X Velocity",Math.round(player.xvel*1000)/1000)
@@ -229,6 +238,14 @@
 	        //Bonus physics
 	        player.x+=player.xvel;
 	        player.y+=-player.yvel;
+	        if(player.x <= 0){
+					player.xvel *= -0.6       
+					player.x = 0 	
+	        	}
+	        	if(player.x-player.width > renderer.width){
+					player.xvel *= -0.6  
+					player.x = renderer.width-player.width      		
+	        		}
 	        if(player.y < 0){player.yvel *= -0.6;player.y = 0;player.xvel*=0.75;}
 	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.6;player.y=ground.abs;player.xvel*=0.75;}
 	        else{player.xvel*=0.85};
@@ -734,11 +751,30 @@
 	            			}
 	            		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
 	            	}
-	                if(obstacle.type == "laser"){
 
-	                }
 	            obstacle.children.forEach(function(val,i) {
-	                if(collide(val, sprite)){
+	                if(collide({width:val.width,height:val.height,
+	                worldTransform:{
+							ty:val.y,
+							tx:obstacle.x+val.x          	
+	                	}}, sprite)){
+	                	function log(name,data){
+								console.log(name+": " + data)                		
+	                		}
+	                		console.log("---------------------------------")
+	                		log("obstacle width",val.width)
+	                		log("obstacle height",val.height)
+	                		log("obstacle x",val.x)
+	                		log("obstacle y",val.y)
+	                		log("absolute obstacle x",val.worldTransform.tx)
+	                		log("absolute obstacle x",val.worldTransform.ty)
+	                		console.log("---------------------------------")
+	                		log("sprite width",sprite.width)
+	                		log("sprite height",sprite.height)
+	                		log("sprite x",sprite.x)
+	                		log("sprite y",sprite.y)
+	                		log("absolute sprite x",sprite.worldTransform.tx)
+	                		log("absolute sprite x",sprite.worldTransform.ty)
 	                	document.getElementById("resume")
 	                            .onclick()
 	                            }
@@ -806,6 +842,7 @@
 /***/ function(module, exports) {
 
 	module.exports = function(obj,key,psc){
+
 		function wait(){
 			obj.start()
 			console.log("START")
@@ -817,7 +854,9 @@
 			obj.stop()
 			console.log("STOP")
 			psc.visible = true
+			setTimeout(function(){
 			key.wait(80,wait)
+			},30)
 		})
 
 	}
