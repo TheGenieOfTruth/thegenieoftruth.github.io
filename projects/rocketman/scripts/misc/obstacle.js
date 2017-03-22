@@ -29,7 +29,7 @@ module.exports = new function() {
         stage.addChild(pc);
     }
     this.create = function() {
-        var types = ["smash","gap"]
+        var types = ["gap","smash"]
         var type = types[Math.floor(Math.random()*types.length)]
         var sprite = a.player
         var renderer = a.renderer
@@ -95,10 +95,10 @@ module.exports = new function() {
                             .onclick()
                             }
                 })
-            if(typeof obstacle.children[0] != "undefined"){
-                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width < 0) {
+                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
                 stage.removeChild(obstacle)
-            }}
+                stage.children[index].x -= 2
+            }
             })
         
         }

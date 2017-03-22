@@ -145,13 +145,13 @@
 	        //Custom function loops
 	        pause(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
-	        obstacle.move(obj);
 	        every(50,function(){
 	            obstacle.shoot()
 	        })
 	        every(100,function(){
 	            obstacle.create();
 	        })
+	        obstacle.move(obj);
 	        if(click.clicked){
 	            kit.shoot("laser");
 	        }
@@ -677,7 +677,7 @@
 	        stage.addChild(pc);
 	    }
 	    this.create = function() {
-	        var types = ["smash","gap"]
+	        var types = ["gap","smash"]
 	        var type = types[Math.floor(Math.random()*types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
@@ -743,10 +743,10 @@
 	                            .onclick()
 	                            }
 	                })
-	            if(typeof obstacle.children[0] != "undefined"){
-	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width < 0) {
+	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
 	                stage.removeChild(obstacle)
-	            }}
+	                stage.children[index].x -= 2
+	            }
 	            })
 	        
 	        }
