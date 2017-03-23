@@ -114,7 +114,7 @@ function setup() {
         //Custom function loops
         pause.handle(obj,key,pauseScreen) //Handles pausing
         kit.bullet();
-        every(75,function(){
+        every(50,function(){
             obstacle.shoot()
         })
         every(100,function(){

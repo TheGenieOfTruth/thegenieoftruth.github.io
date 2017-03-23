@@ -84,8 +84,8 @@
 	    font: "30px Pixel",
 	    fill: "white"
 	});
-	score.anchor.x = 0.5;
-	score.x = renderer.width / 2
+	score.anchor.x = 0;
+	score.x = 10
 	score.y = 495-score.height
 	all.addChild(score)
 	all.addChild(pauseScreen);
@@ -119,6 +119,7 @@
 	    })
 	    })()
 	    document.getElementById("resume").onclick = function(){
+	    		obstacle.score = 0
 	        outport.start()
 	        pauseScreen.visible = false
 	        pause.allowed = true
@@ -145,7 +146,7 @@
 	    debug("Renderer width",renderer.width)
 	    fps(60,function(f,obj,every){
 	        outport = obj
-	    	  score.setText(f);
+	    	  score.setText("Score: " + obstacle.score);
 	        debug("X",Math.round(player.x*1000)/1000)
 	        debug("Y",Math.round(player.y*1000)/1000)
 	        debug("X Velocity",Math.round(player.xvel*1000)/1000)
@@ -159,7 +160,7 @@
 	        //Custom function loops
 	        pause.handle(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
-	        every(50,function(){
+	        every(75,function(){
 	            obstacle.shoot()
 	        })
 	        every(100,function(){
@@ -688,6 +689,7 @@
 	module.exports = new function() {
 	    var a = this
 	    this.obstacles = []
+	    this.score = 0
 	    this.init = function(player, stage, renderer, ground) {
 	        a.player = player
 	        a.stage = stage
@@ -695,7 +697,7 @@
 	        a.ground = ground
 	    }
 	    this.shoot = function(){
-	        var types = ["laser"]
+	        var types = ["laser","flux"]
 	        var type = types[Math.floor(Math.random()*types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
@@ -711,6 +713,14 @@
 	            obstacle.y = Math.random() * (height - ground.height)
 	            pc.addChild(obstacle);
 	        }
+	        if(type === "flux"){
+	        		var obstacle = new PIXI.Sprite(shapes.rectangle(10, 10, "#3498db"))
+	        		obstacle.anchor.x = 0.5;
+	        		obstacle.anchor.y = 0.5;
+	            obstacle.x = loc
+	            obstacle.y = Math.random() * (height - ground.height)
+	            pc.addChild(obstacle);
+	        	}
 	        pc.rand = Math.random()
 	        pc.type = type
 	        stage.addChild(pc);
@@ -773,8 +783,14 @@
 	            			}
 	            		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
 	            	}
-
+					if(obstacle.type == "flux"){
+						obstacle.x -= 6
+						}
 	            obstacle.children.forEach(function(val,i) {
+	            	if(obstacle.type == "flux"){
+						val.width = 10 + Math.sin(obstacle.x)*5
+						val.height = 10 + Math.sin(obstacle.x)*5
+						}
 	                if(collide({width:val.width,height:val.height,
 	                worldTransform:{
 							ty:val.y,
@@ -802,6 +818,9 @@
 	                            }
 	                })
 	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
+	                	if(obstacle.type === "gap" || obstacle.type === "smash"){
+	                	a.score++
+	                }
 	                stage.removeChild(obstacle)
 	                stage.children[index].x -= 2
 	            }
@@ -809,7 +828,7 @@
 	        
 	        }
 	    }
-
+	2
 
 /***/ },
 /* 12 */
