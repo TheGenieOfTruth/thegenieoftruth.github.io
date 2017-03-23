@@ -13,14 +13,15 @@ module.exports = new function() {
             if (param == "loud") {
                 console.log(a.map)
             }
+            
             a.tethers.forEach(function(tether,index){
-                if(a.map.indexOf(tether.key)!=-1){
+                if(tether.type == "down"){
+                if(e === tether.key){
                    tether.func()
-                   a.map.splice(a.map.indexOf(e), 1)
                    a.tethers.splice(index, 1)
                 }
+            }
             })
-
         };
         document.onkeyup = function(e) {
             e = e || window.event;
@@ -32,6 +33,14 @@ module.exports = new function() {
             if (param == "loud") {
                 console.log(a.map)
             }
+            a.tethers.forEach(function(tether,index){
+                if(tether.type == "up"){
+                if(e === tether.key){
+                   tether.func()
+                   a.tethers.splice(index, 1)
+                }
+            }
+            })
 
         };
     }
@@ -50,10 +59,18 @@ module.exports = new function() {
             not()
         }
     }
-    this.wait = function(key,func){
+    this.waitUp = function(key,func){
         a.tethers.push({
             "key":key,
-            "func":func
+            "func":func,
+            "type":"up"
+        })
+    }
+    this.waitDown = function(key,func){
+        a.tethers.push({
+            "key":key,
+            "func":func,
+            "type":"down"
         })
     }
 }

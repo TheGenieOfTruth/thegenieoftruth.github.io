@@ -1,19 +1,25 @@
-module.exports = function(obj,key,psc){
-
+module.exports = new function(){
+	var a = this
+	this.allow = true
+	this.handle = function(obj,key,psc){
 	function wait(){
 		obj.start()
 		console.log("START")
 		psc.visible = false
-		key.tethers.splice(key.tethers.indexOf(wait),1)
-
+	}
+	function allow(){
+		a.allow = true
 	}
 	key.check(80,function(){
+		if(a.allow){
 		obj.stop()
 		console.log("STOP")
 		psc.visible = true
-		setTimeout(function(){
-		key.wait(80,wait)
-		},30)
-	})
+		a.allow = false
+		key.waitUp(80,function(){
+			key.waitDown(80,wait)
+			key.waitUp(80,allow)
+		})}
+	})}
 
 }

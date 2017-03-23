@@ -73,6 +73,9 @@ function setup() {
     })
     })()
     document.getElementById("resume").onclick = function(){
+        outport.start()
+        pauseScreen.visible = false
+        pause.allowed = true
         iteration++
         player.x = 0;
         player.y = ground.abs;
@@ -92,8 +95,10 @@ function setup() {
     stage.addChild(ground);
     kit.init(player,stage,renderer,ground);
     obstacle.init(player,obstacles,renderer,ground);
+    var outport = undefined
     debug("Renderer width",renderer.width)
     fps(60,function(f,obj,every){
+        outport = obj
     	  score.setText(f);
         debug("X",Math.round(player.x*1000)/1000)
         debug("Y",Math.round(player.y*1000)/1000)
@@ -106,7 +111,7 @@ function setup() {
         debug("Running",obj.going)
         debug("Iteration",iteration)
         //Custom function loops
-        pause(obj,key,pauseScreen) //Handles pausing
+        pause.handle(obj,key,pauseScreen) //Handles pausing
         kit.bullet();
         every(50,function(){
             obstacle.shoot()

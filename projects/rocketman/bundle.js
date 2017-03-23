@@ -119,6 +119,9 @@
 	    })
 	    })()
 	    document.getElementById("resume").onclick = function(){
+	        outport.start()
+	        pauseScreen.visible = false
+	        pause.allowed = true
 	        iteration++
 	        player.x = 0;
 	        player.y = ground.abs;
@@ -138,8 +141,10 @@
 	    stage.addChild(ground);
 	    kit.init(player,stage,renderer,ground);
 	    obstacle.init(player,obstacles,renderer,ground);
+	    var outport = undefined
 	    debug("Renderer width",renderer.width)
 	    fps(60,function(f,obj,every){
+	        outport = obj
 	    	  score.setText(f);
 	        debug("X",Math.round(player.x*1000)/1000)
 	        debug("Y",Math.round(player.y*1000)/1000)
@@ -152,7 +157,7 @@
 	        debug("Running",obj.going)
 	        debug("Iteration",iteration)
 	        //Custom function loops
-	        pause(obj,key,pauseScreen) //Handles pausing
+	        pause.handle(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
 	        every(50,function(){
 	            obstacle.shoot()
@@ -278,14 +283,15 @@
 	            if (param == "loud") {
 	                console.log(a.map)
 	            }
+	            
 	            a.tethers.forEach(function(tether,index){
-	                if(a.map.indexOf(tether.key)!=-1){
+	                if(tether.type == "down"){
+	                if(e === tether.key){
 	                   tether.func()
-	                   a.map.splice(a.map.indexOf(e), 1)
 	                   a.tethers.splice(index, 1)
 	                }
+	            }
 	            })
-
 	        };
 	        document.onkeyup = function(e) {
 	            e = e || window.event;
@@ -297,6 +303,14 @@
 	            if (param == "loud") {
 	                console.log(a.map)
 	            }
+	            a.tethers.forEach(function(tether,index){
+	                if(tether.type == "up"){
+	                if(e === tether.key){
+	                   tether.func()
+	                   a.tethers.splice(index, 1)
+	                }
+	            }
+	            })
 
 	        };
 	    }
@@ -315,10 +329,18 @@
 	            not()
 	        }
 	    }
-	    this.wait = function(key,func){
+	    this.waitUp = function(key,func){
 	        a.tethers.push({
 	            "key":key,
-	            "func":func
+	            "func":func,
+	            "type":"up"
+	        })
+	    }
+	    this.waitDown = function(key,func){
+	        a.tethers.push({
+	            "key":key,
+	            "func":func,
+	            "type":"down"
 	        })
 	    }
 	}
@@ -841,23 +863,29 @@
 /* 14 */
 /***/ function(module, exports) {
 
-	module.exports = function(obj,key,psc){
-
+	module.exports = new function(){
+		var a = this
+		this.allow = true
+		this.handle = function(obj,key,psc){
 		function wait(){
 			obj.start()
 			console.log("START")
 			psc.visible = false
-			key.tethers.splice(key.tethers.indexOf(wait),1)
-
+		}
+		function allow(){
+			a.allow = true
 		}
 		key.check(80,function(){
+			if(a.allow){
 			obj.stop()
 			console.log("STOP")
 			psc.visible = true
-			setTimeout(function(){
-			key.wait(80,wait)
-			},30)
-		})
+			a.allow = false
+			key.waitUp(80,function(){
+				key.waitDown(80,wait)
+				key.waitUp(80,allow)
+			})}
+		})}
 
 	}
 
