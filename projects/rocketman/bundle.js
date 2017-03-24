@@ -145,6 +145,7 @@
 	    var outport = undefined
 	    debug("Renderer width",renderer.width)
 	    fps(60,function(f,obj,every){
+	        obstacle.score+=Math.floor(player.x/50)+1
 	        outport = obj
 	    	  score.setText("Score: " + obstacle.score);
 	        debug("X",Math.round(player.x*1000)/1000)
@@ -160,7 +161,7 @@
 	        //Custom function loops
 	        pause.handle(obj,key,pauseScreen) //Handles pausing
 	        kit.bullet();
-	        every(75,function(){
+	        every(25,function(){
 	            obstacle.shoot()
 	        })
 	        every(100,function(){
@@ -221,7 +222,7 @@
 	            "wrapper":particleContainer
 	          })}
 	          ,function(){
-	              player.yvel -= .6
+	              player.yvel -= .4
 	          })
 	        key.check([40,83],function(){
 	          //Down
@@ -248,12 +249,17 @@
 					player.xvel *= -0.6       
 					player.x = 0 	
 	        	}
-	        	if(player.x-player.width > renderer.width){
-					player.xvel *= -0.6  
-					player.x = renderer.width-player.width      		
+	        	if(player.x > renderer.width){
+	                obstacle.score++
+	                player.invincible = true
+	                player.xvel+=5
+					player.xvel *= -12 		
 	        		}
-	        if(player.y < 0){player.yvel *= -0.6;player.y = 0;player.xvel*=0.75;}
-	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.6;player.y=ground.abs;player.xvel*=0.75;}
+	            if(player.xvel >= 0){
+	                player.invincible = false
+	            }
+	        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.75;}
+	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.75;}
 	        else{player.xvel*=0.85};
 	        if(player.yvel>0){
 	            player.yvel*=0.9
@@ -375,7 +381,9 @@
 /***/ function(module, exports) {
 
 	module.exports = function(r1, r2) {
-
+	  if(r1.invincible === true || r2.invincible === true){
+	    return false;
+	  }
 	  //Define the variables we'll need to calculate
 	  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
 
@@ -697,7 +705,7 @@
 	        a.ground = ground
 	    }
 	    this.shoot = function(){
-	        var types = ["laser","flux"]
+	        var types = ["laser"]
 	        var type = types[Math.floor(Math.random()*types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
@@ -713,14 +721,6 @@
 	            obstacle.y = Math.random() * (height - ground.height)
 	            pc.addChild(obstacle);
 	        }
-	        if(type === "flux"){
-	        		var obstacle = new PIXI.Sprite(shapes.rectangle(10, 10, "#3498db"))
-	        		obstacle.anchor.x = 0.5;
-	        		obstacle.anchor.y = 0.5;
-	            obstacle.x = loc
-	            obstacle.y = Math.random() * (height - ground.height)
-	            pc.addChild(obstacle);
-	        	}
 	        pc.rand = Math.random()
 	        pc.type = type
 	        stage.addChild(pc);
@@ -739,13 +739,13 @@
 	        if(type === "gap" || type === "smash"){
 	            var obstacle = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
 	            obstacle.x = loc
-	            obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 5)
+	            obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 7)
 	            obstacle.height = obstacle.oriheight
 	            var counter = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
 	            counter.x = loc
 	            counter.oriheight = height - obstacle.height
 	            counter.height = counter.oriheight
-	            counter.y = obstacle.height + sprite.height * 5
+	            counter.y = obstacle.height + sprite.height * 7
 	            pc.addChild(obstacle);
 	            pc.addChild(counter);
 	        }
@@ -765,7 +765,7 @@
 	        debug("Height", sprite.height)
 	        stage.children.forEach(function(obstacle, index) {
 	            if(obstacle.type == "laser"){
-	                obstacle.x -= 10
+	                obstacle.x -= (renderer.width-obstacle.x)/150
 	            }
 	            if(obstacle.type == "smash" || obstacle.type == "gap"){
 	                obstacle.x -= 2
@@ -783,9 +783,6 @@
 	            			}
 	            		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
 	            	}
-					if(obstacle.type == "flux"){
-						obstacle.x -= 6
-						}
 	            obstacle.children.forEach(function(val,i) {
 	            	if(obstacle.type == "flux"){
 						val.width = 10 + Math.sin(obstacle.x)*5
@@ -819,7 +816,6 @@
 	                })
 	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
 	                	if(obstacle.type === "gap" || obstacle.type === "smash"){
-	                	a.score++
 	                }
 	                stage.removeChild(obstacle)
 	                stage.children[index].x -= 2
@@ -848,14 +844,17 @@
 /* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(obj){
+	module.exports = function(obj,pc,sprite){
 		if(obj==="handle"){
 			particleContainer = arguments[1]
 			particleContainer.children.forEach(function(val){
 
 	            if(val.kill !== 0){
-	                val.x+=val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
-	                val.y+=val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
+	            	var dx =val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
+	            	var dy = val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
+	                val.x+=dx
+	                val.y+=dy
+	        		
 	                val.kill--
 	                val.alpha = val.kill/val.killMax
 	            } else{

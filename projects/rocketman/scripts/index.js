@@ -99,6 +99,7 @@ function setup() {
     var outport = undefined
     debug("Renderer width",renderer.width)
     fps(60,function(f,obj,every){
+        obstacle.score+=Math.floor(player.x/50+frames/100)++1
         outport = obj
     	  score.setText("Score: " + obstacle.score);
         debug("X",Math.round(player.x*1000)/1000)
@@ -114,7 +115,7 @@ function setup() {
         //Custom function loops
         pause.handle(obj,key,pauseScreen) //Handles pausing
         kit.bullet();
-        every(75,function(){
+        every(25,function(){
             obstacle.shoot()
         })
         every(100,function(){
@@ -175,7 +176,7 @@ function setup() {
             "wrapper":particleContainer
           })}
           ,function(){
-              player.yvel -= .6
+              player.yvel -= .4
           })
         key.check([40,83],function(){
           //Down
@@ -202,12 +203,17 @@ function setup() {
 				player.xvel *= -0.6       
 				player.x = 0 	
         	}
-        	if(player.x-player.width > renderer.width){
-				player.xvel *= -0.6  
-				player.x = renderer.width-player.width      		
+        	if(player.x > renderer.width){
+                obstacle.score++
+                player.invincible = true
+                player.xvel+=5
+				player.xvel *= -12 		
         		}
-        if(player.y < 0){player.yvel *= -0.6;player.y = 0;player.xvel*=0.75;}
-        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.6;player.y=ground.abs;player.xvel*=0.75;}
+            if(player.xvel >= 0){
+                player.invincible = false
+            }
+        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.75;}
+        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.75;}
         else{player.xvel*=0.85};
         if(player.yvel>0){
             player.yvel*=0.9

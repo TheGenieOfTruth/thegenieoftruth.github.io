@@ -9,7 +9,7 @@ module.exports = new function() {
         a.ground = ground
     }
     this.shoot = function(){
-        var types = ["laser","flux"]
+        var types = ["laser"]
         var type = types[Math.floor(Math.random()*types.length)]
         var sprite = a.player
         var renderer = a.renderer
@@ -25,14 +25,6 @@ module.exports = new function() {
             obstacle.y = Math.random() * (height - ground.height)
             pc.addChild(obstacle);
         }
-        if(type === "flux"){
-        		var obstacle = new PIXI.Sprite(shapes.rectangle(10, 10, "#3498db"))
-        		obstacle.anchor.x = 0.5;
-        		obstacle.anchor.y = 0.5;
-            obstacle.x = loc
-            obstacle.y = Math.random() * (height - ground.height)
-            pc.addChild(obstacle);
-        	}
         pc.rand = Math.random()
         pc.type = type
         stage.addChild(pc);
@@ -51,13 +43,13 @@ module.exports = new function() {
         if(type === "gap" || type === "smash"){
             var obstacle = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
             obstacle.x = loc
-            obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 5)
+            obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 7)
             obstacle.height = obstacle.oriheight
             var counter = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
             counter.x = loc
             counter.oriheight = height - obstacle.height
             counter.height = counter.oriheight
-            counter.y = obstacle.height + sprite.height * 5
+            counter.y = obstacle.height + sprite.height * 7
             pc.addChild(obstacle);
             pc.addChild(counter);
         }
@@ -77,7 +69,7 @@ module.exports = new function() {
         debug("Height", sprite.height)
         stage.children.forEach(function(obstacle, index) {
             if(obstacle.type == "laser"){
-                obstacle.x -= 10
+                obstacle.x -= (renderer.width-obstacle.x)/150
             }
             if(obstacle.type == "smash" || obstacle.type == "gap"){
                 obstacle.x -= 2
@@ -95,9 +87,6 @@ module.exports = new function() {
             			}
             		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
             	}
-				if(obstacle.type == "flux"){
-					obstacle.x -= 6
-					}
             obstacle.children.forEach(function(val,i) {
             	if(obstacle.type == "flux"){
 					val.width = 10 + Math.sin(obstacle.x)*5
@@ -131,7 +120,6 @@ module.exports = new function() {
                 })
                 if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
                 	if(obstacle.type === "gap" || obstacle.type === "smash"){
-                	a.score++
                 }
                 stage.removeChild(obstacle)
                 stage.children[index].x -= 2

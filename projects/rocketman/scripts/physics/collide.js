@@ -1,5 +1,7 @@
 module.exports = function(r1, r2) {
-
+  if(r1.invincible === true || r2.invincible === true){
+    return false;
+  }
   //Define the variables we'll need to calculate
   var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
 
