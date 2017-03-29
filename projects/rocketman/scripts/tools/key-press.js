@@ -13,12 +13,11 @@ module.exports = new function() {
             if (param == "loud") {
                 console.log(a.map)
             }
-            
             a.tethers.forEach(function(tether,index){
                 if(tether.type == "down"){
                 if(e === tether.key){
                    tether.func()
-                   a.tethers.splice(index, 1)
+                   if(!tether.perma) a.tethers.splice(index, 1)
                 }
             }
             })
@@ -37,7 +36,7 @@ module.exports = new function() {
                 if(tether.type == "up"){
                 if(e === tether.key){
                    tether.func()
-                   a.tethers.splice(index, 1)
+                   if(!tether.perma) a.tethers.splice(index, 1)
                 }
             }
             })
@@ -59,18 +58,26 @@ module.exports = new function() {
             not()
         }
     }
-    this.waitUp = function(key,func){
+    this.waitUp = function(key,func,perma){
+        if(perma === undefined){
+            perma = false
+        }
         a.tethers.push({
             "key":key,
             "func":func,
-            "type":"up"
+            "type":"up",
+            "perma":perma
         })
     }
-    this.waitDown = function(key,func){
+    this.waitDown = function(key,func,perma){
+        if(perma === undefined){
+            perma = false
+        }
         a.tethers.push({
             "key":key,
             "func":func,
-            "type":"down"
+            "type":"down",
+            "perma":perma
         })
     }
 }

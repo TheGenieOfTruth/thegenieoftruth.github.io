@@ -44,232 +44,307 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
-	window.onload = function(){
-	var key = __webpack_require__(1);
-	var click = __webpack_require__(2);
-	var collide = __webpack_require__(3);
-	var shapes = __webpack_require__(4);
-	var contain = __webpack_require__(5);
-	var move = __webpack_require__(6);
-	var fps = __webpack_require__(7);
-	var kit = __webpack_require__(9);
-	var obstacle = __webpack_require__(11)
-	var particles = __webpack_require__(13);
-	var pause = __webpack_require__(14);
-	var debug = __webpack_require__(12)
-	key.listen();
-	// create an new instance of a pixi stage
-	var all = new PIXI.Container();
-	var stage = new PIXI.Container();
-	var obstacles = new PIXI.Container()
-	var particleContainer = new PIXI.Container();
-	all.addChild(obstacles);
-	all.addChild(particleContainer);
-	all.addChild(stage);
-	PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-	// create a renderer instance.
-	var height = 500
-	var renderer = PIXI.autoDetectRenderer(Math.floor(height*1.61), height,null,true);
-	var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width,renderer.height,"rgba(44, 62, 80,0.9)"))
-	var text = new PIXI.Text("Game paused", {
-	    font: "30px Pixel",
-	    fill: "white"
-	});
-	text.anchor.x = 0.5;
-	text.x = renderer.width / 2
-	text.y = 200
-	pauseScreen.addChild(text);
-	var score = new PIXI.Text("0", {
-	    font: "30px Pixel",
-	    fill: "white"
-	});
-	score.anchor.x = 0;
-	score.x = 10
-	score.y = 495-score.height
-	all.addChild(score)
-	all.addChild(pauseScreen);
-	pauseScreen.visible = false;
-	renderer.backgroundColor = 0x888888
-	    // add the renderer view element to the DOM
-	shapes.renderer = renderer
-	document.body.appendChild(renderer.view);
-	// create a new Sprite using the texture
-	stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
-	stage.interactive = true;
-	click.listen(stage);
-	setup();
-	function setup() {
-	    var iteration = 1;
-	    var particleMp = 1;
-	    (function(){
-	    function resetP(){
-	        console.log("oi")
-	        document.querySelectorAll(".p").forEach(function(val){
-	            val.className = "p"
-	        })
-	    }
-	    var targets = [["none",0],["low",.5],["high",1],["ridiculous",2],["max",15]]
-	    targets.forEach(function(val){
-	        document.getElementById(val[0]).onclick = function(){
-	            resetP()
-	            this.className+= " active"
-	            particleMp = val[1]
+	window.onload = function() {
+	    var jammed = false;
+	    var sound = new Howl({
+	        src: ['assets/whoosh.mp3'],
+	        loop: true,
+	        onend: function() {
+	            console.log('Finished!');
 	        }
-	    })
-	    })()
-	    document.getElementById("resume").onclick = function(){
-	    		obstacle.score = 0
-	        outport.start()
-	        pauseScreen.visible = false
-	        pause.allowed = true
-	        iteration++
-	        player.x = 0;
+	    });
+	    sound.play()
+	    PIXI.Sprite.prototype.bringToFront = function() {
+	        if (this.parent) {
+	            var parent = this.parent;
+	            parent.removeChild(this);
+	            parent.addChild(this);
+	        }
+	    }
+	    var key = __webpack_require__(1);
+	    var collide = __webpack_require__(2);
+	    var shapes = __webpack_require__(3);
+	    var contain = __webpack_require__(4);
+	    var move = __webpack_require__(5);
+	    var fps = __webpack_require__(6);
+	    var kit = __webpack_require__(8);
+	    var obstacle = __webpack_require__(10)
+	    var particles = __webpack_require__(12);
+	    var pause = __webpack_require__(13);
+	    var debug = __webpack_require__(11)
+	    key.listen();
+	    // create an new instance of a pixi stage
+	    var all = new PIXI.Container();
+	    var stage = new PIXI.Container();
+	    var obstacles = new PIXI.Container()
+	    var particleContainer = new PIXI.Container();
+	    all.addChild(obstacles);
+	    all.addChild(particleContainer);
+	    all.addChild(stage);
+	    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+	    // create a renderer instance.
+	    var height = 500
+	    var renderer = PIXI.autoDetectRenderer(Math.floor(height * 1.61), height, null, true);
+	    renderer.backgroundColor = 0x888888
+	        // add the renderer view element to the DOM
+	    shapes.renderer = renderer
+	    document.body.appendChild(renderer.view);
+	    // create a new Sprite using the texture
+	    stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
+	    stage.interactive = true;
+	    PIXI.loader.add("assets/mute/mute.json")
+	        .load(setup)
+
+	    function setup() {
+	        var iteration = 1;
+	        var particleMp = 1;
+
+	        function endgame() {
+	            if (typeof check == "undefined") {
+	                outport.stop()
+	                ground.bringToFront()
+	                score.bringToFront()
+	                jammed = true;
+	                console.log("Endgame loop started")
+	                check = new fps(30, function(f, obj) {
+	                        ground.y = (renderer.height - 35) - Math.pow(f, 2)
+	                        ground.height = (35) + Math.pow(f, 2)
+	                        score.y = (495 - score.height) + Math.pow(f, 2)
+	                        renderer.render(all)
+	                        if (f > 30) {
+	                            obj.stop()
+	                            var t = new PIXI.Text("0", {
+	                                font: "60px Pixel",
+	                                fill: "white"
+	                            });
+	                            t.anchor.x = 0.5;
+	                            t.x = renderer.width / 2
+	                            t.y = 200
+	                            stage.addChild(t);
+	                            new fps(30, function(fn, objn) {
+	                                renderer.render(all)
+	                                t.setText(Math.floor(Math.pow(fn, 2.1)))
+	                                if (Math.pow(fn, 2.1) >= obstacle.score) {
+	                                    t.setText(obstacle.score)
+	                                    objn.stop()
+	                                    new fps(30, function(fr, obja) {
+	                                        renderer.render(all)
+	                                        obstacle.score = 0
+	                                        outport.restart()
+	                                        outport.start()
+	                                        pauseScreen.visible = false
+	                                        pause.allowed = true
+	                                        iteration++
+	                                        player.x = 0;
+	                                        player.y = ground.abs;
+	                                        player.xvel = 0;
+	                                        player.yvel = 0;
+	                                        obstacles.children = [];
+	                                        t.y = 200 + Math.pow(fr, 2)
+	                                        ground.y = (renderer.height - 35) - Math.pow(30 - fr, 2)
+	                                        ground.height = (35) + Math.pow(30 - fr, 2)
+	                                        score.y = (495 - score.height) + Math.pow(30 - fr, 2)
+	                                        if (fr >= 30) {
+	                                            stage.removeChild(text)
+	                                            jammed = false;
+	                                            obja.stop()
+	                                            check = undefined
+	                                        }
+	                                    })
+	                                }
+	                            })
+	                        }
+	                    })
+	                    /*
+	                     */
+	            }
+	        }
+	        //MUTE CODE
+	        var mute = new PIXI.Sprite(PIXI.loader.resources["assets/mute/mute.json"].textures["unmute.png"]);
+	        var muted = false
+	            // Opt-in to interactivity
+	        mute.interactive = true;
+
+	        function fMute() {
+	            muted = !muted
+	            if (muted) {
+	                mute.setTexture(PIXI.loader.resources["assets/mute/mute.json"].textures["mute.png"])
+	                sound.mute(true)
+	            } else {
+	                mute.setTexture(PIXI.loader.resources["assets/mute/mute.json"].textures["unmute.png"])
+	                sound.mute(false)
+	            }
+	            renderer.render(all)
+	        }
+	        // Shows hand cursor
+	        mute.buttonMode = true;
+	        mute.x = 7
+	        mute.on('pointerdown', fMute);
+	        stage.addChild(mute);
+	        var player = new PIXI.Sprite(shapes.rectangle(25, 25), "#2ecc71");
+	        var ground = new PIXI.Sprite(shapes.rectangle(renderer.width, 35, "#2ecc71"));
+	        player.zOrder = 1;
+	        ground.y = renderer.height - ground.height;
+	        ground.abs = ground.y - player.height
 	        player.y = ground.abs;
 	        player.xvel = 0;
 	        player.yvel = 0;
-	        obstacles.children = [];
-	    }
-	    var player = new PIXI.Sprite(shapes.rectangle(25,25),"#2ecc71");
-	    var ground = new PIXI.Sprite(shapes.rectangle(renderer.width,35,"#2ecc71"));
-	    player.zOrder = 1;
-	    ground.y = renderer.height-ground.height;
-	    ground.abs = ground.y-player.height
-	    player.y =ground.abs;
-	    player.xvel = 0;
-	    player.yvel = 0;
-	    stage.addChild(player);
-	    stage.addChild(ground);
-	    kit.init(player,stage,renderer,ground);
-	    obstacle.init(player,obstacles,renderer,ground);
-	    var outport = undefined
-	    debug("Renderer width",renderer.width)
-	    fps(60,function(f,obj,every){
-	        obstacle.score+=Math.floor(player.x/50)+1
-	        outport = obj
-	    	  score.setText("Score: " + obstacle.score);
-	        debug("X",Math.round(player.x*1000)/1000)
-	        debug("Y",Math.round(player.y*1000)/1000)
-	        debug("X Velocity",Math.round(player.xvel*1000)/1000)
-	        debug("Y Velocity",Math.round(player.yvel*1000)/1000)
-	        debug("Obstacles",obstacles.children.length)
-	        debug("Particles",particleContainer.children.length)
-	        debug("Tethers",key.tethers.length)
-	        debug("Keymap",JSON.stringify(key.map))
-	        debug("Running",obj.going)
-	        debug("Iteration",iteration)
-	        //Custom function loops
-	        pause.handle(obj,key,pauseScreen) //Handles pausing
-	        kit.bullet();
-	        every(25,function(){
-	            obstacle.shoot()
-	        })
-	        every(100,function(){
-	            obstacle.create();
-	        })
-	        obstacle.move(obj);
-	        if(click.clicked){
-	            kit.shoot("laser");
-	        }
-	        particles("handle",particleContainer)
-
-	        //Keypress handling
-	        key.check([65,37], function() {
-	            player.xvel += -1.2;
-	            if(player.y<ground.abs){
-	            particles({
-	            "amount":3*particleMp,
-	            "x":player.x+player.width,
-	            "y":player.y+player.height/2,
-	            "width":5,
-	            "height":5,
-	            "rangex":[30,-10],
-	            "rangey":[10,-10],
-	            "colors":["#e74c3c","#e67e22","#f1c40f"],
-	            "wrapper":particleContainer
-	        })
-	        }
+	        stage.addChild(player);
+	        stage.addChild(ground);
+	        kit.init(player, stage, renderer, ground);
+	        obstacle.init(player, obstacles, renderer, ground);
+	        key.waitDown(77, fMute, true)
+	        var outport = undefined
+	        debug("Renderer width", renderer.width)
+	            //SCORE CODE
+	        var score = new PIXI.Text("0", {
+	            font: "30px Pixel",
+	            fill: "white"
+	        });
+	        score.anchor.x = 0;
+	        score.x = 10
+	        score.y = 495 - score.height
+	        stage.addChild(score);
+	        //PAUSE CODE
+	        var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width, renderer.height, "rgba(44, 62, 80,0.9)"))
+	        pauseScreen.visible = false;
+	        var text = new PIXI.Text("Game paused", {
+	            font: "30px Pixel",
+	            fill: "white"
+	        });
+	        text.anchor.x = 0.5;
+	        text.x = renderer.width / 2
+	        text.y = 200
+	        pauseScreen.addChild(text);
+	        stage.addChild(pauseScreen);
+	        outport = new fps(60, function(f, obj, every) {
+	            obstacle.score += Math.floor(player.x / 50 + f / 100) + 1
+	            score.setText("Score: " + obstacle.score);
+	            debug("X", Math.round(player.x * 1000) / 1000)
+	            debug("Y", Math.round(player.y * 1000) / 1000)
+	            debug("X Velocity", Math.round(player.xvel * 1000) / 1000)
+	            debug("Y Velocity", Math.round(player.yvel * 1000) / 1000)
+	            debug("Obstacles", obstacles.children.length)
+	            debug("Particles", particleContainer.children.length)
+	            debug("Tethers", key.tethers.length)
+	            debug("Keymap", JSON.stringify(key.map))
+	            debug("Running", obj.going)
+	            debug("Iteration", iteration)
+	                //Custom function loops
+	            if (f > 120) {
+	                every(50, function() {
+	                    obstacle.shoot()
+	                })
+	            }
+	            every(100, function() {
+	                obstacle.create();
+	            })
+	            particles("handle", particleContainer)
+	                //Keypress handling
+	            key.check([65, 37], function() {
+	                player.xvel += -1.2;
+	                if (player.y < ground.abs) {
+	                    particles({
+	                        "amount": 3 * particleMp,
+	                        "x": player.x + player.width,
+	                        "y": player.y + player.height / 2,
+	                        "width": 5,
+	                        "height": 5,
+	                        "rangex": [30, -10],
+	                        "rangey": [10, -10],
+	                        "colors": ["#e74c3c", "#e67e22", "#f1c40f"],
+	                        "wrapper": particleContainer
+	                    })
+	                }
 	                //Left
-	        })
-	        key.check([68,39], function() {
-	            player.xvel += 1.2;
-	            if(player.y<ground.abs){
-	            particles({
-	            "amount":3*particleMp,
-	            "x":player.x,
-	            "y":player.y+player.height/2,
-	            "width":5,
-	            "height":5,
-	            "rangex":[-30,10],
-	            "rangey":[10,-10],
-	            "colors":["#e74c3c","#e67e22","#f1c40f"],
-	            "wrapper":particleContainer
-	        })
-	        }
+	            })
+	            key.check([68, 39], function() {
+	                player.xvel += 1.2;
+	                if (player.y < ground.abs) {
+	                    particles({
+	                        "amount": 3 * particleMp,
+	                        "x": player.x,
+	                        "y": player.y + player.height / 2,
+	                        "width": 5,
+	                        "height": 5,
+	                        "rangex": [-30, 10],
+	                        "rangey": [10, -10],
+	                        "colors": ["#e74c3c", "#e67e22", "#f1c40f"],
+	                        "wrapper": particleContainer
+	                    })
+	                }
 	                //Right
-	        })
-	        key.check([87,38,32], function() {
-	            player.yvel += .75
-	            particles({
-	            "amount":15*particleMp,
-	            "x":player.x+player.width/2,
-	            "y":player.y+player.height,
-	            "width":5,
-	            "height":5,
-	            "rangex":[10,-10],
-	            "rangey":[30,-10],
-	            "colors":["#e74c3c","#e67e22","#f1c40f"],
-	            "wrapper":particleContainer
-	          })}
-	          ,function(){
-	              player.yvel -= .4
-	          })
-	        key.check([40,83],function(){
-	          //Down
-	          player.yvel-= .3
-	          particles({
-	          "amount":3*particleMp,
-	           "yd":-player.yvel+5,
-	            "xd":player.xvel,
-	          "x":player.x+player.width/2,
-	          "y":player.y,
-	          "width":5,
-	          "height":5,
-	          "rangex":[10,-10],
-	          "rangey":[-30,10],
-	          "colors":["#e74c3c","#e67e22","#f1c40f"],
-	          "wrapper":particleContainer
-	      })
-	        })
-
-	        //Bonus physics
-	        player.x+=player.xvel;
-	        player.y+=-player.yvel;
-	        if(player.x <= 0){
-					player.xvel *= -0.6       
-					player.x = 0 	
-	        	}
-	        	if(player.x > renderer.width){
+	            })
+	            key.check([87, 38, 32], function() {
+	                player.yvel += .75
+	                particles({
+	                    "amount": 15 * particleMp,
+	                    "x": player.x + player.width / 2,
+	                    "y": player.y + player.height,
+	                    "width": 5,
+	                    "height": 5,
+	                    "rangex": [10, -10],
+	                    "rangey": [30, -10],
+	                    "colors": ["#e74c3c", "#e67e22", "#f1c40f"],
+	                    "wrapper": particleContainer
+	                })
+	            }, function() {
+	                player.yvel -= .4
+	            })
+	            key.check([40, 83], function() {
+	                    //Down
+	                    player.yvel -= .3
+	                    particles({
+	                        "amount": 3 * particleMp,
+	                        "yd": -player.yvel + 5,
+	                        "xd": player.xvel,
+	                        "x": player.x + player.width / 2,
+	                        "y": player.y,
+	                        "width": 5,
+	                        "height": 5,
+	                        "rangex": [10, -10],
+	                        "rangey": [-30, 10],
+	                        "colors": ["#e74c3c", "#e67e22", "#f1c40f"],
+	                        "wrapper": particleContainer
+	                    })
+	                })
+	                //Bonus physics
+	            player.x += player.xvel;
+	            player.y += -player.yvel;
+	            if (player.x <= 0) {
+	                player.xvel *= -0.6
+	                player.x = 0
+	            }
+	            if (player.x > renderer.width) {
 	                obstacle.score++
-	                player.invincible = true
-	                player.xvel+=5
-					player.xvel *= -12 		
-	        		}
-	            if(player.xvel >= 0){
+	                    player.invincible = true
+	                player.xvel += 5
+	                player.xvel *= -12
+	            }
+	            if (player.xvel >= -0.1) {
 	                player.invincible = false
 	            }
-	        if(player.y < 0){player.yvel *= -0.4;player.y = 0;player.xvel*=0.75;}
-	        else if(player.y > ground.abs && (player.yvel<0)) {player.yvel *= -0.4;player.y=ground.abs;player.xvel*=0.75;}
-	        else{player.xvel*=0.85};
-	        if(player.yvel>0){
-	            player.yvel*=0.9
-	        }
-	        //Render
-	        renderer.render(all);
-	    });
+	            if (player.y < 0) {
+	                player.yvel *= -0.4;
+	                player.y = 0;
+	                player.xvel *= 0.75;
+	            } else if (player.y > ground.abs && (player.yvel < 0)) {
+	                player.yvel *= -0.4;
+	                player.y = ground.abs;
+	                player.xvel *= 0.75;
+	            } else {
+	                player.xvel *= 0.85
+	            };
+	            if (player.yvel > 0) {
+	                player.yvel *= 0.9
+	            }
+	            obstacle.move(obj, endgame);
+	            pause.handle(obj, key, pauseScreen, sound, jammed, mute) //Handles pausing
+	                //Render
+	            renderer.render(all);
+	        });
+	    }
 	}
-	}
-
 
 /***/ },
 /* 1 */
@@ -290,12 +365,11 @@
 	            if (param == "loud") {
 	                console.log(a.map)
 	            }
-	            
 	            a.tethers.forEach(function(tether,index){
 	                if(tether.type == "down"){
 	                if(e === tether.key){
 	                   tether.func()
-	                   a.tethers.splice(index, 1)
+	                   if(!tether.perma) a.tethers.splice(index, 1)
 	                }
 	            }
 	            })
@@ -314,7 +388,7 @@
 	                if(tether.type == "up"){
 	                if(e === tether.key){
 	                   tether.func()
-	                   a.tethers.splice(index, 1)
+	                   if(!tether.perma) a.tethers.splice(index, 1)
 	                }
 	            }
 	            })
@@ -336,48 +410,32 @@
 	            not()
 	        }
 	    }
-	    this.waitUp = function(key,func){
+	    this.waitUp = function(key,func,perma){
+	        if(perma === undefined){
+	            perma = false
+	        }
 	        a.tethers.push({
 	            "key":key,
 	            "func":func,
-	            "type":"up"
+	            "type":"up",
+	            "perma":perma
 	        })
 	    }
-	    this.waitDown = function(key,func){
+	    this.waitDown = function(key,func,perma){
+	        if(perma === undefined){
+	            perma = false
+	        }
 	        a.tethers.push({
 	            "key":key,
 	            "func":func,
-	            "type":"down"
+	            "type":"down",
+	            "perma":perma
 	        })
 	    }
 	}
 
 /***/ },
 /* 2 */
-/***/ function(module, exports) {
-
-	module.exports = new function(){
-	    a = this
-	    function down(){
-	        a.clicked = true
-	    }
-	    function up(){
-	        a.clicked = false
-	    }
-	    this.listen = function(sprite){
-	        sprite
-	            .on('mousedown', down)
-	            .on('mouseup', up)
-	            .on('mouseupoutside', up)
-	            .on('touchstart', down)
-	            .on('touchend', up)
-	            .on('touchendoutside', up);
-	    }
-	}
-
-
-/***/ },
-/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = function(r1, r2) {
@@ -435,7 +493,7 @@
 
 
 /***/ },
-/* 4 */
+/* 3 */
 /***/ function(module, exports) {
 
 	module.exports = new function(){
@@ -472,7 +530,7 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports) {
 
 	module.exports = function(sprite,width,height,callback,extra){
@@ -512,7 +570,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = function(object, distance,direction) {
@@ -522,7 +580,7 @@
 
 
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(fps,cb){
@@ -540,7 +598,10 @@
 	    this.going = !this.going
 	}
 	this.latch = function(a){
-	    cb = __webpack_require__(8)(cb,a)
+	    cb = __webpack_require__(7)(cb,a)
+	}
+	this.restart = function(){
+	    ct = 0;
 	}
 	var a = this
 	var now;
@@ -584,11 +645,12 @@
 	}
 
 	draw();
+	return this;
 	}
 
 
 /***/ },
-/* 8 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = function(a,b){
@@ -600,12 +662,12 @@
 
 
 /***/ },
-/* 9 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = new function(){
-	    var contain = __webpack_require__(5)
-	    var move = __webpack_require__(6)
+	    var contain = __webpack_require__(4)
+	    var move = __webpack_require__(5)
 	    var a = this
 	    this.cooldown = 0
 	    this.bullets = []
@@ -616,7 +678,7 @@
 	        a.ground = ground
 	    }
 	    this.shoot = function(bullet){
-	        bullet = __webpack_require__(10)(bullet)
+	        bullet = __webpack_require__(9)(bullet)
 	        if(a.cooldown<=0){
 	            a.cooldown = bullet.cooldown
 	            bullet.x = a.sprite.x+a.sprite.xvel+a.sprite.width/2+bullet.width*bullet.anchor.x
@@ -662,11 +724,11 @@
 
 
 /***/ },
-/* 10 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(type){
-	    var shapes = __webpack_require__(4)
+	    var shapes = __webpack_require__(3)
 	    //If someone runs bullet("laser"), create a bullet in the following way
 	    if(type==="laser"){
 	        //Creates a new bullet based on the laser image
@@ -691,7 +753,7 @@
 
 
 /***/ },
-/* 11 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = new function() {
@@ -711,12 +773,12 @@
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var shapes = __webpack_require__(4)
+	        var shapes = __webpack_require__(3)
 	        var loc = renderer.width
 	        var height = renderer.height
 	        var pc = new PIXI.Container()
 	        if(type === "laser"){
-	            var obstacle = new PIXI.Sprite(shapes.rectangle(20, 3, "#e74c3c"))
+	            var obstacle = new PIXI.Sprite(shapes.rectangle(30, 6, "#e74c3c"))
 	            obstacle.x = loc
 	            obstacle.y = Math.random() * (height - ground.height)
 	            pc.addChild(obstacle);
@@ -732,7 +794,7 @@
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var shapes = __webpack_require__(4)
+	        var shapes = __webpack_require__(3)
 	        var loc = renderer.width
 	        var height = renderer.height
 	        var pc = new PIXI.Container()
@@ -754,18 +816,18 @@
 	        pc.type = type
 	        stage.addChild(pc);
 	    }
-	    this.move = function(obj) {
+	    this.move = function(obj,endgame) {
 	        var sprite = a.player
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var collide = __webpack_require__(3)
-	        var debug = __webpack_require__(12)
+	        var collide = __webpack_require__(2)
+	        var debug = __webpack_require__(11)
 	        debug("Width", sprite.width)
 	        debug("Height", sprite.height)
 	        stage.children.forEach(function(obstacle, index) {
 	            if(obstacle.type == "laser"){
-	                obstacle.x -= (renderer.width-obstacle.x)/150
+	                obstacle.x -= 8
 	            }
 	            if(obstacle.type == "smash" || obstacle.type == "gap"){
 	                obstacle.x -= 2
@@ -793,25 +855,8 @@
 							ty:val.y,
 							tx:obstacle.x+val.x          	
 	                	}}, sprite)){
-	                	function log(name,data){
-								console.log(name+": " + data)                		
-	                		}
-	                		console.log("---------------------------------")
-	                		log("obstacle width",val.width)
-	                		log("obstacle height",val.height)
-	                		log("obstacle x",val.x)
-	                		log("obstacle y",val.y)
-	                		log("absolute obstacle x",val.worldTransform.tx)
-	                		log("absolute obstacle x",val.worldTransform.ty)
-	                		console.log("---------------------------------")
-	                		log("sprite width",sprite.width)
-	                		log("sprite height",sprite.height)
-	                		log("sprite x",sprite.x)
-	                		log("sprite y",sprite.y)
-	                		log("absolute sprite x",sprite.worldTransform.tx)
-	                		log("absolute sprite x",sprite.worldTransform.ty)
-	                	document.getElementById("resume")
-	                            .onclick()
+	                		console.log("Collision!")
+	                	endgame()
 	                            }
 	                })
 	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
@@ -827,7 +872,7 @@
 	2
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = function(idMessage,value){
@@ -841,7 +886,7 @@
 	}
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(obj,pc,sprite){
@@ -863,7 +908,7 @@
 	        })
 	        return;
 		}
-		var shapes = __webpack_require__(4)
+		var shapes = __webpack_require__(3)
 		for(i=0;i<obj.amount;i++){
 		var particle = new PIXI.Sprite(shapes.rectangle(obj.width,obj.height,obj.colors[Math.floor(Math.random()*obj.colors.length)]))
 		particle.obj = obj
@@ -878,15 +923,20 @@
 
 
 /***/ },
-/* 14 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = new function(){
 		var a = this
 		this.allow = true
-		this.handle = function(obj,key,psc){
+		this.handle = function(obj,key,psc,sound,jammed,mute){
+
+			if(!jammed){
+			psc.bringToFront()
+			mute.bringToFront()
 		function wait(){
 			obj.start()
+			sound.volume(1);
 			console.log("START")
 			psc.visible = false
 		}
@@ -896,6 +946,7 @@
 		key.check(80,function(){
 			if(a.allow){
 			obj.stop()
+			sound.volume(0.1);
 			console.log("STOP")
 			psc.visible = true
 			a.allow = false
@@ -904,7 +955,7 @@
 				key.waitUp(80,allow)
 			})}
 		})}
-
+	}
 	}
 
 /***/ }

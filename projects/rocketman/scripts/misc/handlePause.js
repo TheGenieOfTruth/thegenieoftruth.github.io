@@ -1,9 +1,14 @@
 module.exports = new function(){
 	var a = this
 	this.allow = true
-	this.handle = function(obj,key,psc){
+	this.handle = function(obj,key,psc,sound,jammed,mute){
+
+		if(!jammed){
+		psc.bringToFront()
+		mute.bringToFront()
 	function wait(){
 		obj.start()
+		sound.volume(1);
 		console.log("START")
 		psc.visible = false
 	}
@@ -13,6 +18,7 @@ module.exports = new function(){
 	key.check(80,function(){
 		if(a.allow){
 		obj.stop()
+		sound.volume(0.1);
 		console.log("STOP")
 		psc.visible = true
 		a.allow = false
@@ -21,5 +27,5 @@ module.exports = new function(){
 			key.waitUp(80,allow)
 		})}
 	})}
-
+}
 }

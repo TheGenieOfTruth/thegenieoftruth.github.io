@@ -20,7 +20,7 @@ module.exports = new function() {
         var height = renderer.height
         var pc = new PIXI.Container()
         if(type === "laser"){
-            var obstacle = new PIXI.Sprite(shapes.rectangle(20, 3, "#e74c3c"))
+            var obstacle = new PIXI.Sprite(shapes.rectangle(30, 6, "#e74c3c"))
             obstacle.x = loc
             obstacle.y = Math.random() * (height - ground.height)
             pc.addChild(obstacle);
@@ -58,7 +58,7 @@ module.exports = new function() {
         pc.type = type
         stage.addChild(pc);
     }
-    this.move = function(obj) {
+    this.move = function(obj,endgame) {
         var sprite = a.player
         var renderer = a.renderer
         var stage = a.stage
@@ -69,7 +69,7 @@ module.exports = new function() {
         debug("Height", sprite.height)
         stage.children.forEach(function(obstacle, index) {
             if(obstacle.type == "laser"){
-                obstacle.x -= (renderer.width-obstacle.x)/150
+                obstacle.x -= 8
             }
             if(obstacle.type == "smash" || obstacle.type == "gap"){
                 obstacle.x -= 2
@@ -97,25 +97,8 @@ module.exports = new function() {
 						ty:val.y,
 						tx:obstacle.x+val.x          	
                 	}}, sprite)){
-                	function log(name,data){
-							console.log(name+": " + data)                		
-                		}
-                		console.log("---------------------------------")
-                		log("obstacle width",val.width)
-                		log("obstacle height",val.height)
-                		log("obstacle x",val.x)
-                		log("obstacle y",val.y)
-                		log("absolute obstacle x",val.worldTransform.tx)
-                		log("absolute obstacle x",val.worldTransform.ty)
-                		console.log("---------------------------------")
-                		log("sprite width",sprite.width)
-                		log("sprite height",sprite.height)
-                		log("sprite x",sprite.x)
-                		log("sprite y",sprite.y)
-                		log("absolute sprite x",sprite.worldTransform.tx)
-                		log("absolute sprite x",sprite.worldTransform.ty)
-                	document.getElementById("resume")
-                            .onclick()
+                		console.log("Collision!")
+                	endgame()
                             }
                 })
                 if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {

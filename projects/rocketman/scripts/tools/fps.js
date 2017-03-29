@@ -15,6 +15,9 @@ this.toggle = function(){
 this.latch = function(a){
     cb = require("./../tools/merge")(cb,a)
 }
+this.restart = function(){
+    ct = 0;
+}
 var a = this
 var now;
 var then = Date.now();
@@ -57,4 +60,5 @@ function draw() {
 }
 
 draw();
+return this;
 }
