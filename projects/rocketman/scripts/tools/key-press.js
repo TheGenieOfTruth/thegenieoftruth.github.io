@@ -10,9 +10,6 @@ module.exports = new function() {
             if (a.map.indexOf(e) == -1) {
                 a.map.push(e)
             }
-            if (param == "loud") {
-                console.log(a.map)
-            }
             a.tethers.forEach(function(tether,index){
                 if(tether.type == "down"){
                 if(e === tether.key){
@@ -28,9 +25,6 @@ module.exports = new function() {
                 // use e.keyCode
             if (a.map.indexOf(e) != -1) {
                 a.map.splice(a.map.indexOf(e), 1)
-            }
-            if (param == "loud") {
-                console.log(a.map)
             }
             a.tethers.forEach(function(tether,index){
                 if(tether.type == "up"){

@@ -64,9 +64,6 @@ module.exports = new function() {
         var stage = a.stage
         var ground = a.ground
         var collide = require("./../physics/collide")
-        var debug = require("./../tools/debug")
-        debug("Width", sprite.width)
-        debug("Height", sprite.height)
         stage.children.forEach(function(obstacle, index) {
             if(obstacle.type == "laser"){
                 obstacle.x -= 8
@@ -82,28 +79,19 @@ module.exports = new function() {
             		var s2 = obstacle.children[1]
             		s1.height = s1.oriheight+smash(obstacle.x+s1.oriheight) > 0 ? s1.oriheight+smash(obstacle.x+s1.oriheight) : 0
             		s2.height = s2.oriheight+smash(obstacle.x+s1.oriheight)
-            		if(smash(obstacle.x+s1.oriheight)>=60){
-								console.log("pop!")            			
-            			}
             		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
             	}
             obstacle.children.forEach(function(val,i) {
-            	if(obstacle.type == "flux"){
-					val.width = 10 + Math.sin(obstacle.x)*5
-					val.height = 10 + Math.sin(obstacle.x)*5
-					}
                 if(collide({width:val.width,height:val.height,
                 worldTransform:{
 						ty:val.y,
 						tx:obstacle.x+val.x          	
                 	}}, sprite)){
-                		console.log("Collision!")
                 	endgame()
                             }
                 })
                 if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
-                	if(obstacle.type === "gap" || obstacle.type === "smash"){
-                }
+                	
                 stage.removeChild(obstacle)
                 stage.children[index].x -= 2
             }

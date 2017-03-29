@@ -2,10 +2,7 @@ window.onload = function() {
     var jammed = false;
     var sound = new Howl({
         src: ['assets/whoosh.mp3'],
-        loop: true,
-        onend: function() {
-            console.log('Finished!');
-        }
+        loop: true
     });
     sound.play()
     PIXI.Sprite.prototype.bringToFront = function() {
@@ -16,16 +13,11 @@ window.onload = function() {
         }
     }
     var key = require("./tools/key-press");
-    var collide = require("./physics/collide");
     var shapes = require("./drawing/shapes");
-    var contain = require("./physics/contain");
-    var move = require("./physics/move");
     var fps = require("./tools/fps");
-    var kit = require("./misc/kit");
     var obstacle = require("./misc/obstacle")
     var particles = require("./drawing/particles");
     var pause = require("./misc/handlePause");
-    var debug = require("./tools/debug")
     key.listen();
     // create an new instance of a pixi stage
     var all = new PIXI.Container();
@@ -59,7 +51,6 @@ window.onload = function() {
                 ground.bringToFront()
                 score.bringToFront()
                 jammed = true;
-                console.log("Endgame loop started")
                 check = new fps(30, function(f, obj) {
                         ground.y = (renderer.height - 35) - Math.pow(f, 2)
                         ground.height = (35) + Math.pow(f, 2)
@@ -145,11 +136,9 @@ window.onload = function() {
         player.yvel = 0;
         stage.addChild(player);
         stage.addChild(ground);
-        kit.init(player, stage, renderer, ground);
         obstacle.init(player, obstacles, renderer, ground);
         key.waitDown(77, fMute, true)
         var outport = undefined
-        debug("Renderer width", renderer.width)
             //SCORE CODE
         var score = new PIXI.Text("0", {
             font: "30px Pixel",
@@ -174,16 +163,6 @@ window.onload = function() {
         outport = new fps(60, function(f, obj, every) {
             obstacle.score += Math.floor(player.x / 50 + f / 100) + 1
             score.setText("Score: " + obstacle.score);
-            debug("X", Math.round(player.x * 1000) / 1000)
-            debug("Y", Math.round(player.y * 1000) / 1000)
-            debug("X Velocity", Math.round(player.xvel * 1000) / 1000)
-            debug("Y Velocity", Math.round(player.yvel * 1000) / 1000)
-            debug("Obstacles", obstacles.children.length)
-            debug("Particles", particleContainer.children.length)
-            debug("Tethers", key.tethers.length)
-            debug("Keymap", JSON.stringify(key.map))
-            debug("Running", obj.going)
-            debug("Iteration", iteration)
                 //Custom function loops
             if (f > 120) {
                 every(50, function() {

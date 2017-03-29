@@ -9,7 +9,6 @@ module.exports = new function(){
 	function wait(){
 		obj.start()
 		sound.volume(1);
-		console.log("START")
 		psc.visible = false
 	}
 	function allow(){
@@ -19,7 +18,6 @@ module.exports = new function(){
 		if(a.allow){
 		obj.stop()
 		sound.volume(0.1);
-		console.log("STOP")
 		psc.visible = true
 		a.allow = false
 		key.waitUp(80,function(){
