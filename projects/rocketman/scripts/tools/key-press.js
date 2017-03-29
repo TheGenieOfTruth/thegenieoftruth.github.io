@@ -10,13 +10,13 @@ module.exports = new function() {
             if (a.map.indexOf(e) == -1) {
                 a.map.push(e)
             }
-            a.tethers.forEach(function(tether,index){
-                if(tether.type == "down"){
-                if(e === tether.key){
-                   tether.func()
-                   if(!tether.perma) a.tethers.splice(index, 1)
+            a.tethers.forEach(function(tether, index) {
+                if (tether.type == "down") {
+                    if (e === tether.key) {
+                        tether.func()
+                        if (!tether.perma) a.tethers.splice(index, 1)
+                    }
                 }
-            }
             })
         };
         document.onkeyup = function(e) {
@@ -26,15 +26,14 @@ module.exports = new function() {
             if (a.map.indexOf(e) != -1) {
                 a.map.splice(a.map.indexOf(e), 1)
             }
-            a.tethers.forEach(function(tether,index){
-                if(tether.type == "up"){
-                if(e === tether.key){
-                   tether.func()
-                   if(!tether.perma) a.tethers.splice(index, 1)
+            a.tethers.forEach(function(tether, index) {
+                if (tether.type == "up") {
+                    if (e === tether.key) {
+                        tether.func()
+                        if (!tether.perma) a.tethers.splice(index, 1)
+                    }
                 }
-            }
             })
-
         };
     }
     this.check = function(key, callback, not) {
@@ -52,26 +51,26 @@ module.exports = new function() {
             not()
         }
     }
-    this.waitUp = function(key,func,perma){
-        if(perma === undefined){
+    this.waitUp = function(key, func, perma) {
+        if (perma === undefined) {
             perma = false
         }
         a.tethers.push({
-            "key":key,
-            "func":func,
-            "type":"up",
-            "perma":perma
+            "key": key,
+            "func": func,
+            "type": "up",
+            "perma": perma
         })
     }
-    this.waitDown = function(key,func,perma){
-        if(perma === undefined){
+    this.waitDown = function(key, func, perma) {
+        if (perma === undefined) {
             perma = false
         }
         a.tethers.push({
-            "key":key,
-            "func":func,
-            "type":"down",
-            "perma":perma
+            "key": key,
+            "func": func,
+            "type": "down",
+            "perma": perma
         })
     }
 }

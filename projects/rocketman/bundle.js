@@ -58,12 +58,13 @@
 	            parent.addChild(this);
 	        }
 	    }
-	    var key = __webpack_require__(1);
-	    var shapes = __webpack_require__(2);
-	    var fps = __webpack_require__(3);
-	    var obstacle = __webpack_require__(5)
-	    var particles = __webpack_require__(7);
-	    var pause = __webpack_require__(8);
+	    __webpack_require__(1)();
+	    var key = __webpack_require__(2);
+	    var shapes = __webpack_require__(3);
+	    var fps = __webpack_require__(4);
+	    var obstacle = __webpack_require__(6)
+	    var particles = __webpack_require__(8);
+	    var pause = __webpack_require__(9);
 	    key.listen();
 	    // create an new instance of a pixi stage
 	    var all = new PIXI.Container();
@@ -84,8 +85,7 @@
 	    // create a new Sprite using the texture
 	    stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
 	    stage.interactive = true;
-	    PIXI.loader.add("assets/mute/mute.json")
-	        .load(setup)
+	    PIXI.loader.add("assets/mute/mute.json").load(setup)
 
 	    function setup() {
 	        var iteration = 1;
@@ -209,7 +209,7 @@
 	        outport = new fps(60, function(f, obj, every) {
 	            obstacle.score += Math.floor(player.x / 50 + f / 100) + 1
 	            score.setText("Score: " + obstacle.score);
-	                //Custom function loops
+	            //Custom function loops
 	            if (f > 120) {
 	                every(50, function() {
 	                    obstacle.shoot()
@@ -329,6 +329,31 @@
 /* 1 */
 /***/ function(module, exports) {
 
+	module.exports = function() {
+	    var keys = {};
+	    window.addEventListener("keydown", function(e) {
+	        keys[e.keyCode] = true;
+	        switch (e.keyCode) {
+	            case 37:
+	            case 39:
+	            case 38:
+	            case 40: // Arrow keys
+	            case 32:
+	                e.preventDefault();
+	                break; // Space
+	            default:
+	                break; // do not block other keys
+	        }
+	    }, false);
+	    window.addEventListener('keyup', function(e) {
+	        keys[e.keyCode] = false;
+	    }, false);
+	}
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
 	module.exports = new function() {
 	    var a = this
 	    this.map = [];
@@ -341,13 +366,13 @@
 	            if (a.map.indexOf(e) == -1) {
 	                a.map.push(e)
 	            }
-	            a.tethers.forEach(function(tether,index){
-	                if(tether.type == "down"){
-	                if(e === tether.key){
-	                   tether.func()
-	                   if(!tether.perma) a.tethers.splice(index, 1)
+	            a.tethers.forEach(function(tether, index) {
+	                if (tether.type == "down") {
+	                    if (e === tether.key) {
+	                        tether.func()
+	                        if (!tether.perma) a.tethers.splice(index, 1)
+	                    }
 	                }
-	            }
 	            })
 	        };
 	        document.onkeyup = function(e) {
@@ -357,15 +382,14 @@
 	            if (a.map.indexOf(e) != -1) {
 	                a.map.splice(a.map.indexOf(e), 1)
 	            }
-	            a.tethers.forEach(function(tether,index){
-	                if(tether.type == "up"){
-	                if(e === tether.key){
-	                   tether.func()
-	                   if(!tether.perma) a.tethers.splice(index, 1)
+	            a.tethers.forEach(function(tether, index) {
+	                if (tether.type == "up") {
+	                    if (e === tether.key) {
+	                        tether.func()
+	                        if (!tether.perma) a.tethers.splice(index, 1)
+	                    }
 	                }
-	            }
 	            })
-
 	        };
 	    }
 	    this.check = function(key, callback, not) {
@@ -383,139 +407,130 @@
 	            not()
 	        }
 	    }
-	    this.waitUp = function(key,func,perma){
-	        if(perma === undefined){
+	    this.waitUp = function(key, func, perma) {
+	        if (perma === undefined) {
 	            perma = false
 	        }
 	        a.tethers.push({
-	            "key":key,
-	            "func":func,
-	            "type":"up",
-	            "perma":perma
+	            "key": key,
+	            "func": func,
+	            "type": "up",
+	            "perma": perma
 	        })
 	    }
-	    this.waitDown = function(key,func,perma){
-	        if(perma === undefined){
+	    this.waitDown = function(key, func, perma) {
+	        if (perma === undefined) {
 	            perma = false
 	        }
 	        a.tethers.push({
-	            "key":key,
-	            "func":func,
-	            "type":"down",
-	            "perma":perma
+	            "key": key,
+	            "func": func,
+	            "type": "down",
+	            "perma": perma
 	        })
 	    }
 	}
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
-	module.exports = new function(){
+	module.exports = new function() {
 	    var a = this
 	    this.renderer = ""
-	    this.canvas = function(width,height){
+	    this.canvas = function(width, height) {
 	        var canvas = document.createElement('canvas');
 	        canvas.width = width
 	        canvas.height = height
 	        var ctx = canvas.getContext("2d")
 	        return {
-	            "canvas":canvas,
-	            "ctx":ctx
+	            "canvas": canvas,
+	            "ctx": ctx
 	        }
 	    }
-	    this.rectangle = function(width,height,color){
-	        var b = a.canvas(width,height)
+	    this.rectangle = function(width, height, color) {
+	        var b = a.canvas(width, height)
 	        b.ctx.fillStyle = color
-	        b.ctx.fillRect(0,0,width,height);
-
+	        b.ctx.fillRect(0, 0, width, height);
 	        return PIXI.Texture.fromCanvas(b.canvas);
 	    }
-	    this.circle = function(radius,color){
-	        var b = a.canvas(radius*2,radius*2)
+	    this.circle = function(radius, color) {
+	        var b = a.canvas(radius * 2, radius * 2)
 	        b.ctx.fillStyle = color
 	        b.ctx.beginPath();
-	        b.ctx.arc(radius,radius,radius,0,2*Math.PI);
+	        b.ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
 	        b.ctx.fill();
-
 	        return PIXI.Texture.fromCanvas(b.canvas);
 	    }
-
 	}
-
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function(fps,cb){
-	this.going = true
-	this.start = function(){
-	    this.going = true
-	    requestAnimationFrame(draw);
-	}
-	this.resume = this.start
-	this.stop = function(){
-	    this.going = false
-	}
-	this.pause = this.stop
-	this.toggle = function(){
-	    this.going = !this.going
-	}
-	this.latch = function(a){
-	    cb = __webpack_require__(4)(cb,a)
-	}
-	this.restart = function(){
-	    ct = 0;
-	}
-	var a = this
-	var now;
-	var then = Date.now();
-	var interval = 1000/fps;
-	var delta;
-	var ct = 0;
-	function every(count,callback){
-	    if(ct % count == 0){
-	        callback()
-	    }
-	}
-	function draw() {
-	    if(a.going){
-	        requestAnimationFrame(draw);
-	    }
-
-	    now = Date.now();
-	    delta = now - then;
-
-	    if (delta > interval) {
-	        ct++
-	        // update time stuffs
-
-	        // Just `then = now` is not enough.
-	        // Lets say we set fps at 10 which means
-	        // each frame must take 100ms
-	        // Now frame executes in 16ms (60fps) so
-	        // the loop iterates 7 times (16*7 = 112ms) until
-	        // delta > interval === true
-	        // Eventually this lowers down the FPS as
-	        // 112*10 = 1120ms (NOT 1000ms).
-	        // So we have to get rid of that extra 12ms
-	        // by subtracting delta (112) % interval (100).
-	        // Hope that makes sense.
-
-	        then = now - (delta % interval);
-
-	        cb(ct,a,every)
-	    }
-	}
-
-	draw();
-	return this;
-	}
-
 
 /***/ },
 /* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function(fps, cb) {
+	    this.going = true
+	    this.start = function() {
+	        this.going = true
+	        requestAnimationFrame(draw);
+	    }
+	    this.resume = this.start
+	    this.stop = function() {
+	        this.going = false
+	    }
+	    this.pause = this.stop
+	    this.toggle = function() {
+	        this.going = !this.going
+	    }
+	    this.latch = function(a) {
+	        cb = __webpack_require__(5)(cb, a)
+	    }
+	    this.restart = function() {
+	        ct = 0;
+	    }
+	    var a = this
+	    var now;
+	    var then = Date.now();
+	    var interval = 1000 / fps;
+	    var delta;
+	    var ct = 0;
+
+	    function every(count, callback) {
+	        if (ct % count == 0) {
+	            callback()
+	        }
+	    }
+
+	    function draw() {
+	        if (a.going) {
+	            requestAnimationFrame(draw);
+	        }
+	        now = Date.now();
+	        delta = now - then;
+	        if (delta > interval) {
+	            ct++
+	            // update time stuffs
+	            // Just `then = now` is not enough.
+	            // Lets say we set fps at 10 which means
+	            // each frame must take 100ms
+	            // Now frame executes in 16ms (60fps) so
+	            // the loop iterates 7 times (16*7 = 112ms) until
+	            // delta > interval === true
+	            // Eventually this lowers down the FPS as
+	            // 112*10 = 1120ms (NOT 1000ms).
+	            // So we have to get rid of that extra 12ms
+	            // by subtracting delta (112) % interval (100).
+	            // Hope that makes sense.
+	            then = now - (delta % interval);
+	            cb(ct, a, every)
+	        }
+	    }
+	    draw();
+	    return this;
+	}
+
+/***/ },
+/* 5 */
 /***/ function(module, exports) {
 
 	module.exports = function(a,b){
@@ -527,7 +542,7 @@
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = new function() {
@@ -540,18 +555,18 @@
 	        a.renderer = renderer
 	        a.ground = ground
 	    }
-	    this.shoot = function(){
+	    this.shoot = function() {
 	        var types = ["laser"]
-	        var type = types[Math.floor(Math.random()*types.length)]
+	        var type = types[Math.floor(Math.random() * types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var shapes = __webpack_require__(2)
+	        var shapes = __webpack_require__(3)
 	        var loc = renderer.width
 	        var height = renderer.height
 	        var pc = new PIXI.Container()
-	        if(type === "laser"){
+	        if (type === "laser") {
 	            var obstacle = new PIXI.Sprite(shapes.rectangle(30, 6, "#e74c3c"))
 	            obstacle.x = loc
 	            obstacle.y = Math.random() * (height - ground.height)
@@ -562,17 +577,17 @@
 	        stage.addChild(pc);
 	    }
 	    this.create = function() {
-	        var types = ["gap","smash"]
-	        var type = types[Math.floor(Math.random()*types.length)]
+	        var types = ["gap", "smash"]
+	        var type = types[Math.floor(Math.random() * types.length)]
 	        var sprite = a.player
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var shapes = __webpack_require__(2)
+	        var shapes = __webpack_require__(3)
 	        var loc = renderer.width
 	        var height = renderer.height
 	        var pc = new PIXI.Container()
-	        if(type === "gap" || type === "smash"){
+	        if (type === "gap" || type === "smash") {
 	            var obstacle = new PIXI.Sprite(shapes.rectangle(20, 1, "#444444"))
 	            obstacle.x = loc
 	            obstacle.oriheight = Math.random() * (height - ground.height - sprite.height * 7)
@@ -585,181 +600,168 @@
 	            pc.addChild(obstacle);
 	            pc.addChild(counter);
 	        }
-	        
 	        pc.rand = Math.random()
 	        pc.type = type
 	        stage.addChild(pc);
 	    }
-	    this.move = function(obj,endgame) {
+	    this.move = function(obj, endgame) {
 	        var sprite = a.player
 	        var renderer = a.renderer
 	        var stage = a.stage
 	        var ground = a.ground
-	        var collide = __webpack_require__(6)
+	        var collide = __webpack_require__(7)
 	        stage.children.forEach(function(obstacle, index) {
-	            if(obstacle.type == "laser"){
+	            if (obstacle.type == "laser") {
 	                obstacle.x -= 8
 	            }
-	            if(obstacle.type == "smash" || obstacle.type == "gap"){
+	            if (obstacle.type == "smash" || obstacle.type == "gap") {
 	                obstacle.x -= 2
 	            }
-	            if(obstacle.type == "smash"){
-	            	function smash(x){
-	            			return Math.sin(x/60+obstacle.rand)*60
-	            		}
-	            		var s1 = obstacle.children[0]
-	            		var s2 = obstacle.children[1]
-	            		s1.height = s1.oriheight+smash(obstacle.x+s1.oriheight) > 0 ? s1.oriheight+smash(obstacle.x+s1.oriheight) : 0
-	            		s2.height = s2.oriheight+smash(obstacle.x+s1.oriheight)
-	            		s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x+s1.oriheight)
-	            	}
-	            obstacle.children.forEach(function(val,i) {
-	                if(collide({width:val.width,height:val.height,
-	                worldTransform:{
-							ty:val.y,
-							tx:obstacle.x+val.x          	
-	                	}}, sprite)){
-	                	endgame()
-	                            }
-	                })
-	                if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
-	                	
+	            if (obstacle.type == "smash") {
+	                function smash(x) {
+	                    return Math.sin(x / 60 + obstacle.rand) * 60
+	                }
+	                var s1 = obstacle.children[0]
+	                var s2 = obstacle.children[1]
+	                s1.height = s1.oriheight + smash(obstacle.x + s1.oriheight) > 0 ? s1.oriheight + smash(obstacle.x + s1.oriheight) : 0
+	                s2.height = s2.oriheight + smash(obstacle.x + s1.oriheight)
+	                s2.y = s1.oriheight + sprite.height * 5 - smash(obstacle.x + s1.oriheight)
+	            }
+	            obstacle.children.forEach(function(val, i) {
+	                if (collide({
+	                        width: val.width,
+	                        height: val.height,
+	                        worldTransform: {
+	                            ty: val.y,
+	                            tx: obstacle.x + val.x
+	                        }
+	                    }, sprite)) {
+	                    endgame()
+	                }
+	            })
+	            if (obstacle.children[0].worldTransform.tx + obstacle.children[0].width <= 0) {
 	                stage.removeChild(obstacle)
 	                stage.children[index].x -= 2
 	            }
-	            })
-	        
-	        }
+	        })
 	    }
-	2
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-	module.exports = function(r1, r2) {
-	  if(r1.invincible === true || r2.invincible === true){
-	    return false;
-	  }
-	  //Define the variables we'll need to calculate
-	  var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
-
-	  //hit will determine whether there's a collision
-	  hit = false;
-
-	  //Find the center points of each sprite
-	  r1.centerX = r1.worldTransform.tx + r1.width / 2;
-	  r1.centerY = r1.worldTransform.ty + r1.height / 2;
-	  r2.centerX = r2.worldTransform.tx + r2.width / 2;
-	  r2.centerY = r2.worldTransform.ty + r2.height / 2;
-
-	  //Find the half-widths and half-heights of each sprite
-	  r1.halfWidth = r1.width / 2;
-	  r1.halfHeight = r1.height / 2;
-	  r2.halfWidth = r2.width / 2;
-	  r2.halfHeight = r2.height / 2;
-
-	  //Calculate the distance vector between the sprites
-	  vx = r1.centerX - r2.centerX;
-	  vy = r1.centerY - r2.centerY;
-
-	  //Figure out the combined half-widths and half-heights
-	  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
-	  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
-
-	  //Check for a collision on the x axis
-	  if (Math.abs(vx) < combinedHalfWidths) {
-
-	    //A collision might be occuring. Check for a collision on the y axis
-	    if (Math.abs(vy) < combinedHalfHeights) {
-
-	      //There's definitely a collision happening
-	      hit = true;
-	    } else {
-
-	      //There's no collision on the y axis
-	      hit = false;
-	    }
-	  } else {
-
-	    //There's no collision on the x axis
-	    hit = false;
-	  }
-
-	  //`hit` will be either `true` or `false`
-	  return hit;
-	};
-
+	}
 
 /***/ },
 /* 7 */
+/***/ function(module, exports) {
+
+	module.exports = function(r1, r2) {
+	    if (r1.invincible === true || r2.invincible === true) {
+	        return false;
+	    }
+	    //Define the variables we'll need to calculate
+	    var hit, combinedHalfWidths, combinedHalfHeights, vx, vy;
+	    //hit will determine whether there's a collision
+	    hit = false;
+	    //Find the center points of each sprite
+	    r1.centerX = r1.worldTransform.tx + r1.width / 2;
+	    r1.centerY = r1.worldTransform.ty + r1.height / 2;
+	    r2.centerX = r2.worldTransform.tx + r2.width / 2;
+	    r2.centerY = r2.worldTransform.ty + r2.height / 2;
+	    //Find the half-widths and half-heights of each sprite
+	    r1.halfWidth = r1.width / 2;
+	    r1.halfHeight = r1.height / 2;
+	    r2.halfWidth = r2.width / 2;
+	    r2.halfHeight = r2.height / 2;
+	    //Calculate the distance vector between the sprites
+	    vx = r1.centerX - r2.centerX;
+	    vy = r1.centerY - r2.centerY;
+	    //Figure out the combined half-widths and half-heights
+	    combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+	    combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+	    //Check for a collision on the x axis
+	    if (Math.abs(vx) < combinedHalfWidths) {
+	        //A collision might be occuring. Check for a collision on the y axis
+	        if (Math.abs(vy) < combinedHalfHeights) {
+	            //There's definitely a collision happening
+	            hit = true;
+	        } else {
+	            //There's no collision on the y axis
+	            hit = false;
+	        }
+	    } else {
+	        //There's no collision on the x axis
+	        hit = false;
+	    }
+	    //`hit` will be either `true` or `false`
+	    return hit;
+	};
+
+/***/ },
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(obj,pc,sprite){
-		if(obj==="handle"){
-			particleContainer = arguments[1]
-			particleContainer.children.forEach(function(val){
-
-	            if(val.kill !== 0){
-	            	var dx =val.obj.rangex[0]-Math.round(Math.random()*(val.obj.rangex[0]-val.obj.rangex[1]))
-	            	var dy = val.obj.rangey[0]-Math.round(Math.random()*(val.obj.rangey[0]-val.obj.rangey[1]))
-	                val.x+=dx
-	                val.y+=dy
-	        		
+	module.exports = function(obj, pc, sprite) {
+	    if (obj === "handle") {
+	        particleContainer = arguments[1]
+	        particleContainer.children.forEach(function(val) {
+	            if (val.kill !== 0) {
+	                var dx = val.obj.rangex[0] - Math.round(Math.random() * (val.obj.rangex[0] - val.obj.rangex[1]))
+	                var dy = val.obj.rangey[0] - Math.round(Math.random() * (val.obj.rangey[0] - val.obj.rangey[1]))
+	                val.x += dx
+	                val.y += dy
 	                val.kill--
-	                val.alpha = val.kill/val.killMax
-	            } else{
+	                    val.alpha = val.kill / val.killMax
+	            } else {
 	                particleContainer.removeChild(val)
 	            }
 	        })
 	        return;
-		}
-		var shapes = __webpack_require__(2)
-		for(i=0;i<obj.amount;i++){
-		var particle = new PIXI.Sprite(shapes.rectangle(obj.width,obj.height,obj.colors[Math.floor(Math.random()*obj.colors.length)]))
-		particle.obj = obj
-		particle.x = obj.x
-		particle.y = obj.y
-		particle.zOrder = 2;
-		particle.kill = 12
-		particle.killMax = 12
-		obj.wrapper.addChild(particle)
+	    }
+	    var shapes = __webpack_require__(3)
+	    for (i = 0; i < obj.amount; i++) {
+	        var particle = new PIXI.Sprite(shapes.rectangle(obj.width, obj.height, obj.colors[Math.floor(Math.random() * obj.colors.length)]))
+	        particle.obj = obj
+	        particle.x = obj.x
+	        particle.y = obj.y
+	        particle.zOrder = 2;
+	        particle.kill = 12
+	        particle.killMax = 12
+	        obj.wrapper.addChild(particle)
+	    }
 	}
-	}
-
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
-	module.exports = new function(){
-		var a = this
-		this.allow = true
-		this.handle = function(obj,key,psc,sound,jammed,mute){
+	module.exports = new function() {
+	    var a = this
+	    this.allow = true
+	    this.handle = function(obj, key, psc, sound, jammed, mute) {
+	        if (!jammed) {
+	            psc.bringToFront()
+	            mute.bringToFront()
 
-			if(!jammed){
-			psc.bringToFront()
-			mute.bringToFront()
-		function wait(){
-			obj.start()
-			sound.volume(1);
-			psc.visible = false
-		}
-		function allow(){
-			a.allow = true
-		}
-		key.check(80,function(){
-			if(a.allow){
-			obj.stop()
-			sound.volume(0.1);
-			psc.visible = true
-			a.allow = false
-			key.waitUp(80,function(){
-				key.waitDown(80,wait)
-				key.waitUp(80,allow)
-			})}
-		})}
-	}
+	            function wait() {
+	                obj.start()
+	                sound.volume(1);
+	                psc.visible = false
+	            }
+
+	            function allow() {
+	                a.allow = true
+	            }
+	            key.check(80, function() {
+	                if (a.allow) {
+	                    obj.stop()
+	                    sound.volume(0.1);
+	                    psc.visible = true
+	                    a.allow = false
+	                    key.waitUp(80, function() {
+	                        key.waitDown(80, wait)
+	                        key.waitUp(80, allow)
+	                    })
+	                }
+	            })
+	        }
+	    }
 	}
 
 /***/ }

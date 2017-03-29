@@ -12,6 +12,7 @@ window.onload = function() {
             parent.addChild(this);
         }
     }
+    require("./misc/noscroll")();
     var key = require("./tools/key-press");
     var shapes = require("./drawing/shapes");
     var fps = require("./tools/fps");
@@ -38,8 +39,7 @@ window.onload = function() {
     // create a new Sprite using the texture
     stage.hitArea = new PIXI.Rectangle(0, 0, 1000, 1000);
     stage.interactive = true;
-    PIXI.loader.add("assets/mute/mute.json")
-        .load(setup)
+    PIXI.loader.add("assets/mute/mute.json").load(setup)
 
     function setup() {
         var iteration = 1;
@@ -163,7 +163,7 @@ window.onload = function() {
         outport = new fps(60, function(f, obj, every) {
             obstacle.score += Math.floor(player.x / 50 + f / 100) + 1
             score.setText("Score: " + obstacle.score);
-                //Custom function loops
+            //Custom function loops
             if (f > 120) {
                 every(50, function() {
                     obstacle.shoot()
