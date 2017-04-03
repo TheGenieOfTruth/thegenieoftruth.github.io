@@ -679,18 +679,10 @@
 	    if (Math.abs(vx) < combinedHalfWidths) {
 	        //A collision might be occuring. Check for a collision on the y axis
 	        if (Math.abs(vy) < combinedHalfHeights) {
-	            //There's definitely a collision happening
-	            hit = true;
-	        } else {
-	            //There's no collision on the y axis
-	            hit = false;
+	            return true;
 	        }
-	    } else {
-	        //There's no collision on the x axis
-	        hit = false;
-	    }
-	    //`hit` will be either `true` or `false`
-	    return hit;
+	    } 
+	    return false;
 	};
 
 /***/ },
