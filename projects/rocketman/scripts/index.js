@@ -1,3 +1,4 @@
+
 window.onload = function() {
     var jammed = false;
     var sound = new Howl({
@@ -62,6 +63,7 @@ window.onload = function() {
                                 font: "60px Pixel",
                                 fill: "white"
                             });
+
                             t.anchor.x = 0.5;
                             t.x = renderer.width / 2
                             t.y = 200

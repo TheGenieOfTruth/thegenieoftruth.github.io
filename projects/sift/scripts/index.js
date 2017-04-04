@@ -18,6 +18,7 @@ window.onload = function() {
     var fps = require("./tools/fps");
     var particles = require("./drawing/particles");
     var pause = require("./misc/handlePause");
+    var colorize = require("./drawing/colorize")
     key.listen();
     // create an new instance of a pixi stage
     var all = new PIXI.Container();
@@ -39,12 +40,10 @@ window.onload = function() {
     PIXI.loader.add("assets/mute/mute.json").load(setup)
 
     function setup() {
-        //MUTE CODE
+        /* ## MUTE CODE START ## */
         var mute = new PIXI.Sprite(PIXI.loader.resources["assets/mute/mute.json"].textures["unmute.png"]);
         var muted = false
-            // Opt-in to interactivity
         mute.interactive = true;
-
         function fMute() {
             muted = !muted
             if (muted) {
@@ -56,14 +55,12 @@ window.onload = function() {
             }
             renderer.render(all)
         }
-        // Shows hand cursor
         mute.buttonMode = true;
-        mute.x = 7
+        mute.x = renderer.width-mute.width-7
         mute.on('pointerdown', fMute);
         stage.addChild(mute);
         key.waitDown(77, fMute, true)
         var outport = undefined
-        //PAUSE CODE
         var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width, renderer.height, "rgba(44, 62, 80,0.9)"))
         pauseScreen.visible = false;
         var text = new PIXI.Text("Game paused", {
@@ -75,9 +72,47 @@ window.onload = function() {
         text.y = 200
         pauseScreen.addChild(text);
         stage.addChild(pauseScreen);
+        /* ## MUTE CODE END ## */
+        /* ## PLAYER CODE START ## */
+        player = new PIXI.Sprite()
+        stage.addChild(player)
+        player.xvel = 0;
+        player.yvel = 0;
+        /* ## PLAYER CODE END ## */
         outport = new fps(60, function(f, obj, every) {
             particles("handle", particleContainer)
             pause.handle(obj, key, pauseScreen, sound, mute) //Handles pausing
+            key.check([65, 37], function() {
+                player.xvel -= 1
+                //Left
+            })
+            key.check([68, 39], function() {
+                player.xvel += 1
+                //Right
+            })
+            key.check([87, 38], function() {
+                player.yvel -= 1
+                //Up
+            })
+            key.check([40, 83], function() {
+                player.yvel += 1
+                //Down
+            })
+            player.x += player.xvel
+            player.y += player.yvel
+            player.xvel *= 0.8
+            player.yvel *= 0.8
+            particles({
+                "amount": 10,
+                "x": player.x + player.width / 2,
+                "y": player.y + player.height / 2,
+                "width": 5,
+                "height": 5,
+                "rangex": [-10, 10],
+                "rangey": [10, -10],
+                "colors": colorize["3xhex"](f),
+                "wrapper": particleContainer
+            })
                 //Render
             renderer.render(all);
         });

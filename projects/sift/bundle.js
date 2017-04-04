@@ -62,8 +62,9 @@
 	    var key = __webpack_require__(2);
 	    var shapes = __webpack_require__(3);
 	    var fps = __webpack_require__(4);
-	    var particles = __webpack_require__(6);
-	    var pause = __webpack_require__(7);
+	    var particles = __webpack_require__(5);
+	    var pause = __webpack_require__(6);
+	    var colorize = __webpack_require__(7)
 	    key.listen();
 	    // create an new instance of a pixi stage
 	    var all = new PIXI.Container();
@@ -85,12 +86,10 @@
 	    PIXI.loader.add("assets/mute/mute.json").load(setup)
 
 	    function setup() {
-	        //MUTE CODE
+	        /* ## MUTE CODE START ## */
 	        var mute = new PIXI.Sprite(PIXI.loader.resources["assets/mute/mute.json"].textures["unmute.png"]);
 	        var muted = false
-	            // Opt-in to interactivity
 	        mute.interactive = true;
-
 	        function fMute() {
 	            muted = !muted
 	            if (muted) {
@@ -102,14 +101,12 @@
 	            }
 	            renderer.render(all)
 	        }
-	        // Shows hand cursor
 	        mute.buttonMode = true;
-	        mute.x = 7
+	        mute.x = renderer.width-mute.width-7
 	        mute.on('pointerdown', fMute);
 	        stage.addChild(mute);
 	        key.waitDown(77, fMute, true)
 	        var outport = undefined
-	        //PAUSE CODE
 	        var pauseScreen = new PIXI.Sprite(shapes.rectangle(renderer.width, renderer.height, "rgba(44, 62, 80,0.9)"))
 	        pauseScreen.visible = false;
 	        var text = new PIXI.Text("Game paused", {
@@ -121,9 +118,47 @@
 	        text.y = 200
 	        pauseScreen.addChild(text);
 	        stage.addChild(pauseScreen);
+	        /* ## MUTE CODE END ## */
+	        /* ## PLAYER CODE START ## */
+	        player = new PIXI.Sprite()
+	        stage.addChild(player)
+	        player.xvel = 0;
+	        player.yvel = 0;
+	        /* ## PLAYER CODE END ## */
 	        outport = new fps(60, function(f, obj, every) {
 	            particles("handle", particleContainer)
 	            pause.handle(obj, key, pauseScreen, sound, mute) //Handles pausing
+	            key.check([65, 37], function() {
+	                player.xvel -= 1
+	                //Left
+	            })
+	            key.check([68, 39], function() {
+	                player.xvel += 1
+	                //Right
+	            })
+	            key.check([87, 38], function() {
+	                player.yvel -= 1
+	                //Up
+	            })
+	            key.check([40, 83], function() {
+	                player.yvel += 1
+	                //Down
+	            })
+	            player.x += player.xvel
+	            player.y += player.yvel
+	            player.xvel *= 0.8
+	            player.yvel *= 0.8
+	            particles({
+	                "amount": 10,
+	                "x": player.x + player.width / 2,
+	                "y": player.y + player.height / 2,
+	                "width": 5,
+	                "height": 5,
+	                "rangex": [-10, 10],
+	                "rangey": [10, -10],
+	                "colors": colorize["3xhex"](f),
+	                "wrapper": particleContainer
+	            })
 	                //Render
 	            renderer.render(all);
 	        });
@@ -289,7 +324,7 @@
 	        this.going = !this.going
 	    }
 	    this.latch = function(a) {
-	        cb = __webpack_require__(5)(cb, a)
+	        cb = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./../tools/merge\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()))(cb, a)
 	    }
 	    this.restart = function() {
 	        ct = 0;
@@ -337,18 +372,6 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
-
-	module.exports = function(a,b){
-	    return function(){
-	        a.call(this,arguments)
-	        b.call(this,arguments)
-	    }
-	}
-
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function(obj, pc, sprite) {
@@ -375,14 +398,15 @@
 	        particle.x = obj.x
 	        particle.y = obj.y
 	        particle.zOrder = 2;
-	        particle.kill = 12
-	        particle.killMax = 12
+	        particle.kill = 50
+	        particle.killMax = 50
 	        obj.wrapper.addChild(particle)
 	    }
 	}
 
+
 /***/ },
-/* 7 */
+/* 6 */
 /***/ function(module, exports) {
 
 	module.exports = new function() {
@@ -414,6 +438,28 @@
 	                }
 	            })
 	    }
+	}
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports) {
+
+	module.exports = new function(){
+	    this["3xhex"] = function(frames){
+	        return "0123456789abcdef".split("").map(function(val){
+	        if(frames%200 < 50){
+	            return "#"+val+val+"0000"
+	        } else if(frames%200 < 100){
+	            return "#00"+val+val+"00"
+	        } else if(frames%200 <150){
+	            return "#0000"+val+val
+	        } else{
+	            return "#"+val+val+val+val+val+val
+	        }
+	    })
+	}
+
 	}
 
 
