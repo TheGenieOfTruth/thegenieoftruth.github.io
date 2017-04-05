@@ -19,11 +19,11 @@ module.exports = function(obj, pc, sprite) {
     for (i = 0; i < obj.amount; i++) {
         var particle = new PIXI.Sprite(shapes.rectangle(obj.width, obj.height, obj.colors[Math.floor(Math.random() * obj.colors.length)]))
         particle.obj = obj
-        particle.x = obj.x
-        particle.y = obj.y
+        particle.x = obj.x  + obj.rangey[0] - Math.round(Math.random() * (obj.rangey[0] - obj.rangey[1]))
+        particle.y = obj.y + obj.rangex[0] - Math.round(Math.random() * (obj.rangex[0] - obj.rangex[1]))
         particle.zOrder = 2;
-        particle.kill = 50
-        particle.killMax = 50
+        particle.kill = obj.kill;
+        particle.killMax = obj.kill;
         obj.wrapper.addChild(particle)
     }
 }

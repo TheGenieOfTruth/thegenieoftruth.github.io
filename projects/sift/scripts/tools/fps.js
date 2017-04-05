@@ -12,9 +12,6 @@ module.exports = function(fps, cb) {
     this.toggle = function() {
         this.going = !this.going
     }
-    this.latch = function(a) {
-        cb = require("./../tools/merge")(cb, a)
-    }
     this.restart = function() {
         ct = 0;
     }

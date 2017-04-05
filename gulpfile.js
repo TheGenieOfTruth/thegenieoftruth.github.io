@@ -68,11 +68,11 @@ gulp.task('coffee', function() {
         .pipe(gulp.dest(cwd+'app/js'));
 });
 gulp.task('babel',function(){
-    return gulp.src(cwd + 'app/babel/**/*.+(babel|es5|js)')
+    return gulp.src(cwd + 'scripts/**/*.+(babel|es5|js)')
     .pipe(babel({
         presets: ['es2015-without-strict'],
     }))
-        .pipe(gulp.dest(cwd+'app/scripts'));
+        .pipe(gulp.dest(cwd+'cscripts'));
 })
 gulp.task('pug', function() {
     //locals.root, used for building via relative paths. NEVER USE IN FRONTEND OR YOU WILL DIE, CHILD
@@ -104,6 +104,9 @@ gulp.task('webpack',function(){
     .pipe(gulp.dest(""))
     .pipe(browserSync.stream());
 })
+gulp.task('wsync',function(){
+    runSequence('babel','webpack')
+})
 gulp.task('watch', function(callback) {
     tasks = ["browserSync"]
     if(argv.d === undefined){
@@ -117,8 +120,7 @@ gulp.task('watch', function(callback) {
             gulp.watch('base/scss/*.scss', ['copy-base', 'pug']);
             gulp.watch("base/pug/*.pug", ["pug"]);
             if(argv.c){
-                gulp.watch(cwd + 'babel/**/*.+(babel|es5|js)',['babel'])
-                gulp.watch(cwd + 'scripts/**/*.js', ['webpack']); //reload
+                gulp.watch(cwd + 'scripts/**/*.js',['wsync'])
                 gulp.watch(cwd + 'index.html', browserSync.reload); //reload
                 gulp.watch(cwd + '/**/*.css', browserSync.reload); //reload
             } else{

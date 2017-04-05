@@ -3,7 +3,7 @@
 //For compile: webpack
 module.exports = function(cwd){
     return {
-    "entry":'./'+cwd+'scripts/index.js',
+    "entry":'./'+cwd+'cscripts/index.js',
     "output": {
         "path":require("path").resolve("./"+cwd),
         "filename": cwd+"bundle.js"
