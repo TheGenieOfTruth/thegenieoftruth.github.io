@@ -77,7 +77,7 @@ window.onload = function() {
         stage.addChild(pauseScreen);
         /* ## MUTE CODE END ## */
         /* ## PLAYER CODE START ## */
-        player = new PIXI.Sprite()
+        player = new PIXI.Sprite(shapes.rectangle(25,25,"#34495e"))
         stage.addChild(player)
         player.xvel = 0;
         player.yvel = 0;
@@ -111,38 +111,13 @@ window.onload = function() {
                 "y": player.y + player.height / 2,
                 "width": 5,
                 "height": 5,
-                "rangex": [-10, 10],
-                "rangey": [10, -10],
-                "colors": colorize["rainbow"](f+Math.random()*20-10),
+                "rangex": [-5, 5],
+                "rangey": [5, -5],
+                "colors": colorize["10xlight"]("#888888"),
                 "wrapper": particleContainer,
                 "kill":25
             })
-            for(var i=-1;i<1;i++){
-                particles({
-                    "kill":50,
-                    "amount": 1,
-                    "x": player.x + player.width / 2  + Math.random()*120-60,
-                    "y": player.y + player.height / 2 + Math.random()*120-60,
-                    "width": 5,
-                    "height": 5,
-                    "rangex": [-5, 5],
-                    "rangey": [5, -5],
-                    "colors": colorize["rainbow"](f+i*50),
-                    "wrapper": particleContainer
-                })
-            }
-            particles({
-                "amount": 30,
-                "x": player.x + player.width / 2,
-                "y": player.y + player.height / 2,
-                "width": 5,
-                "height": 5,
-                "rangex": [-1, 1],
-                "rangey": [1, -1],
-                "colors": colorize["rainbow"](f),
-                "wrapper": particleContainer,
-                "kill":10
-            })
+
                 //Render
             renderer.render(all);
         });
