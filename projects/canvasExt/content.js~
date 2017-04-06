@@ -1,0 +1,290 @@
+window.onload = function(){
+console.log("Maybe engage the afterburners")
+if(window.location.href.substring(0,38) === "https://www.google.com/_/chrome/newtab"){
+	/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ function(module, exports, __webpack_require__) {
+
+	window.onload = function () {
+	    var jammed = false;
+	    PIXI.Sprite.prototype.bringToFront = function () {
+	        if (this.parent) {
+	            var parent = this.parent;
+	            parent.removeChild(this);
+	            parent.addChild(this);
+	        }
+	    };
+	    var shapes = __webpack_require__(1);
+	    var fps = __webpack_require__(2);
+	    var particles = __webpack_require__(3);
+	    var colorize = __webpack_require__(4);
+	    // create an new instance of a pixi stage
+	    var all = new PIXI.Container();
+	    var stage = new PIXI.Container();
+	    var particleContainer = new PIXI.Container();
+	    all.addChild(particleContainer);
+	    all.addChild(stage);
+	    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+	    // create a renderer instance.
+	    var renderer = PIXI.autoDetectRenderer(document.body.scrollWidth, document.body.scrollHeight, null, true);
+	    renderer.backgroundColor = 0x222222;
+	    // add the renderer view element to the DOM
+	    shapes.renderer = renderer;
+	    document.body.appendChild(renderer.view);
+	    // create a new Sprite using the texture
+	    setup();
+	    function setup() {
+
+	        outport = new fps(60, function (f, obj, every) {
+	            particles("handle", particleContainer);
+	            particles({
+	                "amount": Math.round(Math.random() * 25),
+	                "x": Math.random() * renderer.width,
+	                "y": Math.random() * renderer.height,
+	                "width": Math.random() * 10,
+	                "height": Math.random() * 10,
+	                "rangex": [-1, 1],
+	                "rangey": [1, -1],
+	                "colors": colorize["rainbow"](f + Math.random() * 50),
+	                "wrapper": particleContainer,
+	                "kill": Math.round(Math.random() * 30) * 6
+	            });
+
+	            //Render
+	            renderer.render(all);
+	        });
+	    }
+	};
+
+/***/ },
+/* 1 */
+/***/ function(module, exports) {
+
+	module.exports = new function () {
+	    var a = this;
+	    this.renderer = "";
+	    this.canvas = function (width, height) {
+	        var canvas = document.createElement('canvas');
+	        canvas.width = width;
+	        canvas.height = height;
+	        var ctx = canvas.getContext("2d");
+	        return {
+	            "canvas": canvas,
+	            "ctx": ctx
+	        };
+	    };
+	    this.rectangle = function (width, height, color) {
+	        var b = a.canvas(width, height);
+	        b.ctx.fillStyle = color;
+	        b.ctx.fillRect(0, 0, width, height);
+	        return PIXI.Texture.fromCanvas(b.canvas);
+	    };
+	    this.circle = function (radius, color) {
+	        var b = a.canvas(radius * 2, radius * 2);
+	        b.ctx.fillStyle = color;
+	        b.ctx.beginPath();
+	        b.ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
+	        b.ctx.fill();
+	        return PIXI.Texture.fromCanvas(b.canvas);
+	    };
+	}();
+
+/***/ },
+/* 2 */
+/***/ function(module, exports) {
+
+	module.exports = function (fps, cb) {
+	    this.going = true;
+	    this.start = function () {
+	        this.going = true;
+	        requestAnimationFrame(draw);
+	    };
+	    this.resume = this.start;
+	    this.stop = function () {
+	        this.going = false;
+	    };
+	    this.pause = this.stop;
+	    this.toggle = function () {
+	        this.going = !this.going;
+	    };
+	    this.restart = function () {
+	        ct = 0;
+	    };
+	    var a = this;
+	    var now;
+	    var then = Date.now();
+	    var interval = 1000 / fps;
+	    var delta;
+	    var ct = 0;
+
+	    function every(count, callback) {
+	        if (ct % count == 0) {
+	            callback();
+	        }
+	    }
+
+	    function draw() {
+	        if (a.going) {
+	            requestAnimationFrame(draw);
+	        }
+	        now = Date.now();
+	        delta = now - then;
+	        if (delta > interval) {
+	            ct++;
+	            // update time stuffs
+	            // Just `then = now` is not enough.
+	            // Lets say we set fps at 10 which means
+	            // each frame must take 100ms
+	            // Now frame executes in 16ms (60fps) so
+	            // the loop iterates 7 times (16*7 = 112ms) until
+	            // delta > interval === true
+	            // Eventually this lowers down the FPS as
+	            // 112*10 = 1120ms (NOT 1000ms).
+	            // So we have to get rid of that extra 12ms
+	            // by subtracting delta (112) % interval (100).
+	            // Hope that makes sense.
+	            then = now - delta % interval;
+	            cb(ct, a, every);
+	        }
+	    }
+	    draw();
+	    return this;
+	};
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = function (obj, pc, sprite) {
+	    if (obj === "handle") {
+	        particleContainer = arguments[1];
+	        particleContainer.children.forEach(function (val) {
+	            if (val.kill !== 0) {
+	                var dx = val.obj.rangex[0] - Math.round(Math.random() * (val.obj.rangex[0] - val.obj.rangex[1]));
+	                var dy = val.obj.rangey[0] - Math.round(Math.random() * (val.obj.rangey[0] - val.obj.rangey[1]));
+	                val.x += dx;
+	                val.y += dy;
+	                val.kill--;
+	                val.alpha = val.kill / val.killMax;
+	            } else {
+	                particleContainer.removeChild(val);
+	            }
+	        });
+	        return;
+	    }
+	    var shapes = __webpack_require__(1);
+	    for (i = 0; i < obj.amount; i++) {
+	        var particle = new PIXI.Sprite(shapes.rectangle(obj.width, obj.height, obj.colors[Math.floor(Math.random() * obj.colors.length)]));
+	        particle.obj = obj;
+	        particle.x = obj.x + obj.rangey[0] - Math.round(Math.random() * (obj.rangey[0] - obj.rangey[1]));
+	        particle.y = obj.y + obj.rangex[0] - Math.round(Math.random() * (obj.rangex[0] - obj.rangex[1]));
+	        particle.zOrder = 2;
+	        particle.kill = obj.kill;
+	        particle.killMax = obj.kill;
+	        obj.wrapper.addChild(particle);
+	    }
+	};
+
+/***/ },
+/* 4 */
+/***/ function(module, exports) {
+
+	module.exports = new function () {
+	    this["3xhex"] = function (frames) {
+	        return "0123456789abcdef".split("").map(function (val) {
+	            if (frames % 200 < 50) {
+	                return "#" + val + val + "0000";
+	            } else if (frames % 200 < 100) {
+	                return "#00" + val + val + "00";
+	            } else if (frames % 200 < 150) {
+	                return "#0000" + val + val;
+	            } else {
+	                return "#" + val + val + val + val + val + val;
+	            }
+	        });
+	    };
+	    this["rainbow"] = function (frames) {
+	        f = 0.01;
+	        function rgbToHex(r, g, b) {
+	            ra = Math.round;
+	            return "#" + ((1 << 24) + (ra(r) << 16) + (ra(g) << 8) + ra(b)).toString(16).slice(1);
+	        }
+	        return this["10xlight"](rgbToHex(Math.sin(frames * f) * 127 + 128, Math.sin(frames * f + 2) * 127 + 128, Math.sin(frames * f + 4) * 127 + 128));
+	    };
+	    this["10xlight"] = function (val) {
+	        function ColorLuminance(hex, lum) {
+
+	            // validate hex string
+	            hex = String(hex).replace(/[^0-9a-f]/gi, '');
+	            if (hex.length < 6) {
+	                hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+	            }
+	            lum = lum || 0;
+
+	            // convert to decimal and change luminosity
+	            var rgb = "#",
+	                c,
+	                i;
+	            for (i = 0; i < 3; i++) {
+	                c = parseInt(hex.substr(i * 2, 2), 16);
+	                c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+	                rgb += ("00" + c).substr(c.length);
+	            }
+
+	            return rgb;
+	        }
+	        var colors = [];
+	        for (i = -5; i <= 5; i++) {
+	            for (j = 0; j < Math.pow(5 - Math.abs(i), 2); j++) {
+	                colors.push(ColorLuminance(val, i / 10));
+	            }
+	        }
+	        return colors;
+	    };
+	}();
+
+/***/ }
+/******/ ]);
+}}
