@@ -94,13 +94,40 @@ u!==e.globalCompositeOperation&&(e.globalCompositeOperation=u),e.globalAlpha=thi
             renderer.backgroundColor = 0xffffff;
             // add the renderer view element to the DOM
             shapes.renderer = renderer;
-            renderer.view.style = "position:absolute;top:0;left:0;width:100%;height:100%;z-index:-1;";
+            renderer.view.style = "position:fixed;top:0;left:0;z-index:-1;";
             document.body.insertBefore(renderer.view,document.body.childNodes[0]);
             // create a new Sprite using the texture
             setup();
+            function getHeight() {
+  if (self.innerHeight) {
+    return self.innerHeight;
+  }
+
+  if (document.documentElement && document.documentElement.clientHeight) {
+    return document.documentElement.clientHeight;
+  }
+
+  if (document.body) {
+    return document.body.clientHeight;
+  }
+}
+function getWidth() {
+  if (self.innerWidth) {
+    return self.innerWidth;
+  }
+
+  if (document.documentElement && document.documentElement.clientWidth) {
+    return document.documentElement.clientWidth;
+  }
+
+  if (document.body) {
+    return document.body.clientWidth;
+  }
+}
             function setup() {
                 outport = new fps(30, function (f, obj, every) {
-                	renderer.resize(document.body.scrollWidth,document.body.scrollHeight)
+                	renderer.resize(getWidth(),getHeight())
+
                     particles("handle", particleContainer);
                     var h = Math.random()*10
                     particles({
