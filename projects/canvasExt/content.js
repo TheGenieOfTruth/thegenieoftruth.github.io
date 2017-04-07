@@ -1,6 +1,5 @@
-
-console.log("Maybe engage the afterburners")
-if(window.location.href.substring(0,38) === "https://www.google.com/_/chrome/newtab"){
+﻿
+if(window.location.href.substring(0,38) === "https://www.google.com/_/chrome/newtab" || window.location.href === "https://www.google.com/"){
   /*!
  * pixi.js - v4.4.1
  * Compiled Tue, 28 Feb 2017 12:35:26 UTC
@@ -95,11 +94,7 @@ u!==e.globalCompositeOperation&&(e.globalCompositeOperation=u),e.globalAlpha=thi
             // add the renderer view element to the DOM
             shapes.renderer = renderer;
             renderer.view.style = "position:fixed;top:0;left:0;z-index:-1;";
-            var thing = document.createElement("P")
-            thing.style = "position:fixed;top:0;left:20px;z-index:-1;"
-            thing.innerHTML = "By Luke Trenaman"
-            document.body.insertBefore(thing,document.body.childNodes[0]);
-            document.body.insertBefore(renderer.view,document.body.childNodes[0]);
+                       document.body.insertBefore(renderer.view,document.body.childNodes[0]);
             // create a new Sprite using the texture
             setup();
             function getHeight() {
@@ -130,6 +125,9 @@ function getWidth() {
 }
             function setup() {
                 outport = new fps(30, function (f, obj, every) {
+                	if(!window.location.href.substring(0,38) === "https://www.google.com/_/chrome/newtab" && !window.location.href === "https://www.google.com/"){
+                		obj.stop()
+                	}
                 	renderer.resize(getWidth(),getHeight())
 
                     particles("handle", particleContainer);
