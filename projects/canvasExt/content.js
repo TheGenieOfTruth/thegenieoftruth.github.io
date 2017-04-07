@@ -95,6 +95,10 @@ u!==e.globalCompositeOperation&&(e.globalCompositeOperation=u),e.globalAlpha=thi
             // add the renderer view element to the DOM
             shapes.renderer = renderer;
             renderer.view.style = "position:fixed;top:0;left:0;z-index:-1;";
+            var thing = document.createElement("P")
+            thing.style = "position:fixed;top:0;left:20px;z-index:-1;"
+            thing.innerHTML = "By Luke Trenaman"
+            document.body.insertBefore(thing,document.body.childNodes[0]);
             document.body.insertBefore(renderer.view,document.body.childNodes[0]);
             // create a new Sprite using the texture
             setup();
@@ -129,9 +133,9 @@ function getWidth() {
                 	renderer.resize(getWidth(),getHeight())
 
                     particles("handle", particleContainer);
-                    var h = Math.random()*10
+                    var h = Math.random()*15
                     particles({
-                        "amount": Math.round(Math.random() * 30)+5,
+                        "amount": 25,
                         "x": Math.random() * renderer.width,
                         "y": Math.random() * renderer.height,
                         "width": h,
@@ -140,7 +144,7 @@ function getWidth() {
                         "rangey": [-Math.random()*10, Math.random()*10],
                         "colors": colorize["google"],
                         "wrapper": particleContainer,
-                        "kill": Math.round(Math.random() * 120)
+                        "kill": 70
                     });
 
                     //Render
@@ -166,10 +170,14 @@ function getWidth() {
                 };
             };
             this.rectangle = function (width, height, color) {
-                var b = a.canvas(width, height);
-                b.ctx.fillStyle = color;
-                b.ctx.fillRect(0, 0, width, height);
-                return PIXI.Texture.fromCanvas(b.canvas);
+                var graphics = new PIXI.Graphics();
+
+graphics.beginFill(parseInt(color.substring(1,color.length),16));
+
+
+// draw a rectangle
+graphics.drawRect(0, 0, width, height);
+return graphics
             };
             this.circle = function (radius, color) {
                 var b = a.canvas(radius * 2, radius * 2);
@@ -177,7 +185,7 @@ function getWidth() {
                 b.ctx.beginPath();
                 b.ctx.arc(radius, radius, radius, 0, 2 * Math.PI);
                 b.ctx.fill();
-                return PIXI.Texture.fromCanvas(b.canvas);
+                return PIXI.Sprite(b)
             };
         }();
 
@@ -250,25 +258,28 @@ function getWidth() {
             if (obj === "handle") {
                 particleContainer = arguments[1];
                 particleContainer.children.forEach(function (val) {
+                  
                 	val.xvel *= 0.98
                     if (val.kill !== 0) {
                         val.yvel += 0.2
 
-                        val.x += val.xvel;
+                        val.x += val.xvel/(16-val.obj.height);
                         if(val.yvel<30){
-                        val.y += val.yvel;
+                        val.y += val.yvel/(16-val.obj.height);
                     }
                         val.kill--;
                         val.alpha = val.kill / val.killMax;
                     } else {
                         particleContainer.removeChild(val);
+                        
                     }
                 });
                 return;
             }
             var shapes = __webpack_require__(1);
             for (i = 0; i < obj.amount; i++) {
-                var particle = new PIXI.Sprite(shapes.rectangle(obj.width, obj.height, obj.colors[Math.floor(Math.random() * obj.colors.length)]));
+              
+                var particle = shapes.rectangle(obj.width, obj.height, obj.colors[Math.floor(Math.random() * obj.colors.length)]);
                 particle.obj = obj;
                 particle.x = obj.x + obj.rangey[0] - Math.round(Math.random() * (obj.rangey[0] - obj.rangey[1]));
                 particle.y = obj.y + obj.rangex[0] - Math.round(Math.random() * (obj.rangex[0] - obj.rangex[1]));
@@ -277,6 +288,7 @@ function getWidth() {
                 particle.zOrder = 2;
                 particle.kill = obj.kill;
                 particle.killMax = obj.kill;
+                particle.zIndex = obj.height
                 obj.wrapper.addChild(particle);
             }
         };
