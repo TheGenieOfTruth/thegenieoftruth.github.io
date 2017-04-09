@@ -2,12 +2,12 @@ doctype html
 html
     head
         != a(head,{"title":"TheGenieOfTruth - Homepage"})
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css")
         //build:css css/styles.min.css
         link(rel="stylesheet" href="css/base/stylesheet.css")
         link(rel="stylesheet" href="css/styles.css")
         //endbuild
-        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css")
-        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css")
     body
         != a(header,{"name":"TheGenieOfTruth","sub":"I'm a smart little child"})
         div(class="container")
@@ -52,6 +52,7 @@ html
                         p= val.synopsis
         br
         div(class="container")
+            hr
             h3 What happens here?
             p I spend a fair portion (actually, too much) of my freetime developing and working on new games, webpages, applications, and other shiny things that I don't know the names of. Due to the slight amount of people who wanted to actually view these things, I decided to make this shiny, shiny website. Seeing how you ended up here, you probably want to know what you can expect. Typically, when I make new projects I publish them here, for the enjoyment of random internet people.
             h5 Enjoy, random internet person!
@@ -59,11 +60,37 @@ html
         div(class="blogosphere")
             .container
                 h1 Blog
-                p I also happen to have a rarely maintained blog, but hey, I might say something funny, so why not...
+                p I also happen to have a rarely maintained blog, but hey, I might say something funny, so head on down to the blogosphere!
                 .text-center
                     a(href="/blog" target = "_blank")
-                        button(class="btn") To the blogosphere
+                        button(class="btn") Go!
+        br
+        div(class="container")
+            hr
+            h1.text-center Say hello!
+            h3.text-center thegenieoftruth@gmail.com
+            p I get lonely sometimes, when I'm hiding from the rest of society, toiling away at random stuff. Shoot me some of your ideas, requests for websites, or work you want to show off! I love to have company :)
+            hr
 
+        .green-wrap
+            .container
+                br
+                h1.text-center Some of my favorites
+                br
+                .row
+                    .col-md-4
+                        h3.text-center
+                            a(href="http://www.kongregate.com/accounts/BigBlingThing") Kongregate
+                        p A nice collection of my games on my shiny account, @BigBlingThing. Play some of my trashy games!
+                    .col-md-4
+                        h3.text-center
+                            a(href = "/htmlproject") HTML Project
+                        p A small webpage, made to display my ability (or lack thereof), to teach web design. Looks very snazzy.
+                    .col-md-4
+                        h3.text-center
+                            a(href = "https://eggspearamint.blogspot.com") Eggspearamint
+                        p This website is a broken, writhing mass of markup, that somehow gave me and my friends fond memories.
+                br
         script(src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js")
         //build:js js/main.min.js
         script(src="js/fireworks.min.js")

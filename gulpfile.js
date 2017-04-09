@@ -110,9 +110,6 @@ gulp.task('webpack',function(){
 gulp.task('wsync',function(){
     runSequence('babel','webpack')
 })
-gulp.task('psync',function(){
-    runSequence('pug','useref','itr')
-})
 gulp.task('watch', function(callback) {
     tasks = ["browserSync"]
     if(argv.d === undefined){
@@ -139,7 +136,7 @@ gulp.task('watch', function(callback) {
                 gulp.watch(cwd + '**/*.css', browserSync.reload); //reload
             } else {
                 gulp.watch(cwd + 'app/coffee/**/*.coffee', ['coffee']); //reload via javascript change
-                gulp.watch(cwd + 'app/*.pug', ['psync']); //reload via HTML change
+                gulp.watch(cwd + 'app/*.pug', ['pug']); //reload via HTML change
                 gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
                 gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
                 gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload

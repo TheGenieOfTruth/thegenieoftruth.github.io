@@ -41,7 +41,28 @@ body{
   padding-right: 15px;
   padding-left: 15px;
 }
-
+.slick-dots li button:before, .slick-dots li.slick-active button:before{
+  color:white
+}
+.green-wrap{
+  background:#2ecc71;
+  color:white
+}
+.green-wrap button{
+  color:white;
+  background:#27ae60;
+  transition: 0.1s all;
+}
+.green-wrap a{
+  color:darken(#16a085,15%);
+  transition:0.1s all;
+}
+.green-wrap a:hover{
+  color:darken(#16a085,10%)
+}
+.green-wrap button:hover{
+  background:darken(#27ae60,10%);
+}
 @media (min-width: 576px) {
   .regular {
     padding-right: 15px;
