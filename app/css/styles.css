@@ -17,11 +17,9 @@ body {
 .slick-prev:before, .slick-next:before {
   color: white !important; }
 
-.slick-prev {
-  margin-left: 30px; }
-
-.slick-next {
-  margin-right: 30px; }
+.rp {
+  background: #e74c3c;
+  padding: 50px 0px; }
 
 .regular a {
   color: #6d2018;
@@ -32,10 +30,54 @@ body {
   color: #81261d; }
 
 .regular {
-  padding: 40px 50px 80px 50px;
-  margin: 0 0px;
   background: #e74c3c;
-  color: white; }
+  color: white;
+  margin-left: auto;
+  margin-right: auto; }
+
+.regular {
+  padding-right: 15px;
+  padding-left: 15px; }
+
+@media (min-width: 576px) {
+  .regular {
+    padding-right: 15px;
+    padding-left: 15px; } }
+
+@media (min-width: 768px) {
+  .regular {
+    padding-right: 15px;
+    padding-left: 15px; } }
+
+@media (min-width: 992px) {
+  .regular {
+    padding-right: 15px;
+    padding-left: 15px; } }
+
+@media (min-width: 1200px) {
+  .regular {
+    padding-right: 15px;
+    padding-left: 15px; } }
+
+@media (min-width: 576px) {
+  .regular {
+    width: 540px;
+    max-width: 100%; } }
+
+@media (min-width: 768px) {
+  .regular {
+    width: 720px;
+    max-width: 100%; } }
+
+@media (min-width: 992px) {
+  .regular {
+    width: 960px;
+    max-width: 100%; } }
+
+@media (min-width: 1200px) {
+  .regular {
+    width: 1140px;
+    max-width: 100%; } }
 
 .blogosphere {
   background: #3498db;
@@ -49,3 +91,17 @@ body {
 
 .blogosphere .btn:hover {
   background: #2c3e50; }
+
+canvas {
+  position: absolute;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1; }
+
+#head-gradient {
+  height: 100vh;
+  width: 100vw; }
+
+.title-container {
+  margin-top: 10%; }
