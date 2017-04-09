@@ -21,6 +21,7 @@ var argv = require('yargs')
 var webpack = require('gulp-webpack');
 var babel = require('gulp-babel');
 var loc = [
+    "",
     "gulp/",
     "harmonicraft/",
     "blog/",
@@ -77,6 +78,8 @@ gulp.task('babel',function(){
 gulp.task('pug', function() {
     //locals.root, used for building via relative paths. NEVER USE IN FRONTEND OR YOU WILL DIE, CHILD
     makeData()
+    data.blogs = JSON.parse(fs.readFileSync('serverside/blog.json', 'utf8'));
+    data.blog = data.blogs
     return gulp.src(cwd + 'app/**/*.pug')
         .pipe(pug({
             pretty: true,
@@ -107,6 +110,9 @@ gulp.task('webpack',function(){
 gulp.task('wsync',function(){
     runSequence('babel','webpack')
 })
+gulp.task('psync',function(){
+    runSequence('pug','useref','itr')
+})
 gulp.task('watch', function(callback) {
     tasks = ["browserSync"]
     if(argv.d === undefined){
@@ -133,7 +139,7 @@ gulp.task('watch', function(callback) {
                 gulp.watch(cwd + '**/*.css', browserSync.reload); //reload
             } else {
                 gulp.watch(cwd + 'app/coffee/**/*.coffee', ['coffee']); //reload via javascript change
-                gulp.watch(cwd + 'app/*.pug', ['pug']); //reload via HTML change
+                gulp.watch(cwd + 'app/*.pug', ['psync']); //reload via HTML change
                 gulp.watch(cwd + 'app/**/*.scss', ['sass']); //reload via CSS change
                 gulp.watch(cwd + 'app/*.html', browserSync.reload); //reload
                 gulp.watch(cwd + 'app/js/**/*.js', browserSync.reload); //reload
@@ -169,7 +175,7 @@ gulp.task('itr', function() {
     return gulp.src(cwd + 'dist/index.html')
         .pipe(replace(/<link(.*)(href="css\/)(.*)>/g, '<link$1href="dist/css/$3>'))
         .pipe(replace(/<img(.*)(src="images\/)(.*)>/g, '<img$1src="dist/images/$3/>'))
-        .pipe(replace(/<script>(.*)(src="js\/)(.*)<\/script>/g, '<script>$1src="dist/js/$3</script>'))
+        .pipe(replace(/<script(.*)(src="js\/)(.*)>/g, '<script $1src="dist/js/$3>'))
         .pipe(gulp.dest(cwd));
 });
 //pug template clean

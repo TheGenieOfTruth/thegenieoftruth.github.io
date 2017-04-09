@@ -12,7 +12,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .gradient-darken {
   width: 100%;
-  color: #f8f8f8;
+  color: white;
   flex-wrap: wrap;
   top: 0;
   right: 0;
@@ -22,13 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #head-gradient {
   padding: 60px 0 60px 0;
-  background: url("/base/assets/sunset.jpg"), #3498db;
-  /* fix background */
-  background-attachment: fixed;
-  /* center it */
-  background-position: center center;
-  /* Scale it nicely to the element */
-  background-size: cover; }
+  background: #34495e; }
 
 #head-gradient .display-1, #head-gradient .display-5 {
   word-wrap: break-word;
@@ -41,15 +35,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .icon-badge {
   min-height: 50px;
-  background: #16527a;
+  background: #07090c;
   border-radius: 0;
   transition: background 0.1s; }
 
 .icon-badge:hover {
-  background: #124364; }
+  background: black; }
 
 .navbar-gradient {
-  background: #1d6fa5;
+  background: #19232d;
   min-height: 45px; }
 
 nav.navbar-color {
@@ -73,14 +67,14 @@ ul.navbar-nav li.nav-item {
   font-size: 20px; }
 
 .nav-item:hover, .nav-brand:hover {
-  background-color: #196090; }
+  background-color: #10161c; }
 
 /*Get confused*/
 li.nav-item:active {
-  background: #16527a; }
+  background: #07090c; }
 
 li.nav-item.active {
-  background: #124364; }
+  background: black; }
 
 .navbar-title {
   display: none; }

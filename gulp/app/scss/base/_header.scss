@@ -1,24 +1,15 @@
-$img: url("/base/assets/sunset.jpg") !default;
+$img: white !default;
 $header-padding: 40px !default;
 .gradient-darken{
     width:100%;
-    color:#f8f8f8;
+    color:$header-color;
     flex-wrap:wrap;
     top:0;right:0;bottom:0;left:0;
     background:linear-gradient(90deg,rgba(0,0,0,0.05),rgba(255,255,255,0.05));
 }
 #head-gradient{
     padding:$header-padding 0 $header-padding 0;
-    background:$img,$base1;
-
-    /* fix background */
-    background-attachment: fixed;
-
-    /* center it */
-    background-position: center center;
-
-    /* Scale it nicely to the element */
-    background-size: cover;
+    background:$base1;
 }
 #head-gradient .display-1, #head-gradient .display-5{
     word-wrap: break-word;

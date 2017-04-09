@@ -1,0 +1,73 @@
+doctype html
+html
+    head
+        != a(head,{"title":"Gulp - Whalescome to the page of holy hallos!"})
+        //build:css css/styles.min.css
+        link(rel="stylesheet" href="css/base/stylesheet.css")
+        link(rel="stylesheet" href="css/styles.css")
+        //endbuild
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css")
+        link(rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css")
+    body
+        != a(header,{"name":"TheGenieOfTruth","sub":"I'm a smart little child"})
+        div(class="container")
+            br
+            h3 Welcome!
+            p Enjoy your stay on humble base of operations, starring yours truly.
+            -
+                pages = [
+                    {
+                        link:"/projects/rocketman/",
+                        title:"Rocketman",
+                        synopsis:"A fast-paced infinite scrolling rocket adventure."
+                    },
+                    {
+                        link:"/projects/pixi/",
+                        title:"Pong",
+                        synopsis:"Basically a trashy recreation of the first videogame ever made."
+                    },
+                    {
+                        link:"/projects/snake/",
+                        title:"Snake",
+                        synopsis:"Ya got this lil' green dude and ya grab some blue things and try to get points. 10/10"
+                    },
+                    {
+                        link:"/projects/voltage/",
+                        title:"Electricity",
+                        synopsis:"Classic nerdiness Mk. I"
+                    },
+                    {
+                        link:"/projects/water/",
+                        title:"Water Cycle",
+                        synopsis:"Classic nerdiness Mk. II"
+                    }
+                ]
+            br
+        .regular
+            each val, index in pages
+                div
+                    a(href=val.link target="_blank")
+                        h3= val.title
+                    p= val.synopsis
+        br
+        div(class="container")
+            h3 What happens here?
+            p I spend a fair portion (actually, too much) of my freetime developing and working on new games, webpages, applications, and other shiny things that I don't know the names of. Due to the slight amount of people who wanted to actually view these things, I decided to make this shiny, shiny website. Seeing how you ended up here, you probably want to know what you can expect. Typically, when I make new projects I publish them here, for the enjoyment of random internet people.
+            h5 Enjoy, random internet person!
+            hr
+        div(class="blogosphere")
+            h1 Blog
+            p I also happen to have a rarely maintained blog, but hey, I might say something funny, so why not...
+            .text-center
+                a(href="/blog" target = "_blank")
+                    button(class="btn") Land in the blogosphere
+
+        script(src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js")
+        //build:js js/main.min.js
+        script(src="js/fireworks.min.js")
+        script(src="js/thing.js")
+        // endbuild
+        //endbuild
+        br
+        != a(analytics)
+        != a(footer)

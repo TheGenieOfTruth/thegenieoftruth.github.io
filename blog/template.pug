@@ -4,13 +4,12 @@ html
         != a(head,{"title":"TheGenieOfTruth - Blog | " + title})
         link(rel="stylesheet" href="../app/css/base/stylesheet.css")
     body
-        != a(navbar,{"selected":"Blog"})
-        != a(header,{"name":"Blog","sub":"Eh, this is a blog"})
+        != a(header,{"name":"Blog","sub":"Please care"})
         div(class="container line-height-1.2")
             br
             h2 #{title}
             p.small By #{author} <br/> #{date}
-            p #{content}
+            p !{content}
             != previous
             != next
             br

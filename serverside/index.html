@@ -3,10 +3,10 @@
 function publish(){
     $.ajax({
             "type": "POST",
-            "url": "http://d03fdcff.ngrok.io",
+            "url": "http://f9a22ed5.ngrok.io",
             "crossDomain": true,
             "dataType": "json",
-            "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val()})
+            "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val().replace(/(?:\r\n|\r|\n)/g, '<br />')})
         })
         .done(function(data) {
             alert("Blog post sent!")

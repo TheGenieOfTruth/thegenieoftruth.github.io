@@ -1,0 +1,54 @@
+// styles.scss
+.testing {
+  width: percentage(5/7);
+}
+html,body{
+    padding:0;
+    margin:0;
+}
+html{
+    height:100%;
+    overflow-x:hidden;
+}
+body{
+    background:white;
+    background-repeat:no-repeat;
+    overflow-x:hidden;
+}
+.slick-prev:before, .slick-next:before { 
+    color:white !important;
+
+}
+.slick-prev{
+	margin-left:30px;
+}
+.slick-next{
+	margin-right:30px;
+}
+.regular a{
+	color:darken(#c0392b,20%);
+	text-decoration:none;
+	transition:0.1s all;
+}
+.regular a:hover{
+	color:darken(#c0392b,15%);
+}
+.regular{
+	padding:40px 50px 80px 50px;
+	margin:0 0px;
+	background:#e74c3c;
+	color:white
+}
+.blogosphere{
+	background:#3498db;
+	padding:50px;
+	color:white
+}
+.blogosphere .btn{
+	background:#34495e;
+	color:white;
+	transition:0.1s all
+}
+.blogosphere .btn:hover{
+	background:#2c3e50;
+}
