@@ -92,6 +92,9 @@ gulp.task('browserSync', function() {
         "server": {
             "baseDir": ""
         },
+        "ui":{
+            "port":argv.p != undefined ? argv.p : 3000
+        },
         "open": false,
         "notify": false
     });
@@ -182,7 +185,7 @@ gulp.task('build', function(callback) {
     def(cwd, callback)
     browserSync.reload()
 });
-gulp.task('default', ['beautify-root-pug','blog'], function(callback) {
+gulp.task('default', ['beautify-root-pug','blog','comic'], function(callback) {
     var ct = 0
 
     function loop() {
@@ -295,6 +298,60 @@ gulp.task('blog', function() {
         }))
         .pipe(rename("index.html"))
         .pipe(gulp.dest('blog/all/'))
+})
+gulp.task('comic',function(){
+    var comic = JSON.parse(fs.readFileSync('serverside/comic.json', 'utf8'));
+    makeData()
+    var ct = 0
+
+    function loop() {
+        if (ct < comic.length) {
+            if (!fs.existsSync('comic/' + (ct + 1).toString())) {
+                fs.mkdirSync('comic' + (ct + 1).toString())
+            }
+            if (fs.existsSync('comic/' + (ct + 1).toString() + "/index.html")) {
+                fs.unlinkSync('comic/' + (ct + 1).toString() + "/index.html");
+            }
+            //fs.writeFileSync('comic/'+(index+1).toString()+"/index.html", '<h2>'+val.title+'</h2>'+'<p>'+val.content+'</p>');
+            var hold = Object.assign({},data)
+            hold.title = comic[ct].title
+            hold.content = comic[ct].content
+            hold.date = comic[ct].date
+            hold.author = comic[ct].author
+            if(ct>0){
+
+            hold.previous = "<a class = 'smallish' href = '../"+(ct).toString()+"'><i class = 'fa fa-long-arrow-left' aria-hidden = 'true'></i> Previous</a>"
+          } else{
+            hold.previous = "<span class = 'gray smallish'>Previous</span>"
+          }
+            if(ct+2<=comic.length){
+              hold.next = "<a class = 'smallish pull-right' href = '../"+(ct+2).toString()+"'>Next <i class = 'fa fa-long-arrow-right' aria-hidden = 'true'></i></a>"
+            } else{
+              hold.next = "<span class = 'gray smallish pull-right'>Next</span>"
+            }
+            gulp.src('comic/template.pug')
+                .pipe(pug({
+                    "pretty": true,
+                    "data": hold
+                })) // pip to pug plugin
+                .pipe(rename("index.html"))
+                .pipe(gulp.dest('comic/' + (ct + 1).toString()));
+            //Clean up and get better page later. Perhaps a pug thing?
+            ct++;
+            loop()
+        } else {
+        }
+    }
+    loop()
+    var hold = Object.assign({},data)
+    hold.list = comic
+    gulp.src('comic/all.pug')
+        .pipe(pug({
+            pretty:true,
+            data:hold
+        }))
+        .pipe(rename("index.html"))
+        .pipe(gulp.dest('comic/all/'))
 })
 gulp.task('help', function() {
     console.log("watch:")

@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        != a(head,{"title":"TheGenieOfTruth - Blog"})
+        //build:css css/styles.min.css
+        link(rel="stylesheet" href="../app/css/base/stylesheet.css")
+        //endbuild
+    body
+        != a(header,{"name":"Comics","sub":"*dooting intensifies*"})
+        div(class="container line-height-1.2")
+            br
+            p Webpage for hosting the amazing comix of JORXXXX
+            a(href = "/blog/1") First post
+            br
+            a(href = "/blog/"+data.blogs.length) Recent post
+
+            .text-center
+                a.smallish(href="/blog/all/") All posts
+        br
+        != a(footer)
+        != a(analytics)
