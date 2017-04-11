@@ -43,6 +43,7 @@ function def(x, callback) {
 
 function makeData() {
     data = {}
+    data.logo = "<img src = '/comics/assets/logo.png' style = 'border:0px solid white;border-radius:5px'>"
     data.bLength = JSON.parse(fs.readFileSync('serverside/blog.json', 'utf8')).length;
     data.cLength = JSON.parse(fs.readFileSync('serverside/comics.json', 'utf8')).length;
     data.times = cwd.split("/")
@@ -323,7 +324,6 @@ gulp.task('comics',function(){
             hold.author = comics[ct].author
             hold.image = "/"+glob.sync("serverside/uploads/*")[ct]
             console.log(glob.sync("serverside/uploads/*")[ct])
-            hold.logo = "<img src = '/comics/assets/logo.png' style = 'border:0px solid white;border-radius:5px'>"
             hold.first = "<a href = '../1'><img src = '/comics/assets/double-arrow-backward.png'/></a>"
             hold.previous = "<a href = '../"+(ct > 0 ? ct : 1).toString()+"'><img src = '/comics/assets/arrow-backward.png'/></a>"
             hold.middle = "<a href = '/comics/all'><img src = '/comics/assets/middle.png'></a>"
