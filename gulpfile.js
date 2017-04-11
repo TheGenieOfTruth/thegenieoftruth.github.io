@@ -26,6 +26,7 @@ var loc = [
     "harmonicraft/",
     "blog/",
     "projects/water/",
+    "comics/"
 ];
 var cwd = "";
 var htmlprettify = require('gulp-html-beautify');
@@ -42,6 +43,8 @@ function def(x, callback) {
 
 function makeData() {
     data = {}
+    data.bLength = JSON.parse(fs.readFileSync('serverside/blog.json', 'utf8')).length;
+    data.cLength = JSON.parse(fs.readFileSync('serverside/comics.json', 'utf8')).length;
     data.times = cwd.split("/")
         .length;
     data.root = "";
@@ -185,7 +188,7 @@ gulp.task('build', function(callback) {
     def(cwd, callback)
     browserSync.reload()
 });
-gulp.task('default', ['beautify-root-pug','blog','comic'], function(callback) {
+gulp.task('default', ['beautify-root-pug','blog','comics'], function(callback) {
     var ct = 0
 
     function loop() {
@@ -299,43 +302,40 @@ gulp.task('blog', function() {
         .pipe(rename("index.html"))
         .pipe(gulp.dest('blog/all/'))
 })
-gulp.task('comic',function(){
-    var comic = JSON.parse(fs.readFileSync('serverside/comic.json', 'utf8'));
+gulp.task('comics',function(){
+    var comics = JSON.parse(fs.readFileSync('serverside/comics.json', 'utf8'));
     makeData()
     var ct = 0
 
     function loop() {
-        if (ct < comic.length) {
-            if (!fs.existsSync('comic/' + (ct + 1).toString())) {
-                fs.mkdirSync('comic' + (ct + 1).toString())
+        if (ct < comics.length) {
+            if (!fs.existsSync('comics/' + (ct + 1).toString())) {
+                fs.mkdirSync('comics/' + (ct + 1).toString())
             }
-            if (fs.existsSync('comic/' + (ct + 1).toString() + "/index.html")) {
-                fs.unlinkSync('comic/' + (ct + 1).toString() + "/index.html");
+            if (fs.existsSync('comics/' + (ct + 1).toString() + "/index.html")) {
+                fs.unlinkSync('comics/' + (ct + 1).toString() + "/index.html");
             }
-            //fs.writeFileSync('comic/'+(index+1).toString()+"/index.html", '<h2>'+val.title+'</h2>'+'<p>'+val.content+'</p>');
+            //fs.writeFileSync('comics/'+(index+1).toString()+"/index.html", '<h2>'+val.title+'</h2>'+'<p>'+val.content+'</p>');
             var hold = Object.assign({},data)
-            hold.title = comic[ct].title
-            hold.content = comic[ct].content
-            hold.date = comic[ct].date
-            hold.author = comic[ct].author
-            if(ct>0){
-
-            hold.previous = "<a class = 'smallish' href = '../"+(ct).toString()+"'><i class = 'fa fa-long-arrow-left' aria-hidden = 'true'></i> Previous</a>"
-          } else{
-            hold.previous = "<span class = 'gray smallish'>Previous</span>"
-          }
-            if(ct+2<=comic.length){
-              hold.next = "<a class = 'smallish pull-right' href = '../"+(ct+2).toString()+"'>Next <i class = 'fa fa-long-arrow-right' aria-hidden = 'true'></i></a>"
-            } else{
-              hold.next = "<span class = 'gray smallish pull-right'>Next</span>"
-            }
-            gulp.src('comic/template.pug')
+            hold.title = comics[ct].title
+            hold.content = comics[ct].content
+            hold.date = comics[ct].date
+            hold.author = comics[ct].author
+            hold.image = "/"+glob.sync("serverside/uploads/*")[ct]
+            console.log(glob.sync("serverside/uploads/*")[ct])
+            hold.logo = "<img src = '/comics/assets/logo.png' style = 'border:0px solid white;border-radius:5px'>"
+            hold.first = "<a href = '../1'><img src = '/comics/assets/double-arrow-backward.png'/></a>"
+            hold.previous = "<a href = '../"+(ct > 0 ? ct : 1).toString()+"'><img src = '/comics/assets/arrow-backward.png'/></a>"
+            hold.middle = "<a href = '/comics/all'><img src = '/comics/assets/middle.png'></a>"
+            hold.recent = "<a href = '../"+comics.length+"'><img src = '/comics/assets/double-arrow-forward.png'/></a>"
+            hold.next = "<a href = '../"+(ct+2 < comics.length ? ct+2 : comics.length).toString()+"'><img src = '/comics/assets/arrow-forward.png'/></a>"
+            gulp.src('comics/template.pug')
                 .pipe(pug({
                     "pretty": true,
                     "data": hold
                 })) // pip to pug plugin
                 .pipe(rename("index.html"))
-                .pipe(gulp.dest('comic/' + (ct + 1).toString()));
+                .pipe(gulp.dest('comics/' + (ct + 1).toString()));
             //Clean up and get better page later. Perhaps a pug thing?
             ct++;
             loop()
@@ -344,14 +344,14 @@ gulp.task('comic',function(){
     }
     loop()
     var hold = Object.assign({},data)
-    hold.list = comic
-    gulp.src('comic/all.pug')
+    hold.list = comics
+    gulp.src('comics/all.pug')
         .pipe(pug({
             pretty:true,
             data:hold
         }))
         .pipe(rename("index.html"))
-        .pipe(gulp.dest('comic/all/'))
+        .pipe(gulp.dest('comics/all/'))
 })
 gulp.task('help', function() {
     console.log("watch:")

@@ -3,7 +3,7 @@
 function publish(){
     $.ajax({
             "type": "POST",
-            "url": "http://f9a22ed5.ngrok.io",
+            "url": window.location.href,
             "crossDomain": true,
             "dataType": "json",
             "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val().replace(/(?:\r\n|\r|\n)/g, '<br />')})
@@ -13,12 +13,15 @@ function publish(){
         })
 
 }
-$(document).ready(function(){
-    $.get("http://d03fdcff.ngrok.io",function(data){
-    })
-})
 </script>
-<input type = "text" placeholder = "title" id = "title">
-<input type = "text" placeholder = "author" id = "author">
-<textarea placeholder = "content" id = "content"></textarea>
-<button onclick = "publish()">Publish</button>
+<form id        =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action    =  "/"
+     method    =  "post"
+>
+<input type = "text" name = "title" placeholder = "title" id = "title">
+<input type = "text" name = "author" placeholder = "author" id = "author">
+<textarea placeholder = "content" name = "content" id = "content"></textarea>
+<input type="file" name="file" />
+<input type="submit" value="Upload" name="submit">
+</form>
