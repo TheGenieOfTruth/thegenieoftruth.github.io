@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        != a(head,{"title":"TheGenieOfTruth - Blog | " + title})
+        link(rel="stylesheet" href="../app/css/base/stylesheet.css")
+    body
+        != a(header,{"name":logo,"sub":"A comic by Jorx"})
+        div(class="container line-height-1.2")
+            br
+            br
+            a(href="/comics") << Back to homepage
+            br
+            -
+                posts = list
+            each val, index in posts
+                h6
+                    a(href="../"+(index+1))=val.title
+                    p(class="small")!= val.date+"<br>By "+val.author
+        br
+        != a(footer)
+        != a(analytics)

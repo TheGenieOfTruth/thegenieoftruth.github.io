@@ -1,27 +1,59 @@
-<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script>
-function publish(){
-    $.ajax({
-            "type": "POST",
-            "url": window.location.href,
-            "crossDomain": true,
-            "dataType": "json",
-            "data": JSON.stringify({"title":$("#title").val(),"author":$("#author").val(),"content":$("#content").val().replace(/(?:\r\n|\r|\n)/g, '<br />')})
-        })
-        .done(function(data) {
-            alert("Blog post sent!")
-        })
-
+<link rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css', integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ', crossorigin='anonymous'/>
+<title>Comic Form</title>
+<style>
+body{
+    margin:10px;
+    padding:10px;
 }
-</script>
+</style>
 <form id        =  "uploadForm"
      enctype   =  "multipart/form-data"
      action    =  "/"
      method    =  "post"
 >
-<input type = "text" name = "title" placeholder = "title" id = "title">
-<input type = "text" name = "author" placeholder = "author" id = "author">
-<textarea placeholder = "content" name = "content" id = "content"></textarea>
-<input type="file" name="file" />
-<input type="submit" value="Upload" name="submit">
+<div class = "container">
+<h3 class = "display-3">Comic Form</h3>
+<br>
+<div class = "form-group row">
+<label class = "col-2 col-form-label">Title</label>
+<div class = "col-10">
+<input type = "text" name = "title" placeholder = "title" id = "title" class = "form-control">
+</div>
+</div>
+<br>
+<br>
+<div class = "form-group row">
+<label class = "col-2 col-form-label">Author</label>
+<div class = "col-10">
+<input type = "text" class = "form-control" name = "author" placeholder = "author" id = "author">
+</div>
+</div>
+<br>
+<br>
+<div class = "form-group row">
+<label class = "col-2 col-form-label">Content</label>
+<div class = "col-10">
+<textarea class = "form-control" placeholder = "content" name = "content" id = "content"></textarea>
+</div>
+</div>
+<br>
+<br>
+<div class = "form-group row">
+<label class = "col-2 col-form-label">Image</label>
+<div class = "col-10">
+<input class = "form-control-file" type="file" name="file" />
+</div>
+</div>
+<br>
+<br>
+<div class = "form-group row">
+<label class = "col-2 col-form-label">Alt text</label>
+<div class = "col-10">
+<input type = "text" name = "alt" placeholder = "alt text" class = "form-control">
+</div>
+</div>
+<br>
+<br>
+<input type="submit" value="Upload" name="submit" class = "btn btn-primary">
+</div>
 </form>

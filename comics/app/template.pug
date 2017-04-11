@@ -1,0 +1,24 @@
+doctype html
+html
+    head
+        != a(head,{"title":"TheGenieOfTruth - Blog | " + title})
+        link(rel="stylesheet" href="../app/css/base/stylesheet.css")
+    body
+        != a(header,{"name":"Comics","sub":"\"Kingdom run\""})
+        div(class="container line-height-1.2")
+            br
+            h2 #{title}
+            p.small By #{author} <br/> #{date}
+            img(src=image)
+            p #{content}
+            != first
+            != previous
+            != middle
+            != recent
+            != next
+            br
+            .text-center
+                a.smallish(href="../all/") All posts
+        br
+        != a(footer)
+        != a(analytics)
