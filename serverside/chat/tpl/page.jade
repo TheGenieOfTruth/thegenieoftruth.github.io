@@ -1,0 +1,605 @@
+doctype html
+html(xmlns='http://www.w3.org/1999/xhtml', xml:lang='en', lang='en')
+  head
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    title Language Arts: Section 25-4 | Schoology
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    link(rel='shortcut icon', href='/sites/all/themes/schoology_theme/favicon.ico', type='image/x-icon')
+    style(type='text/css', media='all').
+      @import "https://cdn3-8.cdn.schoology.com/assets/bundles/js/common/common-7a16a3aa03ced4626f08.css";
+    style(type='text/css', media='all').
+      @import "https://cdn3-4.cdn.schoology.com/assets/css/module_bundle_70c3c33b25ee20f4feb49917039c7349.min.css";
+    style(type='text/css', media='all').
+      @import "https://cdn3-3.cdn.schoology.com/assets/css/theme_bundle_4498bcb8cfc4b394e45d3bf9a0cb0a3f.min.css";
+    link(type='text/css', rel='stylesheet', media='all', href='https://cdn3-3.cdn.schoology.com/sites/all/themes/schoology_theme/school_themes/style.css.php?theme=549769763&updated=1462288337&7437')
+    link(rel='stylesheet', type='text/css', media='print', href='/sites/all/themes/schoology_theme/print.css')
+    //if lte IE 7
+      link(type='text/css', rel='stylesheet', media='all', href='/sites/all/themes/schoology_theme/fix-ie.css')
+    //if lt IE 9
+      script.
+        document.createElement('header');
+        document.createElement('nav');
+        document.createElement('section');
+        document.createElement('article');
+        document.createElement('aside');
+        document.createElement('footer');
+        document.createElement('hgroup');
+        document.createElement('figure');
+        document.createElement('figcaption');
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  body.sidebar-left.js.day-11.has-course-switcher.s-course-materials-has-add-content.has-right-col
+    #body
+      a.skip.visually-hidden(href='#main') Skip to Content
+      // Layout
+      //if lte IE 6
+        .ie6-message.header
+          span.message-icon
+          h3 Warning
+          p
+            | You are using Internet Explorer version 6.0 or lower.  Due to security issues and lack of support for Web Standards, it is highly recommended that you upgrade to a modern browser.
+          .browsers
+            p Download:
+            a(href='http://www.mozilla.com/firefox')
+              img(src='/sites/all/themes/schoology_theme/images/firefox.gif', alt='Download Firefox')
+            a(href='http://www.google.com/chrome')
+              img(src='/sites/all/themes/schoology_theme/images/chrome.gif', alt='Download Google Chrome')
+            a(href='http://www.microsoft.com/windows/internet-explorer/default.aspx')
+              img(src='/sites/all/themes/schoology_theme/images/ie.gif', alt='Download Internet Explorer')
+            a(href='http://www.apple.com/safari/')
+              img(src='/sites/all/themes/schoology_theme/images/safari.gif', alt='Download Safari')
+      #header(role='banner')
+        #header-inner
+          #nav(role='navigation')
+            ul#nav_left(role='menubar')
+              li#home
+                a(href='/home', role='menuitem')
+                  span.visually-hidden Schoology
+              li#search.search-break
+                .search-toggle(tabindex='0', role='button', aria-haspopup='true', aria-controls='navigation_search')
+                  span.visually-hidden Search
+                form#navigation_search(name='navigation_search', method='get', role='search')
+                  input.search-query(name='search_query', type='hidden')
+                  label.visually-hidden(for='search_box') Search Query
+                  input#search_box.searcher.form-text(name='search_box', type='text', autocomplete='off', placeholder='Search people, courses and groups')
+                  #nav-search
+                    a(role='button', href='#')
+                      span.visually-hidden Submit your search
+              li#primary-home
+                a(href='/home', role='menuitem')
+                  span Home
+              li#primary-courses.primary-activities
+                a.clickable(role='menuitem', aria-haspopup='true', aria-controls='course-menu-dropdown', href='#')
+                  | Courses
+                  span.dropdown
+                #course-menu-dropdown.activities-dropdown-wrapper.tpl-placeholder.s-course-course-dropdown(tpl-id='s_course_course_dropdown_1')
+              li#primary-groups.primary-activities
+                a.clickable(role='menuitem', aria-haspopup='true', aria-controls='groups-menu-dropdown', href='#')
+                  | Groups
+                  span.dropdown
+                #groups-menu-dropdown.activities-dropdown-wrapper.tpl-placeholder.s-group-group-dropdown(tpl-id='s_group_group_dropdown_2')
+              li#primary-library.primary-activities
+                a.clickable(role='menuitem', aria-haspopup='true', aria-controls='resources-menu-dropdown', href='#')
+                  | Resources
+                  span.dropdown
+                #resources-menu-dropdown.activities-dropdown-wrapper.no-ajax.item-list
+                  ul#primary-library-sub(role='menu')
+                    li#my-resources.list-item
+                      a(href='/resources', role='menuitem')
+                        span
+                        | Personal
+                    li#group-resources.list-item
+                      a(href='/resources/group', role='menuitem')
+                        span
+                        | Group
+                    li#my-apps.list-item
+                      a(href='/resources/apps', role='menuitem')
+                        span
+                        | Apps
+            ul.user-menu(role='menubar', tabindex='0')
+              li#private-messages
+                a.unread-messages.unread.nav-icon-button(href='#', role='button', aria-haspopup='true')
+                  img.icon-unread-messages(src='https://cdn3-2.cdn.schoology.com/sites/all/themes/schoology_theme/images/notification-icon-sprite.png', alt='Messages')
+                  span.notifier 1
+                #messages-menu-dropdown.message-wrapper.hide
+              li#primary-requests
+                a.unread-reqs.nav-icon-button(href='#', role='button', aria-haspopup='true')
+                  img.icon-unread-requests(src='https://cdn3-2.cdn.schoology.com/sites/all/themes/schoology_theme/images/notification-icon-sprite.png', alt='Requests')
+                #requests-menu-dropdown.request-wrapper.hide
+              li#primary-notifications
+                a.unread-notifications.unread.nav-icon-button(href='#', role='button', aria-haspopup='true')
+                  img.icon-unread-notifications(src='https://cdn3-2.cdn.schoology.com/sites/all/themes/schoology_theme/images/notification-icon-sprite.png', alt='Notifications')
+                  span.notifier 48
+                #notifications-menu-dropdown.notification-wrapper.hide
+              li#profile
+                a(href='/user/38813049', title='View user profile.') Luke Trenaman
+              li#primary-settings.menu-3
+                a.unfold(href='/settings', role='link', aria-haspopup='true', aria-controls='settings-menu-dropdown', title='Settings dropdown')
+                  span.visually-hidden Settings
+                  span.dropdown
+                ul#settings-menu-dropdown.subnav(role='list')
+                  li.school(role='listitem')
+                    .school-building-list
+                      .school-building
+                        a(href='/school/573541197')
+                          .profile-picture
+                            img.imagecache.imagecache-profile_tiny(src='https://cdn3-7.cdn.schoology.com/system/files/imagecache/profile_tiny/schoollogos/logo-573541197_57c43a9340047.jpg?1472477843', alt='Profile picture for Mason Middle School', title='')
+                          | Mason Middle School
+                  li(role='listitem')
+                    a(href='/settings', title='Notifications Settings') Notifications
+                  li.account-settings-link
+                    a(href='/settings/account') Account Settings
+                  li(role='listitem')
+                    a(href='/settings/recycle_bin')
+                      span
+                        | Recycle Bin
+                        span.visually-hidden Account
+                  li.logout(role='listitem')
+                    a.logout(href='/logout?ltoken=aece62435e347c68739a52982ae4104c') Logout
+              li#help-center-wrapper
+                span.infotip.hide-qmark(tipsygravity='ne', aria-label='Support')
+                  a.help-center.nav-icon-button(href='/support', role='button')
+                    img.icon-help(src='https://cdn3-2.cdn.schoology.com/sites/all/themes/schoology_theme/images/notification-icon-sprite.png', alt='Support')
+                  span.infotip-content.visually-hidden Support
+          // /#nav
+      // /#header
+      #wrapper
+        #container.clearfix
+          #sidebar-left.sidebar
+            #content-left-top
+              .profile-picture-wrapper
+                .profile-picture
+                  img.imagecache.imagecache-profile_reg(src='https://cdn3-3.cdn.schoology.com/system/files/imagecache/profile_reg/courselogos/logo-663523699_57b06ca6af3c4.jpeg?1471179942', alt='Profile picture for Language Arts: Section 25-4', title='')
+              #course-materials-dropdown.s-js-course-materials-dropdown.course-materials-dropdown
+                .dropdown-view.course-materials-folders
+                  .item-list
+                    ul
+                      li.first
+                        a.active(href='/course/663523699/materials?f=78962398')
+                          span.inline-icon.folder-icon.folder-color-orange.mini
+                            span.visually-hidden Folder.
+                          | Outsiders
+                      li
+                        a.active(href='/course/663523699/materials?f=59898943')
+                          span.inline-icon.folder-icon.folder-color-pink.mini
+                            span.visually-hidden Folder.
+                          | Vocabulary
+                      li
+                        a.active(href='/course/663523699/materials?f=67530526')
+                          span.inline-icon.folder-icon.folder-color-green.mini
+                            span.visually-hidden Folder.
+                          | Critical Reading
+                      li
+                        a.active(href='/course/663523699/materials?f=61394473')
+                          span.inline-icon.folder-icon.folder-color-black.mini
+                            span.visually-hidden Folder.
+                          | Grammar
+                      li
+                        a.active(href='/course/663523699/materials?f=73989114')
+                          span.inline-icon.folder-icon.folder-color-orange.mini
+                            span.visually-hidden Folder.
+                          | Hobbit - Journey
+                      li
+                        a.active(href='/course/663523699/materials?f=69821376')
+                          span.inline-icon.folder-icon.folder-color-blue.mini
+                            span.visually-hidden Folder.
+                          | Mystery Unit
+                      li
+                        a.active(href='/course/663523699/materials?f=67968410')
+                          span.inline-icon.folder-icon.folder-color-red.mini
+                            span.visually-hidden Folder.
+                          | Perspectives Unit
+                      li
+                        a.active(href='/course/663523699/materials?f=65105176')
+                          span.inline-icon.folder-icon.folder-color-purple.mini
+                            span.visually-hidden Folder.
+                          | Phineas Gage / Incredible Minds
+                      li
+                        a.active(href='/course/663523699/materials?f=61890817')
+                          span.inline-icon.folder-icon.folder-color-yellow.mini
+                            span.visually-hidden Folder.
+                          | Research Unit
+                      li
+                        a.active(href='/course/663523699/materials?f=55266361')
+                          span.inline-icon.folder-icon.folder-color-purple.mini
+                            span.visually-hidden Folder.
+                          | Voice Unit
+                      li
+                        a.active(href='/course/663523699/materials?f=52530755')
+                          span.inline-icon.folder-icon.folder-color-red.mini
+                            span.visually-hidden Folder.
+                          | Week 2
+                      li.last
+                        a.active(href='/course/663523699/materials?f=48858153')
+                          span.inline-icon.folder-icon.folder-color-green.mini
+                            span.visually-hidden Folder.
+                          | Week 1
+            #left-nav(role='navigation')
+              #menu-s-home(role='navigation')
+              #menu-s-main
+                ul.menu(role='menu')
+                  li.expanded.last.active-trail.odd(role='menuitem')
+                    .link-wrapper.menu-235.course-profile-left-menu.active-trail-dist-2
+                      a.menu-235.course-profile-left-menu(href='/course/663523699', role='menuitem')
+                        span
+                          span.visually-hidden Current Menu Item
+                        | Course Profile
+                    ul.menu(role='menu')
+                      li.leaf.first.active-trail.even(role='menuitem')
+                        .link-wrapper.menu-813.course-materials-left-menu.active-trail-dist-1
+                          a.menu-813.course-materials-left-menu.active(href='/course/663523699/materials', role='menuitem')
+                            span
+                              span.visually-hidden Current Menu Item
+                            .materials-dropdown-arrow.hidden(tabindex='0', aria-haspopup='true')
+                              span
+                              span.visually-hidden Materials Dropdown
+                            | Materials
+                      li.leaf.odd(role='menuitem')
+                        .link-wrapper.menu-1025.course-updates-left-menu
+                          a.menu-1025.course-updates-left-menu(href='/course/663523699/updates', role='menuitem')
+                            span
+                            | Updates 
+                            span#updates-count 9
+                      li.leaf.even(role='menuitem')
+                        .link-wrapper.menu-747.course-student-grade-left-menu
+                          a.menu-747.course-student-grade-left-menu(href='/course/663523699/student_grades', role='menuitem')
+                            span
+                            | Grades
+                      li.leaf.odd(role='menuitem')
+                        .link-wrapper.menu-3289.course-student-competency-left-menu
+                          a.menu-3289.course-student-competency-left-menu(href='/course/663523699/student_mastery', role='menuitem')
+                            span
+                            | Mastery
+                      li.leaf.last.even(role='menuitem')
+                        .link-wrapper.menu-821.course-member-left-menu
+                          a.menu-821.course-member-left-menu(href='/course/663523699/members', role='menuitem')
+                            span
+                            | Members
+            #content-left
+              #menu-s-apps
+                #menu-s-apps-list
+              .left-block-wrapper
+                h3.h3-med-flat Information
+                .left-block
+                  .course-info-wrapper
+                    p.course-info
+                    dl
+                      dt Grading periods
+                      dd 2016-2017 Semester 1, 2016-2017 Semester 2
+          // /#sidebar-left
+          #main-content-wrapper.clearfix
+            #center-wrapper
+              #center-inner.clearfix
+                #center-top
+                  h2.page-title
+                    a(href='/course/663523699') Language Arts: Section 25-4
+                  .content-top
+                    .content-top-wrapper
+                      p.school-name
+                        a(href='/school/573541197') Mason Middle School
+                      .realm-top-right
+                        .notification-settings-wrapper
+                          a.link-btn.notification-settings(href='/')
+                            span
+                            | Notifications
+                          .inline-popup-wrapper.notif-setting-dropdown
+                            span.arrow-top
+                            h3 Email Notification Settings:
+                            .inline-popup-ajax-content(src='/settings/notifications/course/663523699')
+                        #taught-courses-switcher
+                          a#edit-course-switcher-select-nid-button.ui-selectmenu.ui-widget.ui-state-default.ui-corner-all(href='#')
+                            img.edit-course-inline-image(src='/sites/all/themes/schoology_theme/images/icons_sprite_realm.png', alt='Section list')
+                            img.edit-course-inline-dropdown-arrow(src='/sites/all/themes/schoology_theme/images/btn-sprite.png', alt='Switch course. Dropdown')
+                            span.visually-hidden Switch to another course.
+                          .tpl-placeholder.s-course-course-switcher(tpl-id='s_course_course_switcher_0')
+                #content-wrapper
+                  #center
+                    #main
+                      #main-inner
+                        #course-profile-materials.s-js-course-materials-full.course-materials-full
+                          .materials-top
+                            #toolbar-options-wrapper.action-links-outer.s-js-options-action-links-outer
+                            .materials-filter-wrapper.s-js-materials-filter-wrapper
+                              img.materials-filter-arrow(src='/sites/all/themes/schoology_theme/images/arrow-down.png', alt='All Materials dropdown')
+                              .action-links-wrapper.action-links-wrapper-gearless.aligned-right
+                                .action-links-unfold(tabindex='0', role='button', href='#')
+                                  span.action-links-unfold-text All Materials
+                                ul.action-links
+                                  li.action-view-all.selected
+                                    a.s-js-material-filter-link.s-js-material-filter-all.active(href='/course/663523699/materials', data-filter='all') All Materials
+                                  li.action-view-assignments
+                                    a.s-js-material-filter-link.s-js-material-filter-assignments.active(href='/course/663523699/materials?list_filter=assignments', data-filter='assignments') Assignments
+                                  li.action-view-assessments
+                                    a.s-js-material-filter-link.s-js-material-filter-assessments.active(href='/course/663523699/materials?list_filter=assessments', data-filter='assessments') Tests/Quizzes
+                                  li.action-view-documents-links
+                                    a.s-js-material-filter-link.s-js-material-filter-documents-links.active(href='/course/663523699/materials?list_filter=documents_links', data-filter='documents_links') Links
+                                  li.action-view-pages
+                                    a.s-js-material-filter-link.s-js-material-filter-pages.active(href='/course/663523699/materials?list_filter=pages', data-filter='pages') Pages
+                          #course-profile-materials-folders.full-view.s-js-materials-body.s-js-full-view
+                            form#s-course-materials-folder-contents-form(role='form', action='/course/663523699/materials', accept-charset='UTF-8', method='post')
+                              div
+                                table#folder-contents-table(role='presentation')
+                                  tbody
+                                    tr#f-78962398.material-row-folder.dr.odd(display_weight='0')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-orange
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=78962398') Outsiders
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p
+                                                | How does one analyze relationships between multiple texts and/or between individual components within a text?
+                                    tr#n-1029941026.dr.type-document.even(display_weight='1')
+                                      td.folder-contents-cell
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.link-icon
+                                            span.visually-hidden Web Link
+                                          .item-info
+                                            .item-title
+                                            .item-body
+                                              .document-body-title
+                                                .attachments-link.clearfix
+                                                  a#document-1029941026.ext.gen-post-link(target='', href='/course/663523699/materials/link/view/1029941026', alt='AIR PRACTICE SITE', title='AIR PRACTICE SITE') AIR PRACTICE SITE
+                                            .item-subtitle
+                                    tr#f-59898943.material-row-folder.dr.odd(display_weight='2')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-pink
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=59898943') Vocabulary
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p Please visit this folder to complete Vocabulary Tasks throughout the year. 
+                                    tr#f-67530526.material-row-folder.dr.even(display_weight='3')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-green
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=67530526') Critical Reading
+                                    tr#f-61394473.material-row-folder.dr.odd(display_weight='4')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-black
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=61394473') Grammar
+                                    tr#f-73989114.material-row-folder.dr.even(display_weight='5')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-orange
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=73989114') Hobbit - Journey
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p Essential Questions:
+                                              p
+                                                | Skill - How do authors use symbols and the structure of the story to contribute to the meaning of a text?
+                                              p Content - What does it take to complete a journey?
+                                    tr#f-69821376.material-row-folder.dr.odd(display_weight='6')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-blue
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=69821376') Mystery Unit
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p
+                                                strong Essential Questions:
+                                              p
+                                                span(style='text-decoration: underline;') Skill
+                                              p 1. How do authors capture and maintain an audience's attention?
+                                              p 2. How do readers draw conclusions?
+                                              p
+                                                span(style='text-decoration: underline;') Content
+                                              p 1. How do we uncover truth?
+                                              p
+                                                span(style='text-decoration: underline;')  
+                                              p  
+                                    tr#f-67968410.material-row-folder.dr.even(display_weight='7')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-red
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=67968410') Perspectives Unit
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p Essential Questions:
+                                              p Skill: How do speakers engage in effective collegial disucssion?
+                                              p Content: What shapes our perspective?
+                                    tr#f-65105176.material-row-folder.dr.odd(display_weight='8')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-purple
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=65105176') Phineas Gage / Incredible Minds
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p
+                                                | Make sure when you make a copy of the documents in this folder, move them to your Phineas Gage folder in your Google Drive.
+                                    tr#f-61890817.material-row-folder.dr.even(display_weight='9')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-yellow
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=61890817') Research Unit
+                                    tr#f-55266361.material-row-folder.dr.odd(display_weight='10')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-purple
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=55266361') Voice Unit
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p Please use this folder to find materials associated with the Voice unit. 
+                                    tr#f-52530755.material-row-folder.dr.even(display_weight='11')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-red
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=52530755') Week 2
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p *Writing Territories Part I and II.   *Independent Reading information.
+                                              p  
+                                    tr#f-48858153.material-row-folder.dr.odd(display_weight='12')
+                                      td.folder-contents-cell
+                                        span.folder-expander.mini.inline-icon.expandable-icon.clickable(tabindex='0', role='button')
+                                          span.visually-hidden Expand folder.
+                                        .s-material-folder-row-wrapper
+                                          span.inline-icon.folder-icon.folder-color-green
+                                            span.visually-hidden Folder.
+                                          .materials-folder.item-info
+                                            .folder-title
+                                              a.active(href='/course/663523699/materials?f=48858153') Week 1
+                                            .s-js-folder-description.folder-description.description-clickable.s-rte
+                                              p
+                                                | In this folder you will find: Information about this class, the Student Information Google Form, and the Parent Information Google Form.
+                                            .folder-visibility
+                                              span.folder-subtitle-wrapper.avail-wrapper Available after 8/15/16 12:00am
+                                input#form-cKBl0Usg9Qbb40zELjDEspMGaze4bDjwo1CZqzQeyV4(type='hidden', name='form_build_id', value='form-cKBl0Usg9Qbb40zELjDEspMGaze4bDjwo1CZqzQeyV4')
+                                input#edit-s-course-materials-folder-contents-form-form-token(type='hidden', name='form_token', value='e155906a7dfd7cd4350755a35cb8c192')
+                                input#edit-s-course-materials-folder-contents-form(type='hidden', name='form_id', value='s_course_materials_folder_contents_form')
+                    #right-column(role='complementary')
+                      #right-column-inner
+                        #calendar-page-smartbox.hidden.no-access
+                          .popups-body-inner
+                            ul#calender-smartbox-tabs.filter-block
+                              li.filter-item.add-label.calendar-form-tab
+                                | Post: 
+                                span.form-required *
+                            #calendar-form-container.smart-box-mid
+                        #course-events.upcoming-events-wrapper
+                          #share-calendar-option-containter.hidden
+                            .share-calendar-option
+                              a.ical-popup(href='/calendar/feed/export/course/663523699') Export
+                          h3#event-selector
+                            span#event-upcoming.active.clickable Upcoming
+                            |  ⋅ 
+                            span#event-calendar.clickable.inline-icon.mini.event-icon(tabindex='0', role='button')
+                              span.visually-hidden Calendar
+                          img.more-loading(src='/sites/all/themes/schoology_theme/images/ajax-loader.gif', alt='Loading')
+                        #sgyReactRenders_comp_14919466286787
+                          script(type='text/javascript').
+                            (function(w, d){function f(){ReactDOM.render(React.createElement(sgyModules.Components.FileViewers.document.PdfTronWebViewer, {"height":0,"width":0,"options":{"l":"U2Nob29sb2d5LCBJbmMoc2Nob29sb2d5LmNvbSk6T0VNOlNjaG9vbG9neSBXZWIgQXBwbGljYXRpb246OkI6QU1TKDIwMTcwNTEzKTozMzc3RTIxMDFGNTcxQUQwNDMzMzUyNzg2MDYxMUZCNTg3NzgwQTdCRjU3MjREMTlBNTM0MjBFRTdBRjIzMUY1Qzc=","sEnableOnMobile":false,"path":"\\/assets\/bundles\/js\/pdftron-webviewer\/f17c5fbc\/","subzero":true,"config":"https:\/\/cdn3-7.cdn.schoology.com\/assets\/bundles\/js\/react-common\/pdftron-config-7e52736269cc9cc8a27a.js"}}), d.getElementById("sgyReactRenders_comp_14919466286787"));}(w['sgyReactRenders'] = w['sgyReactRenders'] || {})["sgyReactRenders_comp_14919466286787"] = f;})(window, document)
+            // /#center-wrapper
+          // /#main-content-wrapper
+        // /#container
+        #footer.clearfix(role='contentinfo')
+          #footer-inner
+            #copyright  · Schoology © 2017
+            #footer-links
+              a(href='http://help.schoology.com', target='_blank') Support
+              |  ·
+              a(href='https://www.schoology.com/blog', target='_blank') Schoology Blog
+              |  ·
+              a(href='https://www.schoology.com/privacy', target='_blank') Privacy Policy
+              |  ·
+              a(href='https://www.schoology.com/terms-of-use', target='_blank') Terms of Use
+            #user-language-selector
+              .current-language.clickable(aria-haspopup='true', role='menu', tabindex='0', aria-label='Language dropdown', aria-controls='s-common-language-selector-form')
+                | English
+                span.visually-hidden Language dropdown
+              form#s-common-language-selector-form(role='form', action='/course/663523699/materials', accept-charset='UTF-8', method='post')
+                div
+                  .s-link-wrapper
+                    html
+                      head
+                        title Real time web chat
+                      body
+                        #content(style='width: 500px; height: 300px; margin: 0 0 20px 0; border: solid 1px #999; overflow-y: scroll')
+                        .controls
+                          | Name: 
+                          input#name(style='width:350px')
+                          br
+                          input#field(style='width:350px')
+                          input#send(type='button', value='send')
+                        script(src='/socket.io/socket.io.js')
+                        script(src='/chat.js')
+                    span.submit-span-wrapper
+                      input#edit-en-GB.form-submit(type='submit', name='op', value='English (UK)', role='menuitem')
+                  .s-link-wrapper
+                    span.submit-span-wrapper
+                      input#edit-fr-corp.form-submit(type='submit', name='op', value='French - Corporate', role='menuitem')
+                  .s-link-wrapper
+                    span.submit-span-wrapper
+                      input#edit-ja.form-submit(type='submit', name='op', value='Japanese', role='menuitem')
+                  .s-link-wrapper
+                    span.submit-span-wrapper
+                      input#edit-ms.form-submit(type='submit', name='op', value='Malay', role='menuitem')
+                  .s-link-wrapper
+                    span.submit-span-wrapper
+                      input#edit-pt.form-submit(type='submit', name='op', value='Portuguese', role='menuitem')
+                  .s-link-wrapper
+                    span.submit-span-wrapper
+                      input#edit-es.form-submit(type='submit', name='op', value='Spanish', role='menuitem')
+                  input#form-f-9yZ6l9OPRSt2nGLKH5sYeAJxF-Svy73HD8dQoxV5I(type='hidden', name='form_build_id', value='form-f-9yZ6l9OPRSt2nGLKH5sYeAJxF-Svy73HD8dQoxV5I')
+                  input#edit-s-common-language-selector-form-form-token(type='hidden', name='form_token', value='6ab147195d301cc2156e69a32e812fa8')
+                  input#edit-s-common-language-selector-form(type='hidden', name='form_id', value='s_common_language_selector_form')
+        // /#footer
+        span.clear.clearfix.bottom-span
+      // /#wrapper
+      // /layout
+      #bottom-bar
+        #bottom-bar-inner
+      script(type='text/javascript', src='https://cdn3-4.cdn.schoology.com/assets/bundles/js/common/common-7a16a3aa03ced4626f08.js')
+      script(type='text/javascript', src='https://cdn3-5.cdn.schoology.com/assets/js/module_bundle_3f98c3ae5ddf26a9ae0eec11f638a8fa.min.js')
+      script(type='text/javascript', src='https://cdn3-4.cdn.schoology.com/assets/bundles/js/react-common/react-common-7e52736269cc9cc8a27a.js')
+      script(type='text/javascript', src='https://cdn3-1.cdn.schoology.com/assets/js/module_bundle_9a617f1fdd32fc8ddcbeae5a409ee6e8.min.js')
+      script(type='text/javascript', src='https://cdn3-1.cdn.schoology.com/assets/js/theme_bundle_e5e98743a2cb8a6447feff24eeca8599.min.js')
+      script(type='text/javascript', src='https://cdn3-7.cdn.schoology.com/assets/js/tiny_mce_bundle_3dc5f09ba66228a6e26c2e24cff08df1.min.js')
+      script(type='text/javascript').
+        <!--//--><![CDATA[//><!--
+        jQuery.extend(Drupal.settings, {"basePath":"\\/","s_common":{"csrf_key":"whRlVdK8L1LG3-3Dh-nXI-6Z3VubYS3xZfcoIpzWnQM","csrf_token":"61acdb5ff1ebae70a3aa433f6e6ae897","logout_token":"aece62435e347c68739a52982ae4104c","default_realm_profiles":{"group":"sites\/all\/themes\/schoology_theme\/images\/group-default.gif","course":"sites\/all\/themes\/schoology_theme\/images\/course-default.gif","school":"sites\/all\/themes\/schoology_theme\/images\/school-default.gif"},"date_format_language":"","language":"","timezone":"-14400","default_domain":"app.schoology.com","user":{"uid":"38813049","school_nid":"549769763"}},"s_course_topic":{"placeholder_template":"\u003Clabel class=\u0022mceDraggableWrapper\u0022 id=\u0022!wrapperId\u0022\u003E\u003Cspan class=\u0022mceNonEditable mce-topic-item #!id\u0022\u003E!title\u003Cspan class=\u0022item-delete\u0022 id=\u0022!wrapperId-deletebtn\u0022\u003Ex\u003C\/span\u003E\u003C\/span\u003E\u003C\/label\u003E"},"extlink":{"extTarget":"_blank","extClass":"ext","extSubdomains":1,"extExclude":"^https?:\/\/[^\/]+\\.schoology\\.com\/i","extInclude":"","extAlert":"_blank","extAlertText":"This link will take you to an external web site. We are not responsible for their content.","mailtoClass":"mailto"},"popups":{"links":{".s-js-locked-resource-link-diff":{"extraClass":"popups-extra-large linked-content-diff-view"},"div.user-invite-colleagues a.user-invite-colleagues":{"extraClass":"popup-invite popups-large"},".materials-hide-toggle":{"extraClass":"popups-small"},".s-course-save-all-to-resources":{"extraClass":"popups-small","hijackDestination":true,"updateSource":"final","doneTest":"course\/.+?\/materials","updateMethod":"reload"},".app-uninstall":{"extraClass":"popups-small","targetSelectors":["#menu-s-apps-list"]},"#folder-completion-status":{"extraClass":"popups-large no-buttons popups-student-progress"},".add-item":{"extraClass":"popups-large","targetSelectors":["#s-course-materials-folder-contents-form"]},".add-xlarge-item":{"extraClass":"popups-extra-large","targetSelectors":["#s-course-materials-folder-contents-form"]},".add-item-attachment":{"extraClass":"popups-small popups-add-document","targetSelectors":["#s-course-materials-folder-contents-form"]},".add-item-existing":{"extraClass":"popups-large popups-add-existing","targetSelectors":["#s-course-materials-folder-contents-form"]},".import-library":{"extraClass":"popups-large popups-import-library popups-library","targetSelectors":["#s-course-materials-folder-contents-form"]},".action-edit-availability a":{"extraClass":"popups-small popups-action-item popups-availability","targetSelectors":["#s-course-materials-folder-contents-form"]},".action-completion a":{"extraClass":"popups-large popups-action-item student-completion-popup"},".edit-discussion-tags":{"extraClass":"popups-large"},"li.options-completion a":{"extraClass":"popups-large popups-action-item student-completion-popup"},".ical-popup":{"extraClass":"ical-popup popups-medium"},".ical-popup-import":{"extraClass":"ical-popup popups-medium","updateMethod":"reload","updateSource":"initial"},"#help-center-wrapper .help-center":{"extraClass":"popups-large support-page-popup"}},"originalPath":"course\/663523699\/materials","defaultTargetSelector":"div#content-wrapper","modulePath":"sites\/all\/modules\/popups","autoCloseFinalMessage":1},"s_user_ui_settings":[],"s_realm_info":{"realm":"course","realm_id":663523699},"theme_js":{"s_course_course_switcher_0":{"template":"s_course_course_switcher","module":[],"args":[]},"s_course_course_dropdown_1":{"template":"s_course_course_dropdown","module":[],"args":[]},"s_group_group_dropdown_2":{"template":"s_group_group_dropdown","module":[],"args":[]}},"s_course":{"display_mode":2,"display_mode_without_index":2},"s_accessibility":{"role_main":["content-wrapper","content-wrapper","main"]},"s_app":{"cookie_preload_urls":[]},"s_event_fcalendar_smartbox":{"externals_loaded":false},"s_tinymce":{"language":"en","cache":"7437","s_content_menu_items":[{"id":"s_content_resources_app_230009898","title":"YouTube","cmd":"sContentResourcesInsertPopup","icon_src":"https:\/\/cdn3-4.cdn.schoology.com\/system\/files\/imagecache\/profile_tiny\/applogos\/logo-230009898_54cba5ca183de.png?1422632394","value":{"nid":"230009898","type":"app"},"class":"s-js-resources-insert-item s-js-resources-insert-apps"},{"id":"s_content_resources_app_215015860","title":"Microsoft OneDrive","cmd":"sContentResourcesInsertPopup","icon_src":"https:\/\/cdn3-1.cdn.schoology.com\/system\/files\/imagecache\/profile_tiny\/applogos\/logo-215015860_54a335e5c2f65.png?1419982309","value":{"nid":"215015860","type":"app"},"class":"s-js-resources-insert-item s-js-resources-insert-apps"},{"id":"s_content_resources_app_67933789","title":"Khan Academy","cmd":"sContentResourcesInsertPopup","icon_src":"https:\/\/cdn3-5.cdn.schoology.com\/system\/files\/imagecache\/profile_tiny\/applogos\/logo-67933789.png?1381417262","value":{"nid":"67933789","type":"app"},"class":"s-js-resources-insert-item s-js-resources-insert-apps"},{"id":"s_content_resources_app_67923511","title":"Google Drive","cmd":"sContentResourcesInsertPopup","icon_src":"https:\/\/cdn3-3.cdn.schoology.com\/system\/files\/imagecache\/profile_tiny\/applogos\/logo-67923511.png?1381416833","value":{"nid":"67923511","type":"app"},"class":"s-js-resources-insert-item s-js-resources-insert-apps"}],"editors":[]},"aggregated_css":["\/sites\/all\/modules\/schoology_core\/s_extlink\/s_extlink.css?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course.css?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course_materials.css?7437","\/sites\/all\/modules\/schoology_core\/s_feeds\/s_feeds.css?7437","\/sites\/all\/modules\/schoology_core\/s_discussion\/s_discussion.css?7437","\/sites\/all\/modules\/schoology_core\/s_app\/s_app.css?7437","\/sites\/all\/modules\/schoology_core\/s_enrollment\/s_enrollment.css?7437","\/sites\/all\/modules\/schoology_core\/s_attachment\/s_attachment_form.css?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course_materials_folders.css?7437","\/sites\/all\/modules\/schoology_core\/s_attachment\/s_attachments.css?7437","\/sites\/all\/modules\/schoology_core\/s_edge\/s_edge.css?7437","\/sites\/all\/themes\/schoology_theme\/s_calendar.css?7437","\/sites\/all\/modules\/schoology_core\/s_event\/fullcalendar\/fullcalendar.css?7437","\/sites\/all\/modules\/schoology_core\/s_event\/s_fcalendar.css?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/mathquill.css?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/s_tinymce_resources_insert.css?7437","\/sites\/all\/themes\/schoology_theme\/style.css?7437"]});
+        //--><!]]>
+      script(type='text/javascript').
+        <!--//--><![CDATA[//><!--
+        window._initPendo({"gender":"","accountCreationDate":"2016-08-01 13:48:54","id":"65b9f6d3d742777948cc92bfb6069b50","isFaculty":false,"isParent":false,"isSchoolAdmin":false,"isTeacher":false,"isAdvisor":false,"isStudent":true,"customRole":"student","numCoursesEnrolled":11,"numCoursesTaught":0,"numSchoolGroupsAsMember":2,"numSchoolGroupsAsOwner":0,"numPublicGroupsAsMember":0}, {"schoolType":"k-12","customizedUI":true,"country":"US","state":"OH","zip":"45040","featurePackage":"enterprise","sgyId":132780,"organizationNid":"549769763","buildingNid":"549769763","id":132780}, "9d267eb0-c5a6-41fb-786d-8ec2c4e691cc")
+        //--><!]]>
+      script(type='text/javascript').
+        <!--//--><![CDATA[//><!--
+        (function(){var r = window['sgyReactRenders'];if (!r) return;for(var k in r) r.hasOwnProperty(k) && r[k]();window['sgyReactRenders'] = null;})()
+        //--><!]]>
+      script(type='text/javascript').
+        <!--//--><![CDATA[//><!--
+        jQuery.extend(Drupal.settings, {"aggregated_js":["\\/assets\/bundles\/js\/common\/common-7a16a3aa03ced4626f08.js?7437","\/sites\/all\/misc\/pendo\/pendo.js?7437","\/sites\/all\/modules\/schoology_core\/s_extlink\/s_extlink.js?7437","\/sites\/all\/modules\/popups\/popups.js?7437","\/sites\/all\/themes\/schoology_theme\/popups-skin.js?7437","\/sites\/all\/modules\/schoology_core\/s_update\/s_update.js?7437","\/sites\/all\/modules\/schoology_core\/s_edge\/s_edge_more.js?7437","\/sites\/all\/modules\/schoology_core\/s_user\/s_user.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course_switcher.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course_materials_folders.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_course.js?7437","\/sites\/all\/modules\/schoology_core\/s_app\/s_app_launcher.js?7437","\/sites\/all\/modules\/schoology_core\/s_app\/s_app_menu.js?7437","\/sites\/all\/modules\/schoology_core\/s_common\/s_common_iframe_use_relative_url.js?7437","\/sites\/all\/modules\/schoology_core\/s_attachment\/s_attachment.js?7437","\/sites\/all\/modules\/schoology_core\/s_event\/fullcalendar\/fullcalendar.js?7437","\/sites\/all\/modules\/schoology_core\/s_event\/s_fcalendar.js?7437","\/sites\/all\/themes\/schoology_theme\/calendar_view.js?7437","\/sites\/all\/modules\/schoology_core\/s_event\/s_event_upcoming.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/mathquill.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_tinymce_mathquill_insert.js?7437","\/sites\/all\/misc\/ajaxfileupload.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_ajaxfileupload\/js\/s_ajaxfileupload.class.js?7437","\/assets\/bundles\/js\/react-common\/react-common-7e52736269cc9cc8a27a.js?7437","\/sites\/all\/modules\/ajax\/jquery\/jquery.a_form.packed.js?7437","\/sites\/all\/modules\/ajax\/ajax.js?7437","\/sites\/all\/themes\/schoology_theme\/theme.js?7437","\/sites\/all\/modules\/schoology_core\/s_update\/s_update_ajax_post.js?7437","\/sites\/all\/modules\/schoology_core\/s_comment\/s_comment_ajax_post.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_ng\/templates\/s_course_course_switcher.tpl.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_ng\/s_course_ng_controller.js?7437","\/sites\/all\/modules\/schoology_core\/s_course\/s_ng\/templates\/s_course_course_dropdown.tpl.js?7437","\/sites\/all\/modules\/schoology_core\/s_group\/s_ng\/templates\/s_group_group_dropdown.tpl.js?7437","\/sites\/all\/modules\/schoology_core\/s_group\/s_ng\/s_group_ng_controller.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/tiny_mce_constants.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/tiny_mce_src.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/langs\/en.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/themes\/advanced\/editor_template_src.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/themes\/advanced\/langs\/en.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/plugins\/spellchecker\/editor_plugin.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/plugins\/table\/editor_plugin.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/plugins\/media\/editor_plugin_src.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/plugins\/paste\/editor_plugin_src.js?7437","\/sites\/all\/libraries\/tinymce\/jscripts\/tiny_mce\/\/plugins\/tiny_mce_wiris\/editor_plugin_src.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_tinymce.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_image_hover\/editor_plugin_src.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_content\/editor_plugin_src.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_cluetip\/editor_plugin_src.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_dropmenu\/editor_plugin_src.js?7437","\/sites\/all\/modules\/schoology_core\/s_media\/s_tinymce\/js\/s_table\/editor_plugin_src.js?7437"]});
+        //--><!]]>
+      // Piwik
+      script(type='text/javascript').
+        sBrowserInfoSetCookie();
+      // End Piwik Tag
+      iframe(style='display:none', src='//livestaticassets.schoology.com/session-tracker.html?id=38813049&rand=5527660658419564545')
