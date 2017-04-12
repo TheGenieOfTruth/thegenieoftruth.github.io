@@ -1,0 +1,21 @@
+<script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<button onclick = 'document.write(CryptoJS.AES.encrypt(prompt("message"), prompt("passphrase")));'>Encrypt data?</button>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCaiN7-xIjwP4Uuu3r7-iia_WVXmZNkfic",
+    authDomain: "pass-82a96.firebaseapp.com",
+    databaseURL: "https://pass-82a96.firebaseio.com",
+    projectId: "pass-82a96",
+    storageBucket: "pass-82a96.appspot.com",
+    messagingSenderId: "197734439785"
+  };
+  firebase.initializeApp(config);
+ firebase.database().ref('/').once('value').then(function(snapshot) {
+ var decrypted = CryptoJS.AES.decrypt(snapshot.val(), prompt("Wat is the passphrase?"))
+	document.write(decrypted + "<br>")
+  document.write(decrypted.toString(CryptoJS.enc.Utf8))
+  // ...
+});
+</script>
