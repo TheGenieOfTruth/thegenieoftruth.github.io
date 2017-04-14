@@ -1,0 +1,6 @@
+{
+	"modules":["header","navbar","misc","footer","mobile"],
+	"variables":{
+		"head-font":"Comic Sans MS"
+	}
+}

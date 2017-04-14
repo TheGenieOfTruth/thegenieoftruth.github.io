@@ -1,4 +1,5 @@
 // styles.scss
+//*:focus {outline:none !important} Uncomment to kill accessibility
 .testing {
   width: percentage(5/7);
 }
@@ -54,11 +55,12 @@ body{
   transition: 0.1s all;
 }
 .green-wrap a{
-  color:darken(#16a085,15%);
+  color:darken(#27ae60,15%);
   transition:0.1s all;
+  text-decoration:none;
 }
 .green-wrap a:hover{
-  color:darken(#16a085,10%)
+  color:darken(#27ae60,10%);
 }
 .green-wrap button:hover{
   background:darken(#27ae60,10%);
@@ -138,6 +140,12 @@ canvas{
 	height:100vh;
 	width:100vw;
 }
+#head-gradient {
+    display: flex;
+    /* flex-direction: column;*/
+    align-items: center; 
+    justify-content:center;    /* justify-content: center;*/
+}
 .title-container{
-	margin-top:10vh
+  margin-bottom:10vh;
 }

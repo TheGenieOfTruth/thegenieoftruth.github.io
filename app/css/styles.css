@@ -52,11 +52,12 @@ body {
   transition: 0.1s all; }
 
 .green-wrap a {
-  color: #0d5d4d;
-  transition: 0.1s all; }
+  color: #19703e;
+  transition: 0.1s all;
+  text-decoration: none; }
 
 .green-wrap a:hover {
-  color: #107360; }
+  color: #1e8449; }
 
 .green-wrap button:hover {
   background: #1e8449; }
@@ -125,5 +126,12 @@ canvas {
   height: 100vh;
   width: 100vw; }
 
+#head-gradient {
+  display: flex;
+  /* flex-direction: column;*/
+  align-items: center;
+  justify-content: center;
+  /* justify-content: center;*/ }
+
 .title-container {
-  margin-top: 10vh; }
+  margin-bottom: 10vh; }

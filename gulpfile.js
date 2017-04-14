@@ -104,6 +104,17 @@ gulp.task('browserSync', function() {
     });
 });
 gulp.task('sass', function() {
+    var data = JSON.parse(fs.readFileSync(cwd+'app/scss/base/config.json', 'utf8'));
+    var write = ""
+    for(var i=0;i<data.modules.length;i++){
+        write += "@import '" + data.modules[i] + "';\n"
+    }
+    console.log(data)
+    console.log(data.modules)
+    console.log(write)
+    fs.writeFileSync(cwd+'app/scss/base/stylesheet.scss',
+        fs.readFileSync('base/scss/stylesheet.scss')+"\n"+write
+        , 'utf8');
     return gulp.src(cwd + 'app/scss/**/*.scss')
         .pipe(sass()) // Using gulp-sass
         .pipe(gulp.dest(cwd + 'app/css'));
@@ -207,7 +218,7 @@ gulp.task('default', ['beautify-root-pug','blog','comics'], function(callback) {
     loop()
 });
 gulp.task('copy-base', function() {
-    return gulp.src("base/scss/*.scss")
+    return gulp.src("base/scss/*")
         .pipe(gulp.dest(cwd + "app/scss/base"));
 })
 gulp.task('copy-js', function() {
