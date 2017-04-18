@@ -47,14 +47,7 @@ function iconF() {
 
 function i1() {
     $(".icon-1").unbind('click').click(function() {
-        $(`
-        <div class = "group">
-        <br>
-		<div class = "icon-group">
-			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%
-You realize that this option was probably an option ` + Math.random() + `</textarea>
-		</div>
-		</div>
+        $(`<div class = "group"><br><div class = "icon-group"><div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%% \nYou realize that this option was probably an option ` + Math.random()+`</textarea></div></div>
 	`).insertAfter($(this).parent().parent())
         iconF()
     })
@@ -62,14 +55,7 @@ You realize that this option was probably an option ` + Math.random() + `</texta
 
 function i2() {
     $(".icon-2").unbind('click').click(function() {
-        $(`
-        <div class = "group">
-        <br>
-		<div class = "icon-group">
-			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%
-You realize that this option was probably an option ` + Math.random() + `</textarea>
-		</div>
-		</div>
+        $(`<div class = "group"><br><div class = "icon-group"><div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%% \nYou realize that this option was probably an option ` + Math.random()+`</textarea></div></div>
 	`).insertAfter($(this).parent().parent().parent())
         iconF()
     })

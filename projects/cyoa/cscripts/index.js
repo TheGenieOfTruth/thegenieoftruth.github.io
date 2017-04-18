@@ -20,14 +20,14 @@ function iconF() {
 
 function i1() {
 	$(".icon-1").unbind('click').click(function () {
-		$("\n        <div class = \"group\">\n        <br>\n\t\t<div class = \"icon-group\">\n\t\t\t<div contenteditable = \"plaintext-only\" class = \"form-control\">%%opt This is an option%%\nYou realize that this option was probably an option " + Math.random() + "</textarea>\n\t\t</div>\n\t\t</div>\n\t").insertAfter($(this).parent().parent());
+		$("<div class = \"group\"><br><div class = \"icon-group\"><div contenteditable = \"plaintext-only\" class = \"form-control\">%%opt This is an option%% \nYou realize that this option was probably an option " + Math.random() + "</textarea></div></div>\n\t").insertAfter($(this).parent().parent());
 		iconF();
 	});
 }
 
 function i2() {
 	$(".icon-2").unbind('click').click(function () {
-		$("\n        <div class = \"group\">\n        <br>\n\t\t<div class = \"icon-group\">\n\t\t\t<div contenteditable = \"plaintext-only\" class = \"form-control\">%%opt This is an option%%\nYou realize that this option was probably an option " + Math.random() + "</textarea>\n\t\t</div>\n\t\t</div>\n\t").insertAfter($(this).parent().parent().parent());
+		$("<div class = \"group\"><br><div class = \"icon-group\"><div contenteditable = \"plaintext-only\" class = \"form-control\">%%opt This is an option%% \nYou realize that this option was probably an option " + Math.random() + "</textarea></div></div>\n\t").insertAfter($(this).parent().parent().parent());
 		iconF();
 	});
 }
