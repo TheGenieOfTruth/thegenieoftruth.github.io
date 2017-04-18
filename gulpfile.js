@@ -334,6 +334,7 @@ gulp.task('comics',function(){
             hold.date = comics[ct].date
             hold.author = comics[ct].author
             hold.image = "/"+glob.sync("serverside/uploads/*")[ct]
+            hold.alt = comics[ct].alt
             console.log(glob.sync("serverside/uploads/*")[ct])
             hold.first = "<a href = '../1'><img src = '/comics/assets/double-arrow-backward.png'/></a>"
             hold.previous = "<a href = '../"+(ct > 0 ? ct : 1).toString()+"'><img src = '/comics/assets/arrow-backward.png'/></a>"

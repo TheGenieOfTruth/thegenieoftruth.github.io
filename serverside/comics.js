@@ -59,6 +59,7 @@ app.post('/', function(req, res) {
         "title":req.body.title,
         "content":req.body.content,
         "author":req.body.author,
+        "alt":req.body.alt,
         "date":timeStamp()
     })
     console.log(req.body)

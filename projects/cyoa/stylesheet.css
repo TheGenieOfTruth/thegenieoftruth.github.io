@@ -1,0 +1,64 @@
+#content{
+	margin:0px 20px;
+}
+textarea{resize:none;border-width:0px;}
+.icon-group, .icon-group-start, .ig{
+	position:relative;
+}
+.group{
+	margin-left:20px;
+}
+.menu{
+	float:right;
+	position:absolute;
+	right:0;
+	z-index:1;
+	height:30px;
+}
+.menu .icon-1,.menu .icon-2,.menu .icon-3,.menu .icon-4,.menu .icon-5{
+	top:0;
+	transition:all 0.2s ease-in-out;
+	border-bottom:2px;
+	cursor:pointer;
+	position:relative;
+	opacity:0.3;
+	justify-content:center;
+	align-items:center;
+	display:inline-flex;
+	-webkit-backface-visibility: hidden;
+	padding:5px 20px;
+}
+.menu .icon-1:hover, .menu .icon-2:hover, .menu .icon-3:hover, .menu .icon-4:hover, .menu .icon-5:hover{
+	top:2px;
+	opacity:0.7;
+	box-shadow:none;
+}
+.menu .icon-1:active, .menu .icon-2:active, .menu .icon-3:active, .menu .icon-4:active, .menu .icon-5:active{
+	opacity:0.9;
+}
+.menu .icon-1{
+	border-top-right-radius: 5px;
+	box-shadow: 0 2px 0px 0px #2980b9;
+	background:#3498db;
+	color:#ecf0f1;
+}
+.menu .icon-2{
+	box-shadow: 0 2px 0px 0px #27ae60;
+	background:#2ecc71;
+	color:#ecf0f1;
+}
+.menu .icon-3{
+	box-shadow: 0 2px 0px 0px #c0392b;
+	background:#e74c3c;
+	color:#ecf0f1;
+}
+.menu .icon-4{
+	box-shadow: 0 2px 0px 0px #f39c12;
+	background:#f1c40f;
+	color:#ecf0f1;
+}
+.menu .icon-5{
+	box-shadow: 0 2px 0px 0px #c0392b;
+	background:#e74c3c;
+	color:#ecf0f1;
+}
