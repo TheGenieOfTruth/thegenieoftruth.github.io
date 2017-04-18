@@ -1,4 +1,3 @@
-console.log("ay")
 var resize = require("./misc/autoresize")
 var clip = require("./misc/clip")
 function grp() {
@@ -52,7 +51,7 @@ function i1() {
         <div class = "group">
         <br>
 		<div class = "icon-group">
-			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%<br>
+			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%
 You realize that this option was probably an option ` + Math.random() + `</textarea>
 		</div>
 		</div>
@@ -67,7 +66,7 @@ function i2() {
         <div class = "group">
         <br>
 		<div class = "icon-group">
-			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%<br>
+			<div contenteditable = "plaintext-only" class = "form-control">%%opt This is an option%%
 You realize that this option was probably an option ` + Math.random() + `</textarea>
 		</div>
 		</div>
@@ -90,11 +89,43 @@ function i4() {
 	iconF()
 	})
 }
+
 $("#export").click(function(){
-	var data = {}
-	data = JSON.stringify(data)
+	function explore(elem,map){
+		elem.children(".group").each(function(index,value){
+			var clone = jQuery.extend([], map);
+			clone[clone.length] = index
+			var txt = {"text":$(value).children().children(".form-control").html(),"link":[]}
+			var x = ""
+			for(i=0;i<clone.length;i++){
+				x += ".link."+clone[i]
+			}
+			if(x===""){
+				obj = txt
+			} else {
+			x = x.substring(1,x.length)
+			set(x,txt)
+		}
+			explore($(value),clone)
+		})
+
+	}
+	function set(path, value) {
+    var schema = obj;  // a moving reference to internal objects within obj
+    var pList = path.split('.');
+    var len = pList.length;
+    for(var i = 0; i < len-1; i++) {
+        var elem = pList[i];
+        if( !schema[elem] ) schema[elem] = {}
+        schema = schema[elem];
+    }
+
+    schema[pList[len-1]] = value;
+}
+	var obj = {};
+	explore($("#content"),[])
+	obj = JSON.stringify(obj.link["0"])
 	$('#clip').modal()
-	$("#ct").html(data)
-	clip(data)
+	clip(obj)
 })
 iconF()
