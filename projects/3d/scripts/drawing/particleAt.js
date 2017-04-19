@@ -19,8 +19,7 @@ module.exports = new function(){
 	this.loop = function(scene){
 		this.particles.forEach(function(particle){
 		particle.material.opacity -= 0.01
-		move(particle).randomly([[-0.1,0.1],[0,0],[-0.1,0.1]])
-		move(particle).gravity(0.01)
+		move(particle).randomly([[-0.1,0.1],[0,0],[-0.1,0.1]]).gravity(0.01)
 		if(particle.material.opacity <= 0){
 			scene.remove(particle)
 			a.particles.splice(a.particles.indexOf(particle),1)
