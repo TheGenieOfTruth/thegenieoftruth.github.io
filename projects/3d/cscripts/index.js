@@ -18,7 +18,7 @@ document.body.appendChild(document.createElement("br"));
 var camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 var sun = new THREE.AmbientLight(0xbbbbbb, 1);
-var pointLight = new THREE.PointLight(0xffffff, 0.4);
+var pointLight = new THREE.PointLight(0xffffff, 1);
 var geometry = new THREE.CubeGeometry(1, 1, 1);
 var material = new THREE.MeshStandardMaterial({
     color: 0x2ecc71
@@ -43,7 +43,7 @@ material = new THREE.MeshStandardMaterial({
 camera.position.z = 8.5;
 camera.position.y = 2;
 //Collision test cube
-geometry = new THREE.CubeGeometry(3, 3, 3);
+geometry = new THREE.CubeGeometry(2, 2, 2);
 var oC = new THREE.Mesh(geometry, material);
 scene.add(oC);
 
@@ -185,16 +185,14 @@ function render() {
     debug("Cube", JSON.stringify(cube.geometry.parameters));
     debug("Obs", JSON.stringify(oC.geometry.parameters));
     debug("z", cube.position.z);
-    debug("x", cube.position.x);
     debug("y", cube.position.y);
     debug("zvel", cube.zvel);
     debug("xvel", cube.xvel);
     debug("yvel", cube.yvel);
-    debug("Collision", collide(cube, oC));
+    debug("Collision", JSON.stringify(collide(cube, oC, "loud")));
+    collide(cube, oC, "contain");
     particles.loop(scene);
     renderer.render(scene, camera);
-    if (!collide(cube, oC)) {
-        requestAnimationFrame(render);
-    }
+    requestAnimationFrame(render);
 }
 render();
