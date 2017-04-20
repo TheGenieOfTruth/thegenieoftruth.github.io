@@ -10,6 +10,8 @@ module.exports = new function(){
 	});
 	var cube = new THREE.Mesh(geometry, material);
 	move(cube).to(obj)
+	cube.castShadow = true
+	cube.receiveShadow = true
 	cube.yvel = 0
 	cube.position.y -= 0.1
 	this.particles.push(cube)
