@@ -2,30 +2,42 @@ var key = require("./tools/key-press");
 var particles = require("./drawing/particleAt");
 var debug = require("./tools/debug");
 var collide = require("./physics/collide");
+var obstacles = require("./misc/obstacles");
 key.listen();
 var width = 650;
-var height = 500;
+var height = 800;
 var aspect = width / height;
 var scene = new THREE.Scene();
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
-renderer.setClearColor(0x2c3e50);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 document.body.appendChild(document.createElement("br"));
 var camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
-var sun = new THREE.AmbientLight(0xbbbbbb, 1);
-var pointLight = new THREE.PointLight(0xffffff, 1);
 var geometry = new THREE.CubeGeometry(1, 1, 1);
 var material = new THREE.MeshStandardMaterial({
     color: 0x2ecc71
 });
 var cube = new THREE.Mesh(geometry, material);
-cube.position.y = -2;
 
+camera.position.z = 4;
+camera.position.y = 4;
+cube.position.y = -5;
+var light = new THREE.AmbientLight(0x777777, 1);
+scene.add(light);
+var light2 = new THREE.PointLight(0xffffff, 1);
+light2.position.z = 0;
+light2.position.y = 3;
+scene.add(light2);
+var light3 = new THREE.PointLight(0xffffff, 0.5);
+light3.position.z = 0;
+light3.position.y = 6;
+light3.castShadow = true;
+scene.add(light3);
+scene.add(new THREE.CameraHelper(light2.shadow.camera));
 scene.add(cube);
 /*var light = new THREE.SpotLight(0xffffff, 0.1);
   light.shadow.mapSize.width = light.shadow.mapSize.height = 1024
@@ -34,23 +46,12 @@ scene.add(cube);
   light.position.z = -8
   scene.add(light);
   scene.add(new THREE.CameraHelper(light.shadow.camera))*/
-scene.add(sun);
-scene.add(pointLight);
 scene.add(camera);
 material = new THREE.MeshStandardMaterial({
     color: 0x888888
 });
-camera.position.z = 8.5;
-camera.position.y = 2;
 //Collision test cube
-geometry = new THREE.CubeGeometry(2, 2, 2);
-var oC = new THREE.Mesh(geometry, material);
-scene.add(oC);
-
-oC.position.z = -6;
-oC.position.x = 2;
-oC.castShadow = true;
-oC.receiveShadow = true;
+geometry = new THREE.CubeGeometry(4, 4, 4);
 
 (function () {
     var a = new THREE.CubeGeometry(10, 1, 50);
@@ -144,7 +145,7 @@ function render() {
         cube.position.y = -2;
     }
     //Ceiling
-    if (cube.position.y > 5) {
+    if (cube.position.y + cube.yvel > 5) {
         if (Math.abs(cube.yvel) < 0.01) {
             cube.yvel = 0;
         }
@@ -168,12 +169,12 @@ function render() {
         cube.position.x = 4.5;
     }
     //Camera side
-    if (cube.position.z + cube.zvel + 0.001 > 0) {
-        if (Math.abs(cube.zvel) < 0.01) {
+    if (cube.position.z + cube.zvel + 0.001 > -10) {
+        if (Math.abs(cube.zwadvel) < 0.01) {
             cube.zvel = 0;
         }
         cube.zvel *= -0.4;
-        cube.position.z = 0;
+        cube.position.z = -10;
     }
     //Far side
     if (cube.position.z + cube.zvel + 0.001 < -49) {
@@ -183,14 +184,11 @@ function render() {
     cube.position.z += cube.zvel;
     cube.position.y += cube.yvel;
     debug("Cube", JSON.stringify(cube.geometry.parameters));
-    debug("Obs", JSON.stringify(oC.geometry.parameters));
     debug("z", cube.position.z);
     debug("y", cube.position.y);
     debug("zvel", cube.zvel);
     debug("xvel", cube.xvel);
     debug("yvel", cube.yvel);
-    debug("Collision", JSON.stringify(collide(cube, oC, "loud")));
-    collide(cube, oC, "contain");
     particles.loop(scene);
     renderer.render(scene, camera);
     requestAnimationFrame(render);

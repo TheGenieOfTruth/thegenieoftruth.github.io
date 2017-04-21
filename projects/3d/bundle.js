@@ -48,30 +48,42 @@
 	var particles = __webpack_require__(2);
 	var debug = __webpack_require__(4);
 	var collide = __webpack_require__(5);
+	var obstacles = __webpack_require__(6);
 	key.listen();
 	var width = 650;
-	var height = 500;
+	var height = 800;
 	var aspect = width / height;
 	var scene = new THREE.Scene();
 
 	var renderer = new THREE.WebGLRenderer();
 	renderer.setSize(width, height);
-	renderer.setClearColor(0x2c3e50);
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 	document.body.appendChild(renderer.domElement);
 	document.body.appendChild(document.createElement("br"));
 	var camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
 	var controls = new THREE.OrbitControls(camera, renderer.domElement);
-	var sun = new THREE.AmbientLight(0xbbbbbb, 1);
-	var pointLight = new THREE.PointLight(0xffffff, 1);
 	var geometry = new THREE.CubeGeometry(1, 1, 1);
 	var material = new THREE.MeshStandardMaterial({
 	    color: 0x2ecc71
 	});
 	var cube = new THREE.Mesh(geometry, material);
-	cube.position.y = -2;
 
+	camera.position.z = 4;
+	camera.position.y = 4;
+	cube.position.y = -5;
+	var light = new THREE.AmbientLight(0x777777, 1);
+	scene.add(light);
+	var light2 = new THREE.PointLight(0xffffff, 1);
+	light2.position.z = 0;
+	light2.position.y = 3;
+	scene.add(light2);
+	var light3 = new THREE.PointLight(0xffffff, 0.5);
+	light3.position.z = 0;
+	light3.position.y = 6;
+	light3.castShadow = true;
+	scene.add(light3);
+	scene.add(new THREE.CameraHelper(light2.shadow.camera));
 	scene.add(cube);
 	/*var light = new THREE.SpotLight(0xffffff, 0.1);
 	  light.shadow.mapSize.width = light.shadow.mapSize.height = 1024
@@ -80,23 +92,12 @@
 	  light.position.z = -8
 	  scene.add(light);
 	  scene.add(new THREE.CameraHelper(light.shadow.camera))*/
-	scene.add(sun);
-	scene.add(pointLight);
 	scene.add(camera);
 	material = new THREE.MeshStandardMaterial({
 	    color: 0x888888
 	});
-	camera.position.z = 8.5;
-	camera.position.y = 2;
 	//Collision test cube
-	geometry = new THREE.CubeGeometry(2, 2, 2);
-	var oC = new THREE.Mesh(geometry, material);
-	scene.add(oC);
-
-	oC.position.z = -6;
-	oC.position.x = 2;
-	oC.castShadow = true;
-	oC.receiveShadow = true;
+	geometry = new THREE.CubeGeometry(4, 4, 4);
 
 	(function () {
 	    var a = new THREE.CubeGeometry(10, 1, 50);
@@ -190,7 +191,7 @@
 	        cube.position.y = -2;
 	    }
 	    //Ceiling
-	    if (cube.position.y > 5) {
+	    if (cube.position.y + cube.yvel > 5) {
 	        if (Math.abs(cube.yvel) < 0.01) {
 	            cube.yvel = 0;
 	        }
@@ -214,12 +215,12 @@
 	        cube.position.x = 4.5;
 	    }
 	    //Camera side
-	    if (cube.position.z + cube.zvel + 0.001 > 0) {
-	        if (Math.abs(cube.zvel) < 0.01) {
+	    if (cube.position.z + cube.zvel + 0.001 > -10) {
+	        if (Math.abs(cube.zwadvel) < 0.01) {
 	            cube.zvel = 0;
 	        }
 	        cube.zvel *= -0.4;
-	        cube.position.z = 0;
+	        cube.position.z = -10;
 	    }
 	    //Far side
 	    if (cube.position.z + cube.zvel + 0.001 < -49) {
@@ -229,14 +230,11 @@
 	    cube.position.z += cube.zvel;
 	    cube.position.y += cube.yvel;
 	    debug("Cube", JSON.stringify(cube.geometry.parameters));
-	    debug("Obs", JSON.stringify(oC.geometry.parameters));
 	    debug("z", cube.position.z);
 	    debug("y", cube.position.y);
 	    debug("zvel", cube.zvel);
 	    debug("xvel", cube.xvel);
 	    debug("yvel", cube.yvel);
-	    debug("Collision", JSON.stringify(collide(cube, oC, "loud")));
-	    collide(cube, oC, "contain");
 	    particles.loop(scene);
 	    renderer.render(scene, camera);
 	    requestAnimationFrame(render);
@@ -415,115 +413,125 @@
 /***/ function(module, exports) {
 
 	module.exports = function (r1, r2, type) {
-	  if (r1.invincible === true || r2.invincible === true) {
-	    return false;
-	  }
-	  //Define the variables we'll need to calculate
-	  var hit, combinedHalfWidths, combinedHalfHeights, combinedHalfDepths, vx, vy, vz, map;
-	  //hit will determine whether there's a collision
-	  hit = false;
-	  map = {};
-	  //Find the center points of each sprite
-	  r1.centerX = r1.position.x;
-	  r1.centerY = r1.position.y;
-	  r1.centerZ = r1.position.z;
-	  r2.centerX = r2.position.x;
-	  r2.centerY = r2.position.y;
-	  r2.centerZ = r2.position.z;
-	  //Find the half-widths and half-heights of each sprite
-	  r1.halfWidth = r1.geometry.parameters.width / 2;
-	  r1.halfHeight = r1.geometry.parameters.height / 2;
-	  r1.halfDepth = r1.geometry.parameters.depth / 2;
-	  // lol ur mom is so r1.halfWidth * 10
-	  r2.halfWidth = r2.geometry.parameters.width / 2;
-	  r2.halfHeight = r2.geometry.parameters.height / 2;
-	  r2.halfDepth = r2.geometry.parameters.depth / 2;
-	  //Calculate the distance vector between the sprites
-	  vx = r1.position.x - r2.position.x;
-	  vy = r1.position.y - r2.position.y;
-	  vz = r1.position.z - r2.position.z;
-	  //Figure out the combined half-widths and half-heights
-	  combinedHalfWidths = r1.halfWidth + r2.halfWidth;
-	  combinedHalfHeights = r1.halfHeight + r2.halfHeight;
-	  combinedHalfDepths = r1.halfDepth + r2.halfDepth;
-	  //Check for a collision on the x axis
-	  if (Math.abs(vx) < combinedHalfWidths) {
-	    //Collision on the x axis
+	    if (r1.invincible === true || r2.invincible === true) {
+	        return false;
+	    }
+	    //Define the variables we'll need to calculate
+	    var hit, combinedHalfWidths, combinedHalfHeights, combinedHalfDepths, vx, vy, vz;
+	    //hit will determine whether there's a collision
+	    hit = false;
+	    map = {};
+	    map.left = false;
+	    map.right = false;
+	    map.bottom = false;
+	    map.top = false;
+	    map.back = false;
+	    map.front = false;
+	    map.set = function (param, amt) {
+	        this[param] = true;
+	    };
+	    //Find the center points of each sprite
+	    r1.centerX = r1.position.x;
+	    r1.centerY = r1.position.y;
+	    r1.centerZ = r1.position.z;
+	    r2.centerX = r2.position.x;
+	    r2.centerY = r2.position.y;
+	    r2.centerZ = r2.position.z;
+	    //Find the half-widths and half-heights of each sprite
+	    r1.halfWidth = r1.geometry.parameters.width / 2;
+	    r1.halfHeight = r1.geometry.parameters.height / 2;
+	    r1.halfDepth = r1.geometry.parameters.depth / 2;
+	    // lol ur mom is so r1.halfWidth * 10
+	    r2.halfWidth = r2.geometry.parameters.width / 2;
+	    r2.halfHeight = r2.geometry.parameters.height / 2;
+	    r2.halfDepth = r2.geometry.parameters.depth / 2;
+	    //Calculate the distance vector between the sprites
+	    vx = r1.position.x - r2.position.x;
+	    vy = r1.position.y - r2.position.y;
+	    vz = r1.position.z - r2.position.z;
+	    //Figure out the combined half-widths and half-heights
+	    combinedHalfWidths = r1.halfWidth + r2.halfWidth;
+	    combinedHalfHeights = r1.halfHeight + r2.halfHeight;
+	    combinedHalfDepths = r1.halfDepth + r2.halfDepth;
+	    //Check for a collision on the x axis
+	    if (Math.abs(vx) < combinedHalfWidths) {
+	        //Collision on the x axis
+	        if (vx < -r2.halfWidth) {
+	            map.set("left");
+	        }
+	        if (vx >= r2.halfWidth) {
+	            map.set("right");
+	        }
+	        map.x = combinedHalfWidths - Math.abs(vx) + r1.xvel;
+	    }
 	    if (Math.abs(vy) < combinedHalfHeights) {
-	      //Collision on the y axis
-	      if (Math.abs(vz) < combinedHalfDepths) {
-	        //Collision on the z axis
-	        if (!type) {
-	          return true;
+	        //Collision on the y axis
+	        if (vy < -r2.halfHeight) {
+	            map.set("bottom");
 	        }
-	      }
-	    }
-	  }
-	  map.left = false;
-	  map.right = false;
-	  map.bottom = false;
-	  map.top = false;
-	  map.back = false;
-	  map.front = false;
-	  map.set = function (param) {
-	    this[param] = true;
-	  };
-
-	  if (Math.abs(vx) < combinedHalfWidths) {
-	    //Collision on the x axis
-	    if (vx < 0) {
-	      map.set("left");
-	    }
-	    if (vx >= 0) {
-	      map.set("right");
-	    }
-	  }
-	  if (Math.abs(vy) < combinedHalfHeights) {
-	    //Collision on the y axis
-	    if (vy < 0) {
-	      map.set("bottom");
-	    }
-	    if (vy >= 0) {
-	      map.set("top");
-	    }
-	  }
-	  if (Math.abs(vz) < combinedHalfDepths) {
-	    if (vz < 0) {
-	      map.set("back");
-	    }
-	    if (vz >= 0) {
-	      map.set("front");
-	    }
-	  }
-	  if (type === "loud") {
-	    return map;
-	  }
-	  if (type === "contain") {
-	    if (map.right) {
-	      if (r1.position.x + r1.xvel + 0.001 < r2.position.x + r2.halfWidth) {
-	        if (Math.abs(r1.xvel) < 0.01) {
-	          r1.xvel = 0;
+	        if (vy >= r2.halfHeight) {
+	            map.set("top");
 	        }
-	        r1.xvel *= -0.4;
-	        r1.position.x = r2.position.x + r2.halfWidth;
-	      }
+	        map.y = combinedHalfHeights - Math.abs(vy) + r1.yvel;
 	    }
-	    if (map.left) {
-	      if (r1.position.x + r1.xvel + 0.001 > r2.position.x - r2.halfWidth) {
-	        if (Math.abs(r1.xvel) < 0.01) {
-	          r1.xvel = 0;
+	    if (Math.abs(vz) < combinedHalfDepths) {
+	        if (vz < -r2.halfDepth) {
+	            map.set("back");
 	        }
-	        r1.xvel *= -0.4;
-	        r1.position.x = r2.position.x + r2.halfWidth;
-	      }
+	        if (vz >= r2.halfDepth) {
+	            map.set("front");
+	        }
+	        map.z = combinedHalfDepths - Math.abs(vz) + r1.zvel;
 	    }
-	    if (map.top) {}
-	    if (map.bottom) {}
-	    if (map.front) {}
-	    if (map.back) {}
-	  }
-	  return false;
+	    if (type === "loud") {
+	        return map;
+	    }
+	    if (Math.abs(vx) < combinedHalfWidths) {
+	        //Collision on the x axis
+	        if (Math.abs(vy) < combinedHalfHeights) {
+	            //Collision on the y axis
+	            if (Math.abs(vz) < combinedHalfDepths) {
+	                //Collision on the z axis
+	                if (type === "contain") {
+	                    if (map.right && map.x < map.z && map.x < map.y) {
+	                        r1.xvel *= -0.4;
+	                        r1.position.x = r2.position.x + r2.halfWidth + r1.halfWidth;
+	                    }
+	                    if (map.left && map.x < map.z && map.x < map.y) {
+	                        r1.xvel *= -0.4;
+	                        r1.position.x = r2.position.x - r2.halfWidth - r1.halfWidth;
+	                    }
+	                    if (map.top && map.y < map.z && map.y < map.x) {
+	                        r1.yvel *= -0.4;
+	                        r1.position.y = r2.position.y + r2.halfHeight + r1.halfHeight;
+	                    }
+	                    if (map.bottom && map.y < map.z && map.y < map.x) {
+	                        r1.yvel *= -0.4;
+	                        r1.position.y = r2.position.y - r2.halfHeight - r1.halfHeight;
+	                    }
+	                    if (map.front && map.z < map.y && map.z < map.x) {
+	                        r1.zvel *= -0.4;
+	                        r1.position.z = r2.position.z + r2.halfDepth + r1.halfDepth;
+	                    }
+	                    if (map.back && map.z < map.y && map.z < map.x) {
+	                        r1.zvel *= -0.4;
+	                        r1.position.z = r2.position.z - r2.halfDepth - r1.halfDepth;
+	                    }
+	                }
+	                if (!type) {
+	                    return true;
+	                }
+	            }
+	        }
+	    }
+	    return false;
 	};
+
+/***/ },
+/* 6 */
+/***/ function(module, exports) {
+
+	module.exports = function () {};
 
 /***/ }
 /******/ ]);
