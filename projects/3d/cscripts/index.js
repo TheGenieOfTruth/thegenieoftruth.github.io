@@ -4,8 +4,8 @@ var debug = require("./tools/debug");
 var collide = require("./physics/collide");
 var obstacles = require("./misc/obstacles");
 key.listen();
-var width = 650;
-var height = 800;
+var width = 800;
+var height = 600;
 var aspect = width / height;
 var scene = new THREE.Scene();
 
@@ -94,8 +94,14 @@ cube.xvel = 0;
 //Shadows
 cube.castShadow = true;
 cube.receiveShadow = true;
-
+var ct = 0;
 function render() {
+    ct++;
+    ct %= 200;
+    if (ct === 0) {
+        obstacles.create(scene, material);
+    }
+    obstacles.loop(cube, scene);
     /*
     ===========================
     |  Normal Control Scheme  |
@@ -108,19 +114,19 @@ function render() {
         * key.listen() to initialise
         * run in a loop
         */
-    key.check([65, 37], function () {
+    key.check([65], function () {
         cube.xvel -= 0.05;
         //Left
     });
-    key.check([68, 39], function () {
+    key.check([68], function () {
         cube.xvel += 0.05;
         //Right
     });
-    key.check([87, 38], function () {
+    key.check([87], function () {
         cube.zvel -= 0.05;
         //Up
     });
-    key.check([40, 83], function () {
+    key.check([83], function () {
         cube.zvel += 0.05;
         //Down
     });

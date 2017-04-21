@@ -50,8 +50,8 @@
 	var collide = __webpack_require__(5);
 	var obstacles = __webpack_require__(6);
 	key.listen();
-	var width = 650;
-	var height = 800;
+	var width = 800;
+	var height = 600;
 	var aspect = width / height;
 	var scene = new THREE.Scene();
 
@@ -140,8 +140,14 @@
 	//Shadows
 	cube.castShadow = true;
 	cube.receiveShadow = true;
-
+	var ct = 0;
 	function render() {
+	    ct++;
+	    ct %= 200;
+	    if (ct === 0) {
+	        obstacles.create(scene, material);
+	    }
+	    obstacles.loop(cube, scene);
 	    /*
 	    ===========================
 	    |  Normal Control Scheme  |
@@ -154,19 +160,19 @@
 	        * key.listen() to initialise
 	        * run in a loop
 	        */
-	    key.check([65, 37], function () {
+	    key.check([65], function () {
 	        cube.xvel -= 0.05;
 	        //Left
 	    });
-	    key.check([68, 39], function () {
+	    key.check([68], function () {
 	        cube.xvel += 0.05;
 	        //Right
 	    });
-	    key.check([87, 38], function () {
+	    key.check([87], function () {
 	        cube.zvel -= 0.05;
 	        //Up
 	    });
-	    key.check([40, 83], function () {
+	    key.check([83], function () {
 	        cube.zvel += 0.05;
 	        //Down
 	    });
@@ -529,9 +535,44 @@
 
 /***/ },
 /* 6 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function () {};
+	module.exports = new function () {
+			var collide = __webpack_require__(5);
+			var debug = __webpack_require__(4);
+			this.obstacles = [];
+			this.loop = function (player, scene) {
+					var a = this;
+					debug("Obstacles", this.obstacles.length);
+					this.obstacles.forEach(function (obsGroup) {
+							obsGroup.forEach(function (val) {
+									val.position.z += 0.1;
+									val.position.y += val.yvel;
+									collide(player, val, "contain");
+									if (val.position.z > -10) {
+											val.yvel -= 0.1;
+									}
+									if (val.position.z > 5) {
+											scene.remove(val);
+											a.obstacles.splice(a.obstacles.indexOf(obsGroup), 1);
+									}
+							});
+					});
+			};
+			this.create = function (scene, material) {
+					var obsGroup = [];
+					var a = new THREE.CubeGeometry(3, 10, 1);
+					var c = new THREE.Mesh(a, material);
+					scene.add(c);
+					c.position.y = 1.5;
+					c.position.x = -3.5;
+					c.position.z = -40;
+					c.yvel = 0;
+					c.receiveShadow = true;
+					obsGroup.push(c);
+					this.obstacles.push(obsGroup);
+			};
+	}();
 
 /***/ }
 /******/ ]);
