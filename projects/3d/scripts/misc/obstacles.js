@@ -10,27 +10,64 @@ module.exports = new function(){
 	    val.position.z += 0.1
 	    val.position.y += val.yvel
 	    collide(player,val,"contain")
-	    if(val.position.z > -10){
-	      val.yvel -= 0.1
-	    }
 	    if(val.position.z > 5){
 	      scene.remove(val)
-			  a.obstacles.splice(a.obstacles.indexOf(obsGroup),1)
 	    }
 	    })
+	    if(obsGroup[0].position.z > 5){
+	    	a.obstacles.splice(a.obstacles.indexOf(obsGroup),1)
+	    }
 	  })
 	}
 	this.create = function(scene,material){
 	    var obsGroup = [];
-      var a = new THREE.CubeGeometry(3, 10, 1);
-      var c = new THREE.Mesh(a, material);
-      scene.add(c);
-      c.position.y = 1.5;
-      c.position.x = -3.5;
-      c.position.z = -40;
-      c.yvel = 0;
-      c.receiveShadow = true
-      obsGroup.push(c)
+	    //12 wide x 10 tall
+	   //Left
+	  (function(){
+	      var a = new THREE.CubeGeometry(3, 9, 1);
+	      var c = new THREE.Mesh(a, material);
+	      scene.add(c);
+	      c.position.y = 1.5;
+	      c.position.x = -3.5;
+	      c.position.z = -40;
+	      c.yvel = 0;
+	      c.receiveShadow = true
+	      obsGroup.push(c)}
+      )();
+      //Right
+      (function(){
+	      var a = new THREE.CubeGeometry(3, 9, 1);
+	      var c = new THREE.Mesh(a, material);
+	      scene.add(c);
+	      c.position.y = 1.5;
+	      c.position.x = 3.5;
+	      c.position.z = -40;
+	      c.yvel = 0;
+	      c.receiveShadow = true
+	      obsGroup.push(c)}
+      )();
+      //Bottom
+      (function(){
+	      var a = new THREE.CubeGeometry(4, 3, 1);
+	      var c = new THREE.Mesh(a, material);
+	      scene.add(c);
+	      c.position.y = -1.5;
+	      c.position.z = -40;
+	      c.yvel = 0;
+	      c.receiveShadow = true
+	      obsGroup.push(c)}
+      )();
+      //Top
+      (function(){
+	      var a = new THREE.CubeGeometry(4, 3, 1);
+	      var c = new THREE.Mesh(a, material);
+	      scene.add(c);
+	      c.position.y = 4.5;
+	      c.position.z = -40;
+	      c.yvel = 0;
+	      c.receiveShadow = true
+	      obsGroup.push(c)}
+      )();
       this.obstacles.push(obsGroup)
 	}
 }

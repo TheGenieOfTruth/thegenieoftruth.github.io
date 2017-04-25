@@ -3,6 +3,7 @@ module.exports = new function(){
 	this.particles = []
 	var a = this
 	this.run = function(obj,scene){
+		for(i=0;i<5;i++){
 	var geometry = new THREE.CubeGeometry(0.1,0.1,0.1);
 	var material = new THREE.MeshStandardMaterial({
   		color: [0xe74c3c,0xe67e22,0xf1c40f][Math.floor(Math.random()*2)],
@@ -17,6 +18,7 @@ module.exports = new function(){
 	this.particles.push(cube)
 	scene.add(cube)
 	move(cube).to(obj)
+}
 	}
 	this.loop = function(scene){
 		this.particles.forEach(function(particle){

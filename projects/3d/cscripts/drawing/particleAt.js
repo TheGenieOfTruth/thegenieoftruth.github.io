@@ -3,20 +3,22 @@ module.exports = new function () {
 	this.particles = [];
 	var a = this;
 	this.run = function (obj, scene) {
-		var geometry = new THREE.CubeGeometry(0.1, 0.1, 0.1);
-		var material = new THREE.MeshStandardMaterial({
-			color: [0xe74c3c, 0xe67e22, 0xf1c40f][Math.floor(Math.random() * 2)],
-			transparent: true
-		});
-		var cube = new THREE.Mesh(geometry, material);
-		move(cube).to(obj);
-		cube.castShadow = true;
-		cube.receiveShadow = true;
-		cube.yvel = 0;
-		cube.position.y -= 0.1;
-		this.particles.push(cube);
-		scene.add(cube);
-		move(cube).to(obj);
+		for (i = 0; i < 5; i++) {
+			var geometry = new THREE.CubeGeometry(0.1, 0.1, 0.1);
+			var material = new THREE.MeshStandardMaterial({
+				color: [0xe74c3c, 0xe67e22, 0xf1c40f][Math.floor(Math.random() * 2)],
+				transparent: true
+			});
+			var cube = new THREE.Mesh(geometry, material);
+			move(cube).to(obj);
+			cube.castShadow = true;
+			cube.receiveShadow = true;
+			cube.yvel = 0;
+			cube.position.y -= 0.1;
+			this.particles.push(cube);
+			scene.add(cube);
+			move(cube).to(obj);
+		}
 	};
 	this.loop = function (scene) {
 		this.particles.forEach(function (particle) {

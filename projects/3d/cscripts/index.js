@@ -4,6 +4,7 @@ var debug = require("./tools/debug");
 var collide = require("./physics/collide");
 var obstacles = require("./misc/obstacles");
 key.listen();
+var dbg = false;
 var width = 800;
 var height = 600;
 var aspect = width / height;
@@ -16,24 +17,30 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 document.body.appendChild(document.createElement("br"));
 var camera = new THREE.PerspectiveCamera(50, aspect, 0.1, 1000);
+
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 var geometry = new THREE.CubeGeometry(1, 1, 1);
 var material = new THREE.MeshStandardMaterial({
-    color: 0x2ecc71
+    color: 0x2ecc71,
+    transparent: true,
+    opacity: 0.8
 });
 var cube = new THREE.Mesh(geometry, material);
-
-camera.position.z = 4;
-camera.position.y = 4;
+if (dbg) {
+    scene.add(camera);
+    camera.position.y = 1;
+} else {
+    cube.add(camera);
+}
 cube.position.y = -5;
 var light = new THREE.AmbientLight(0x777777, 1);
 scene.add(light);
 var light2 = new THREE.PointLight(0xffffff, 1);
-light2.position.z = 0;
+light2.position.z = 2;
 light2.position.y = 3;
 scene.add(light2);
 var light3 = new THREE.PointLight(0xffffff, 0.5);
-light3.position.z = 0;
+light3.position.z = 2;
 light3.position.y = 6;
 light3.castShadow = true;
 scene.add(light3);
@@ -46,7 +53,7 @@ scene.add(cube);
   light.position.z = -8
   scene.add(light);
   scene.add(new THREE.CameraHelper(light.shadow.camera))*/
-scene.add(camera);
+
 material = new THREE.MeshStandardMaterial({
     color: 0x888888
 });
@@ -96,6 +103,11 @@ cube.castShadow = true;
 cube.receiveShadow = true;
 var ct = 0;
 function render() {
+    if (!dbg) {
+        camera.position.z = 6 + cube.zvel * (cube.zvel < 0.2);
+        camera.position.y = cube.yvel;
+        camera.position.x = cube.xvel;
+    }
     ct++;
     ct %= 200;
     if (ct === 0) {
@@ -175,12 +187,12 @@ function render() {
         cube.position.x = 4.5;
     }
     //Camera side
-    if (cube.position.z + cube.zvel + 0.001 > -10) {
+    if (cube.position.z + cube.zvel + 0.001 > 0) {
         if (Math.abs(cube.zwadvel) < 0.01) {
             cube.zvel = 0;
         }
         cube.zvel *= -0.4;
-        cube.position.z = -10;
+        cube.position.z = 0;
     }
     //Far side
     if (cube.position.z + cube.zvel + 0.001 < -49) {
@@ -191,6 +203,7 @@ function render() {
     cube.position.y += cube.yvel;
     debug("Cube", JSON.stringify(cube.geometry.parameters));
     debug("z", cube.position.z);
+    debug("x", cube.position.x);
     debug("y", cube.position.y);
     debug("zvel", cube.zvel);
     debug("xvel", cube.xvel);
